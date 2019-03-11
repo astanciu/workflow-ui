@@ -1,0 +1,5 @@
+.Canvas {
+  touch-action: manipulation;
+  box-sizing: border-box;
+    background: #596A84;
+}

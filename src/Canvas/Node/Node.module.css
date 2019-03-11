@@ -1,0 +1,64 @@
+/* Normal  */
+.normal {
+  fill: #91a2c0;
+  cursor: pointer;
+  stroke: none;
+}
+
+.normalOutline {
+  fill: none;
+  stroke: #8998aa;
+  stroke-width: 1px;
+}
+
+.normalIcon {
+  fill: #596a84;
+  stroke: none;
+  cursor: pointer;
+}
+
+.normalPort {
+  fill: #72839e;
+  stroke: none;
+  cursor: pointer;
+}
+
+/* Selected */
+.selected {
+  composes: normal;
+  fill: #a9c2e0;
+  stroke: none;
+}
+
+.selectedOutline {
+  composes: normalOutline;
+  stroke: #899fba;
+  stroke-width: 2px;
+}
+
+.selectedIcon {
+  composes: normalIcon;
+  fill: #596a84;
+}
+
+.selectedHighlight {
+  fill: #c4ebff;
+  opacity: 0.0514605978;
+}
+
+/* UnSelected */
+.unselected {
+  composes: normal;
+  fill: #768ca6;
+  stroke: none;
+}
+
+.unselectedOutline {
+  composes: normalOutline;
+  stroke: #69778c;
+}
+
+.unselectedIcon {
+  composes: normalIcon;
+  fill: #596a84;
+}
