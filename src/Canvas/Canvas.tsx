@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
 
 import isEqual from 'lodash/isEqual';
-import Grid from './Grid/Grid.js';
+// import Grid from './Grid/Grid.js';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
@@ -184,6 +184,7 @@ class Canvas extends React.Component<Props> {
   };
 
   render() {
+    // console.log((this.state.nodes[2] || {}).position);
     const nodes = this.state.nodes.map(node => (
       <NodeComponent
         key={node.id}
@@ -209,7 +210,7 @@ class Canvas extends React.Component<Props> {
           {/* <ConnectionPreview drawConnection={this.state.drawConnection} /> */}
           {/* {this.state.drawConnection && ()} */}
 
-          <Grid view={this.state.view} />
+          {/* <Grid view={this.state.view} /> */}
           {nodes}
         </g>
       </svg>

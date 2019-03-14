@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from './Node.module.css';
+import styles from './Node-light.module.css';
 import Icon from '../Icon/Icon.js';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
@@ -21,12 +21,9 @@ type Props = {
 export default class NodeComponent extends React.Component<Props> {
   static displayName = 'Node';
   static defaultProps = {
-    position: new Point(),
-    icon: 'cog',
-    gridSize: 50,
     snapToGrid: true
   };
-  state = { reset: false };
+  state = {};
   // private width = 100;
   // private height = 100;
   // private dragging = false;
@@ -35,6 +32,7 @@ export default class NodeComponent extends React.Component<Props> {
   private em!: EventManager;
 
   componentDidMount() {
+    console.log('Mounted', this.props.node);
     this.domNode = ReactDOM.findDOMNode(this);
 
     this.em = new EventManager(this.domNode);
@@ -47,9 +45,10 @@ export default class NodeComponent extends React.Component<Props> {
   shouldComponentUpdate(nextProps, nextState) {
     const sameProps = isEqual(nextProps, this.props);
     const sameState = isEqual(nextState, this.state);
+    const shouldUpdate = !(sameProps && sameState);
 
-    return !(sameProps && sameState);
-    // return true;
+    return shouldUpdate;
+    return true;
   }
 
   _onTap = e => {
@@ -77,7 +76,7 @@ export default class NodeComponent extends React.Component<Props> {
   };
 
   snapToGrid = () => {
-    const node = this.props.node;
+    const node = new Node(this.props.node);
     const hgrid = 100 * 0.5;
     const vgrid = 110 * 0.75;
     const target = {
@@ -98,6 +97,7 @@ export default class NodeComponent extends React.Component<Props> {
   };
 
   render() {
+    console.log('Rendering ', this.props.node.name);
     let nodeClass = styles.normal;
     let nodeOutline = styles.normalOutline;
     let nodeIconClass = styles.normalIcon;

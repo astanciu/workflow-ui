@@ -46,7 +46,6 @@ export class InPort extends Port {
 
 export class OutPort extends Port {
   render() {
-    // console.log('Outport node:', this.props.node);
     return (
       <circle
         className={this.props.className}

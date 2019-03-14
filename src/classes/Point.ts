@@ -8,7 +8,6 @@ export class Point {
   }
 
   add(point: Point): Point {
-    console.log(this.x, point.x);
     return new Point(this.x + point.x, this.y + point.y);
   }
 }
