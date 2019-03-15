@@ -16,6 +16,7 @@ type Props = {
   onConnectionDrag: any;
   onConnectionEnd: any;
   snapToGrid: boolean;
+  connectionCandidate: boolean;
 };
 
 export default class NodeComponent extends React.Component<Props> {
@@ -141,7 +142,7 @@ export default class NodeComponent extends React.Component<Props> {
           <InPort
             node={this.props.node}
             className={nodePort}
-            highlight={this.props.node.highlightInPort}
+            highlight={this.props.connectionCandidate}
           />
         </g>
       </g>

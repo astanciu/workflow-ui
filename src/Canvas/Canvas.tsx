@@ -7,14 +7,17 @@ import Grid from './Grid/Grid.js';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
-import { Node, Point } from '../classes';
+import { Node, Connection, Point } from '../classes';
 import ConnectionPreview from './Connections/ConnectionPreview';
+import ConnectionComponent from './Connections/ConnectionComponent';
 
 type Props = {
   nodes: Node[];
+  connections: Connection[];
   updateNode: (node: Node) => void;
   selectNode: (node: Node | null) => void;
   isAnyNodeSelected: boolean;
+  createConnection: (fromNode: Node, toNode: Node) => void;
 };
 type ViewType = {
   width: number;
@@ -29,8 +32,10 @@ type ConnectionInProgress = {
 };
 type State = {
   nodes: Node[];
+  connections: Connection[];
   view: ViewType;
   connectionInProgress?: ConnectionInProgress;
+  closestNode?: Node;
 };
 
 class Canvas extends React.Component<Props> {
@@ -44,6 +49,7 @@ class Canvas extends React.Component<Props> {
 
   state: State = {
     nodes: [] as Node[],
+    connections: [] as Connection[],
     view: {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -71,7 +77,7 @@ class Canvas extends React.Component<Props> {
     // if (!isEqual(this.state.nodes, next.nodes)) {
     //   this.setState({ nodes: next.nodes });
     // }
-    this.setState({ nodes: next.nodes });
+    this.setState({ nodes: next.nodes, connections: next.connections });
   }
 
   componentWillUnmount() {
@@ -183,7 +189,7 @@ class Canvas extends React.Component<Props> {
 
   onConnectionDrag = (node: Node, e) => {
     const mousePosition = this.convertCoordsToSVG(e.detail.x, e.detail.y);
-    this.highlightClosestPorts(mousePosition);
+    this.setClosestNode(mousePosition);
     this.setState(currentState => ({
       connectionInProgress: {
         from: node,
@@ -192,39 +198,20 @@ class Canvas extends React.Component<Props> {
     }));
   };
 
-  highlightClosestPorts = (mouse: Point): void => {
+  setClosestNode = (mouse: Point): void => {
     // get closest node to the mouse
     const closest = this.getClosestInPortNode(mouse);
-
     if (closest) {
-      // bail if it's already highlighted
-      if (closest.highlightInPort) return;
-
-      // otherwise, highlight it
-      closest.highlightInPort = true;
-      this.props.updateNode(closest);
-    }
-
-    // check if there was another node previously highlighted
-    // and remove the highlight
-    const prevClosest = this.props.nodes.find(n => {
-      if (closest) {
-        return n.highlightInPort === true && n.id !== closest.id;
-      }
-      return n.highlightInPort === true;
-    });
-
-    if (prevClosest) {
-      const update = prevClosest.clone();
-      update.highlightInPort = false;
-      this.props.updateNode(update);
+      this.setState({ closestNode: closest });
+    } else {
+      this.setState({ closestNode: undefined });
     }
   };
 
   getClosestInPortNode = (loc: Point): Node | undefined => {
     const { nodes } = this.props;
 
-    const minDist: number = 90;
+    const minDist: number = 30;
     let closestNode: Node | undefined;
     let closestDist: number;
 
@@ -249,8 +236,12 @@ class Canvas extends React.Component<Props> {
 
   onConnectionEnd = (node: Node, e) => {
     console.log(`onConnectionEnd`, node.name);
+    if (this.state.closestNode) {
+      this.props.createConnection(node, this.state.closestNode);
+    }
     this.setState({
-      connectionInProgress: null
+      connectionInProgress: null,
+      closestNode: undefined
     });
   };
 
@@ -265,8 +256,17 @@ class Canvas extends React.Component<Props> {
         canvasView={this.state.view}
         onConnectionDrag={this.onConnectionDrag}
         onConnectionEnd={this.onConnectionEnd}
+        connectionCandidate={
+          this.state.closestNode ? this.state.closestNode.id === node.id : false
+        }
       />
     ));
+
+    const connections = this.state.connections.map(conn => (
+      <ConnectionComponent connection={conn} />
+    ));
+
+    console.log(this.state.connections);
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -285,6 +285,7 @@ class Canvas extends React.Component<Props> {
           )}
 
           <Grid view={this.state.view} />
+          {connections}
           {nodes}
         </g>
       </svg>
