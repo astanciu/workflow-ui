@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
 
 import isEqual from 'lodash/isEqual';
-// import Grid from './Grid/Grid.js';
+import Grid from './Grid/Grid.js';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
@@ -174,7 +174,6 @@ class Canvas extends React.Component<Props> {
   };
 
   onConnectionDrag = (node, e) => {
-    console.log(node);
     const target = this.convertCoordsToSVG(e.detail.x, e.detail.y);
     this.setState({ drawConnection: target });
   };
@@ -210,7 +209,7 @@ class Canvas extends React.Component<Props> {
           {/* <ConnectionPreview drawConnection={this.state.drawConnection} /> */}
           {/* {this.state.drawConnection && ()} */}
 
-          {/* <Grid view={this.state.view} /> */}
+          <Grid view={this.state.view} />
           {nodes}
         </g>
       </svg>

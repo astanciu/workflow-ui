@@ -32,7 +32,6 @@ export default class NodeComponent extends React.Component<Props> {
   private em!: EventManager;
 
   componentDidMount() {
-    console.log('Mounted', this.props.node);
     this.domNode = ReactDOM.findDOMNode(this);
 
     this.em = new EventManager(this.domNode);
@@ -40,6 +39,7 @@ export default class NodeComponent extends React.Component<Props> {
     this.em.onMove(this._onMove);
 
     if (this.props.snapToGrid) this.em.onMoveEnd(this._onMoveEnd);
+    this.snapToGrid();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -97,7 +97,6 @@ export default class NodeComponent extends React.Component<Props> {
   };
 
   render() {
-    console.log('Rendering ', this.props.node.name);
     let nodeClass = styles.normal;
     let nodeOutline = styles.normalOutline;
     let nodeIconClass = styles.normalIcon;

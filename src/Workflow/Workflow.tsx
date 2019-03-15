@@ -8,9 +8,13 @@ type WorkflowType = {
   workflow: any;
 };
 
+type WorkflowState = {
+  nodes: Node[];
+};
+
 export class Workflow extends Component<WorkflowType> {
-  state = {
-    nodes: [] as Node[]
+  state: WorkflowState = {
+    nodes: []
   };
 
   componentDidMount() {
@@ -30,15 +34,10 @@ export class Workflow extends Component<WorkflowType> {
   };
 
   updateNode = (node: Node) => {
-    const nodes = [...this.state.nodes];
-    const index = findIndex(nodes, { id: node.id });
-    if (index !== -1) {
-      nodes.splice(index, 1, node);
-    } else {
-      nodes.push(node);
-    }
-
-    this.setState({ nodes });
+    this.setState((previousState: WorkflowState) => {
+      const nodes = previousState.nodes.map(n => (n.id === node.id ? node : n));
+      return { nodes };
+    });
   };
 
   selectNode = (node: Node | null) => {
