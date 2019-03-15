@@ -10,4 +10,11 @@ export class Point {
   add(point: Point): Point {
     return new Point(this.x + point.x, this.y + point.y);
   }
+
+  distanceTo(point: Point): number {
+    const a = this.x - point.x;
+    const b = this.y - point.y;
+
+    return Math.sqrt(a * a + b * b);
+  }
 }

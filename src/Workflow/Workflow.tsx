@@ -36,6 +36,7 @@ export class Workflow extends Component<WorkflowType> {
   updateNode = (node: Node) => {
     this.setState((previousState: WorkflowState) => {
       const nodes = previousState.nodes.map(n => (n.id === node.id ? node : n));
+
       return { nodes };
     });
   };

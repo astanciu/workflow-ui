@@ -1,0 +1,12 @@
+.Port {
+  fill: #8a939a;
+  stroke: #4b5056;
+  cursor: pointer;
+  stroke-width: 3;
+}
+
+.PortHighlight {
+  composes: Port;
+  fill: #d0d0d0;
+  stroke-width: 2;
+}

@@ -48,7 +48,7 @@ export default class NodeComponent extends React.Component<Props> {
     const shouldUpdate = !(sameProps && sameState);
 
     return shouldUpdate;
-    return true;
+    // return true;
   }
 
   _onTap = e => {
@@ -113,6 +113,8 @@ export default class NodeComponent extends React.Component<Props> {
       nodeIconClass = styles.selectedIcon;
     }
 
+    // console.log(this.props.node.name, this.props.node.highlightInPort);
+
     return (
       <g id="Node" transform={this.getTransform()}>
         <g id="Hexagons" transform="translate(-40.000000, -39.500000)">
@@ -138,9 +140,8 @@ export default class NodeComponent extends React.Component<Props> {
           />
           <InPort
             node={this.props.node}
-            onConnectionDrag={this.props.onConnectionDrag}
-            onConnectionEnd={this.props.onConnectionEnd}
             className={nodePort}
+            highlight={this.props.node.highlightInPort}
           />
         </g>
       </g>

@@ -7,18 +7,12 @@
 
 .normalOutline {
   fill: none;
-  stroke: #34373c;
+  stroke: #95999e;
   stroke-width: 1px;
 }
 
 .normalIcon {
   fill: #d1d7e4;
-  stroke: none;
-  cursor: pointer;
-}
-
-.normalPort {
-  fill: #8998aa;
   stroke: none;
   cursor: pointer;
 }
@@ -32,7 +26,7 @@
 
 .selectedOutline {
   composes: normalOutline;
-  stroke: #24272b;
+  stroke: #95999e;
   stroke-width: 2px;
 }
 

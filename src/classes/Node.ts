@@ -8,6 +8,7 @@ export class Node {
   public selected: boolean = false;
   public outPortOffset = new Point(45, 0);
   public inPortOffset = new Point(-45, 0);
+  public highlightInPort: boolean = false;
 
   constructor(node: any) {
     Object.assign(this, node);
@@ -15,10 +16,16 @@ export class Node {
   }
 
   get outPortPosition(): Point {
+    if (!this.position) return new Point();
     return this.position.add(this.outPortOffset);
   }
 
   get inPortPosition(): Point {
+    if (!this.position) return new Point();
     return this.position.add(this.inPortOffset);
+  }
+
+  public clone() {
+    return new Node(this);
   }
 }

@@ -2,15 +2,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import EventManager from '../Util/EventManager.js';
 import { Node } from '../../classes';
+import styles from './Port.module.css';
 
-type Props = {
+type InPortProps = {
   node: Node;
-  onConnectionDrag: (node: Node, e: Event) => void;
-  onConnectionEnd: (node: Node, e: Event) => void;
   className: string;
+  highlight: boolean;
 };
 
-class Port extends React.Component<Props> {
+export class InPort extends React.Component<InPortProps> {
+  componentDidMount() {
+    const domNode = ReactDOM.findDOMNode(this);
+    const em = new EventManager(domNode, this.props.node);
+    em.onMove(this._onMove);
+  }
+
+  _onMove = e => {
+    e.stopPropagation();
+  };
+
+  render() {
+    return (
+      <circle
+        className={this.props.highlight ? styles.PortHighlight : styles.Port}
+        cx={this.props.node.inPortOffset.x}
+        cy={this.props.node.inPortOffset.y}
+        r={this.props.highlight ? '10' : '4'}
+      />
+    );
+  }
+}
+
+type OutPortProps = {
+  node: Node;
+  className: string;
+  onConnectionDrag: (node: Node, e: Event) => void;
+  onConnectionEnd: (node: Node, e: Event) => void;
+};
+
+export class OutPort extends React.Component<OutPortProps> {
   componentDidMount() {
     const domNode = ReactDOM.findDOMNode(this);
     const em = new EventManager(domNode, this.props.node);
@@ -25,33 +55,17 @@ class Port extends React.Component<Props> {
   };
 
   _onMoveEnd = e => {
-    // e.stopPropagation();
+    e.stopPropagation();
     // console.log(`onMoveEnd ${this.props.node.name}`, e.data);
     this.props.onConnectionEnd(this.props.node, e);
   };
-}
-
-export class InPort extends Port {
   render() {
     return (
       <circle
-        className={this.props.className}
-        cx={this.props.node.inPortOffset.x}
-        cy={this.props.node.inPortOffset.y}
-        r="6"
-      />
-    );
-  }
-}
-
-export class OutPort extends Port {
-  render() {
-    return (
-      <circle
-        className={this.props.className}
+        className={styles.Port}
         cx={this.props.node.outPortOffset.x}
         cy={this.props.node.outPortOffset.y}
-        r="6"
+        r="4"
       />
     );
   }
