@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Node-light.module.css';
-import Icon from '../Icon/Icon.js';
+import Icon from '../Icon/Icon';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
 import { Node, Point } from '../../classes';

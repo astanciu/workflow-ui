@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import isEqual from 'lodash/isEqual';
 import findIndex from 'lodash/findIndex';
 
 import Canvas from '../Canvas/Canvas';
@@ -29,7 +30,7 @@ export class Workflow extends Component<WorkflowType> {
       const toNode = nodes.find(n => n.id === conn.to);
 
       if (fromNode && toNode) {
-        return new Connection(fromNode, toNode);
+        return new Connection(fromNode, toNode, conn.id);
       }
       return null;
     }) as Connection[];
@@ -52,9 +53,37 @@ export class Workflow extends Component<WorkflowType> {
 
   updateNode = (node: Node) => {
     this.setState((previousState: WorkflowState) => {
-      const nodes = previousState.nodes.map(n => (n.id === node.id ? node : n));
+      let posChanged = false;
+      const nodes = previousState.nodes.map(n => {
+        if (n.id === node.id) {
+          posChanged = !isEqual(n.position, node.position);
+          return node;
+        } else {
+          return n;
+        }
+      });
 
-      return { nodes };
+      if (posChanged) {
+        const connections = previousState.connections.map(conn => {
+          if (conn.from.id === node.id) {
+            const newConn = conn.clone();
+            newConn.from = node;
+            return newConn;
+          }
+
+          if (conn.to.id === node.id) {
+            const newConn = conn.clone();
+            newConn.to = node;
+            return newConn;
+          }
+
+          return conn;
+        });
+
+        return { nodes, connections };
+      } else {
+        return { nodes };
+      }
     });
   };
 
