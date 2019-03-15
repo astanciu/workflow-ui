@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Node, Connection } from '../../classes';
 import styles from './Connections.module.css';
 import createSVGPath from './util';
@@ -15,4 +15,4 @@ const ConnectionComponent = ({ connection }: Props) => {
   return <path d={d} className={styles.Connection} />;
 };
 
-export default ConnectionComponent;
+export default React.memo(ConnectionComponent);

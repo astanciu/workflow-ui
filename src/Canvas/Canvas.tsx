@@ -129,7 +129,7 @@ class Canvas extends React.Component<Props> {
     let size = event.deltaY ? event.deltaY : 0 - event.wheelDeltaY;
     if (isNaN(size) || !size) return;
 
-    const scale = this.state.view.scale + size / 200;
+    const scale = this.state.view.scale + (-1 * size) / 200;
     let center = {
       x: event.clientX,
       y: event.clientY
