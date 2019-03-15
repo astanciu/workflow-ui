@@ -1,7 +1,7 @@
 const workflow1 = {
   name: 'Sample Workflow 1',
   nodes: [
-    { name: 'Eye', id: '1', icon: 'eye', position: { x: 3, y: 7 } },
+    { name: 'Eye', id: '1', icon: 'plus-circle', position: { x: 3, y: 7 } },
     {
       name: 'User',
       id: '2',

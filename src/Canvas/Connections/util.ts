@@ -1,3 +1,6 @@
+// Credit for this method goes to
+// https://github.com/flowhub/the-graph/blob/master/the-graph/the-graph-edge.js
+
 const NODE_SIZE = 100;
 const CURVE = 50;
 
@@ -26,31 +29,10 @@ const makeSVGPath = (startX, startY, endX, endY) => {
     c2X = c1X;
     c2Y = endY;
   }
-  const path = createEdgePathArray(
-    startX,
-    startY,
-    c1X,
-    c1Y,
-    c2X,
-    c2Y,
-    endX,
-    endY
-  );
 
-  return path.join(' ');
-};
+  const path = `M ${startX} ${startY} C ${c1X} ${c1Y} ${c2X} ${c2Y} ${endX} ${endY}`;
 
-const createEdgePathArray = (
-  sourceX,
-  sourceY,
-  c1X,
-  c1Y,
-  c2X,
-  c2Y,
-  targetX,
-  targetY
-) => {
-  return ['M', sourceX, sourceY, 'C', c1X, c1Y, c2X, c2Y, targetX, targetY];
+  return path;
 };
 
 export default makeSVGPath;
