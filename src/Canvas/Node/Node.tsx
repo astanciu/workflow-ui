@@ -80,7 +80,7 @@ export default class NodeComponent extends React.Component<Props> {
     const hgrid = 100 * 0.5;
     const vgrid = 110 * 0.75;
     const target = {
-      x: Math.round(node.position.x / hgrid) * hgrid + 100,
+      x: Math.round(node.position.x / hgrid) * hgrid,
       y: Math.round(node.position.y / vgrid) * vgrid
     };
 
