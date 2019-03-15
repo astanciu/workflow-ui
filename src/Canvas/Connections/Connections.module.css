@@ -1,4 +1,12 @@
 .previewConnection {
   stroke: #8a939a;
+  stroke-dasharray: 10;
   stroke-width: 2px;
+  fill: none;
+}
+
+.Connection {
+  stroke: #8a939a;
+  stroke-width: 3px;
+  fill: none;
 }

@@ -266,7 +266,6 @@ class Canvas extends React.Component<Props> {
       <ConnectionComponent connection={conn} />
     ));
 
-    console.log(this.state.connections);
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
