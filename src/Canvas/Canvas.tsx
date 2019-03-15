@@ -90,8 +90,6 @@ class Canvas extends React.Component<Props> {
   };
 
   convertCoordsToSVG = (x, y) => {
-    // console.log(`X: ${x}, Y: ${y}`);
-    // console.log(`ViewX: ${this.state.view.x}, ViewY: ${this.state.view.y}`);
     return {
       x: (x - this.state.view.x) / this.state.view.scale,
       y: (y - this.state.view.y) / this.state.view.scale
@@ -138,14 +136,6 @@ class Canvas extends React.Component<Props> {
 
     this.friction = 0.85;
     this.animationFrame = requestAnimationFrame(this.glideCanvas.bind(this));
-
-    // if (this.domNode) {
-    //   this.domNode.removeEventListener('click', this.onClick);
-    //   setTimeout(
-    //     () => this.domNode!.addEventListener('click', this.onClick),
-    //     10
-    //   );
-    // }
   };
 
   glideCanvas = () => {
@@ -173,17 +163,18 @@ class Canvas extends React.Component<Props> {
     this.animationFrame = requestAnimationFrame(this.glideCanvas.bind(this));
   };
 
-  onConnectionDrag = (node, e) => {
+  onConnectionDrag = (node: Node, e) => {
+    console.log(`onConnectionDrag `, node.name);
     const target = this.convertCoordsToSVG(e.detail.x, e.detail.y);
     this.setState({ drawConnection: target });
   };
 
-  onConnectionEnd = () => {
+  onConnectionEnd = (node: Node, e) => {
+    console.log(`onConnectionEnd`, node.name);
     this.setState({ drawConnection: undefined });
   };
 
   render() {
-    // console.log((this.state.nodes[2] || {}).position);
     const nodes = this.state.nodes.map(node => (
       <NodeComponent
         key={node.id}

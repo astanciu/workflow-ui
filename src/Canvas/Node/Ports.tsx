@@ -26,7 +26,7 @@ class Port extends React.Component<Props> {
 
   _onMoveEnd = e => {
     // e.stopPropagation();
-    console.log(`onMoveEnd ${this.props.node.name}`, e.data);
+    // console.log(`onMoveEnd ${this.props.node.name}`, e.data);
     this.props.onConnectionEnd(this.props.node, e);
   };
 }
