@@ -263,7 +263,7 @@ class Canvas extends React.Component<Props> {
     ));
 
     const connections = this.state.connections.map(conn => (
-      <ConnectionComponent connection={conn} />
+      <ConnectionComponent key={conn.id} connection={conn} />
     ));
 
     return (

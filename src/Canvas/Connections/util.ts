@@ -1,14 +1,14 @@
 // Credit for this method goes to
 // https://github.com/flowhub/the-graph/blob/master/the-graph/the-graph-edge.js
 
-const NODE_SIZE = 100;
-const CURVE = 50;
+const NODE_SIZE = 110;
+const CURVE = 90;
 
 const makeSVGPath = (startX, startY, endX, endY) => {
   let c1X, c1Y, c2X, c2Y;
 
   if (endX - 5 < startX) {
-    var curveFactor = ((startX - endX) * CURVE) / 200;
+    const curveFactor = ((startX - endX) * CURVE) / 200;
     if (Math.abs(endY - startY) < NODE_SIZE / 2) {
       // Loopback
       c1X = startX + curveFactor;
