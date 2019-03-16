@@ -193,7 +193,9 @@ class Canvas extends React.Component<Props> {
     this.setState(currentState => ({
       connectionInProgress: {
         from: node,
-        to: mousePosition
+        to: this.state.closestNode
+          ? this.state.closestNode.inPortPosition
+          : mousePosition
       }
     }));
   };

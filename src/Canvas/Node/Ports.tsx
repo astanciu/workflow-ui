@@ -27,7 +27,7 @@ export class InPort extends React.Component<InPortProps> {
         className={this.props.highlight ? styles.PortHighlight : styles.Port}
         cx={this.props.node.inPortOffset.x}
         cy={this.props.node.inPortOffset.y}
-        r={this.props.highlight ? '10' : '4'}
+        r={this.props.highlight ? '6' : '4'}
       />
     );
   }

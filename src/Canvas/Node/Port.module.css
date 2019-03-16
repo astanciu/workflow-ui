@@ -7,6 +7,6 @@
 
 .PortHighlight {
   composes: Port;
-  fill: #d0d0d0;
-  stroke-width: 2;
+  fill: #c4ff00;
+  stroke-width: 3;
 }
