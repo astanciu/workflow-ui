@@ -10,3 +10,9 @@
   fill: #c4ff00;
   stroke-width: 3;
 }
+
+.PortHitBox {
+  fill: #ffffff00;
+  cursor: pointer;
+  stroke-width: 0;
+}

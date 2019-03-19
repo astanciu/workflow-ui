@@ -56,3 +56,7 @@
   composes: normalIcon;
   fill: #dedede;
 }
+
+.nocursor {
+  cursor: none;
+}

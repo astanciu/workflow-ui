@@ -25,10 +25,7 @@ export default class NodeComponent extends React.Component<Props> {
     snapToGrid: true
   };
   state = {};
-  // private width = 100;
-  // private height = 100;
-  // private dragging = false;
-  // private dragged = false;
+  private dragging = false;
   private domNode: Element | Text | null = null;
   private em!: EventManager;
 
@@ -60,6 +57,7 @@ export default class NodeComponent extends React.Component<Props> {
 
   _onMove = e => {
     e.stopPropagation();
+    this.dragging = true;
 
     const node = new Node(this.props.node);
     const scaleFactor =
@@ -73,6 +71,7 @@ export default class NodeComponent extends React.Component<Props> {
   };
 
   _onMoveEnd = e => {
+    this.dragging = false;
     this.snapToGrid();
   };
 
@@ -114,25 +113,31 @@ export default class NodeComponent extends React.Component<Props> {
       nodeIconClass = styles.selectedIcon;
     }
 
-    // console.log(this.props.node.name, this.props.node.highlightInPort);
+    let dragStyle = {
+      cursor: 'inherit'
+    };
+    if (this.dragging) {
+      nodeClass += ' ' + styles.nocursor;
+      nodeIconClass += ' ' + styles.nocursor;
+    }
 
     return (
-      <g id="Node" transform={this.getTransform()}>
-        <g id="Hexagons" transform="translate(-40.000000, -39.500000)">
-          <polygon
-            className={nodeClass}
-            points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25"
-          />
+      <g id="Node" transform={this.getTransform()} style={dragStyle}>
+        <g id="Hexgons" transform="translate(-40.000000, -39.500000)">
           <polygon
             className={nodeOutline}
             strokeWidth="1"
             points="40 0 74.6410162 19.75 74.6410162 59.25 40 79 5.35898385 59.25 5.35898385 19.75"
           />
+          <polygon
+            className={nodeClass}
+            points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25"
+          />
         </g>
-        <g transform={`translate(${0},${0})`}>
-          <Icon icon={this.props.node.icon} className={nodeIconClass} />
-        </g>
-        <g transform={`translate(${0},${0})`}>
+
+        <Icon icon={this.props.node.icon} className={nodeIconClass} />
+
+        <g id="Ports" transform={`translate(${0},${0})`}>
           <OutPort
             node={this.props.node}
             onConnectionDrag={this.props.onConnectionDrag}

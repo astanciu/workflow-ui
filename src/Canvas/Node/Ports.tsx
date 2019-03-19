@@ -61,12 +61,20 @@ export class OutPort extends React.Component<OutPortProps> {
   };
   render() {
     return (
-      <circle
-        className={styles.Port}
-        cx={this.props.node.outPortOffset.x}
-        cy={this.props.node.outPortOffset.y}
-        r="4"
-      />
+      <g>
+        <circle
+          className={styles.PortHitBox}
+          cx={this.props.node.outPortOffset.x}
+          cy={this.props.node.outPortOffset.y}
+          r="20"
+        />
+        <circle
+          className={styles.Port}
+          cx={this.props.node.outPortOffset.x}
+          cy={this.props.node.outPortOffset.y}
+          r="4"
+        />
+      </g>
     );
   }
 }
