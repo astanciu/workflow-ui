@@ -159,7 +159,6 @@ export class Workflow extends Component<WorkflowType> {
   };
 
   removeConnection = (connection: Connection) => {
-    console.log(`delete`);
     this.setState((previousState: WorkflowState) => {
       const connections = previousState.connections.filter(
         c => c.id !== connection.id

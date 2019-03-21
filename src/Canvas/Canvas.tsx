@@ -145,7 +145,6 @@ class Canvas extends React.Component<Props> {
   };
 
   _onTap = e => {
-    console.log(`heyo`);
     this.props.selectNode(null);
     this.props.selectConnection(null);
   };

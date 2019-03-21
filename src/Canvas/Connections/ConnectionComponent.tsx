@@ -34,19 +34,16 @@ class ConnectionComponent extends React.Component<Props> {
   shouldComponentUpdate(nextProps) {
     const c = this.props.connection;
     const n = nextProps.connection as Connection;
-    console.log(`this: `, c);
-    console.log(`next: `, n);
+
     return !isEqual(c, n);
   }
 
   _onTapConnection = e => {
-    console.log(`tap`);
     e.stopPropagation();
     this.props.select(this.props.connection);
   };
 
   _onTapClose = e => {
-    console.log(`close`);
     this.props.removeConnection(this.props.connection);
   };
 
@@ -73,8 +70,6 @@ class ConnectionComponent extends React.Component<Props> {
       endX,
       endY
     );
-
-    console.log('rendering conn ' + connection.id);
 
     return (
       <g ref={this.connectionDomEl}>
