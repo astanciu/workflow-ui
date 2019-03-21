@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
-
 import isEqual from 'lodash/isEqual';
 import Grid from './Grid/Grid.js';
 import NodeComponent from './Node/Node';
@@ -16,9 +15,12 @@ type Props = {
   connections: Connection[];
   updateNode: (node: Node) => void;
   selectNode: (node: Node | null) => void;
+  selectConnection: (conn: Connection | null) => void;
+  removeConnection: (conn: Connection) => void;
   isAnyNodeSelected: boolean;
   createConnection: (fromNode: Node, toNode: Node) => void;
 };
+
 type ViewType = {
   width: number;
   height: number;
@@ -26,10 +28,12 @@ type ViewType = {
   y: number;
   scale: number;
 };
+
 type ConnectionInProgress = {
   from: Node;
   to: Point;
 };
+
 type State = {
   nodes: Node[];
   connections: Connection[];
@@ -73,11 +77,13 @@ class Canvas extends React.Component<Props> {
   }
 
   componentWillReceiveProps(next) {
-    // console.log(next.nodes);
-    // if (!isEqual(this.state.nodes, next.nodes)) {
-    //   this.setState({ nodes: next.nodes });
-    // }
-    this.setState({ nodes: next.nodes, connections: next.connections });
+    if (!isEqual(this.state.nodes, next.nodes)) {
+      this.setState({ nodes: next.nodes });
+    }
+
+    if (!isEqual(this.state.connections, next.connections)) {
+      this.setState({ connections: next.connections });
+    }
   }
 
   componentWillUnmount() {
@@ -139,7 +145,9 @@ class Canvas extends React.Component<Props> {
   };
 
   _onTap = e => {
+    console.log(`heyo`);
     this.props.selectNode(null);
+    this.props.selectConnection(null);
   };
 
   _onPinch = e => {
@@ -201,7 +209,6 @@ class Canvas extends React.Component<Props> {
   };
 
   setClosestNode = (mouse: Point): void => {
-    // get closest node to the mouse
     const closest = this.getClosestInPortNode(mouse);
     if (closest) {
       this.setState({ closestNode: closest });
@@ -237,7 +244,7 @@ class Canvas extends React.Component<Props> {
   };
 
   onConnectionEnd = (node: Node, e) => {
-    console.log(`onConnectionEnd`, node.name);
+    // console.log(`onConnectionEnd`, node.name);
     if (this.state.closestNode) {
       this.props.createConnection(node, this.state.closestNode);
     }
@@ -265,7 +272,12 @@ class Canvas extends React.Component<Props> {
     ));
 
     const connections = this.state.connections.map(conn => (
-      <ConnectionComponent key={conn.id} connection={conn} />
+      <ConnectionComponent
+        key={conn.id}
+        connection={conn}
+        select={this.props.selectConnection}
+        removeConnection={this.props.removeConnection}
+      />
     ));
 
     return (
@@ -278,16 +290,16 @@ class Canvas extends React.Component<Props> {
         id="svgCanvas"
       >
         <g id="Canvas" transform={this.getTransform()}>
+          <Grid view={this.state.view} />
+          {connections}
+          {nodes}
+
           {this.state.connectionInProgress && (
             <ConnectionPreview
               startNode={this.state.connectionInProgress.from}
               mouse={this.state.connectionInProgress.to}
             />
           )}
-
-          <Grid view={this.state.view} />
-          {connections}
-          {nodes}
         </g>
       </svg>
     );

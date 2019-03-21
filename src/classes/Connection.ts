@@ -4,6 +4,7 @@ export class Connection {
   public id: string = '0';
   public from: Node;
   public to: Node;
+  public selected: boolean = false;
 
   constructor(from: Node, to: Node, id?: string) {
     this.from = from;
@@ -12,6 +13,8 @@ export class Connection {
   }
 
   clone() {
-    return new Connection(this.from, this.to, this.id);
+    const conn = new Connection(this.from, this.to, this.id);
+    conn.selected = this.selected;
+    return conn;
   }
 }

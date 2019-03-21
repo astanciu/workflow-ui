@@ -30,6 +30,14 @@ export default class EventManager {
     }
   };
 
+  setdown = () => {
+    if ('ontouchstart' in window) {
+      this.el.removeEventListener('touchstart', this._mousedown.bind(this));
+    } else {
+      this.el.removeEventListener('mousedown', this._mousedown.bind(this));
+    }
+  };
+
   setupPinch = () => {
     listen(this.el, 'touchstart').start(e => {
       e.preventDefault();

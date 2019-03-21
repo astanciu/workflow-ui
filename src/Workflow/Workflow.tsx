@@ -104,14 +104,68 @@ export class Workflow extends Component<WorkflowType> {
     this.onNodeSelect(node);
   };
 
+  selectConnection = (connection: Connection | null) => {
+    if (connection === null || !connection) {
+      const connection = this.state.connections.find(c => c.selected);
+      if (!connection) return;
+      this.onConnectionDeSelect(connection);
+      return;
+    }
+
+    const currentlySelected = this.state.connections.find(c => c.selected);
+    if (currentlySelected) {
+      this.onConnectionDeSelect(currentlySelected);
+      if (currentlySelected.id === connection.id) return;
+    }
+
+    this.onConnectionSelect(connection);
+  };
+
+  onConnectionSelect = (conn: Connection) => {
+    const connection = conn.clone();
+    connection.selected = true;
+    this.updateConnection(connection);
+  };
+
+  onConnectionDeSelect = (conn: Connection) => {
+    const connection = conn.clone();
+    delete connection.selected;
+    this.updateConnection(connection);
+  };
+
+  updateConnection = (connection: Connection) => {
+    this.setState((previousState: WorkflowState) => {
+      const connections = previousState.connections.map(c =>
+        c.id === connection.id ? connection : c
+      );
+      return { connections };
+    });
+  };
+
   isAnyNodeSelected = (): boolean => {
     return !!this.state.nodes.find(n => n.selected);
   };
 
   createConnection = (from: Node, to: Node) => {
+    const exists = this.state.connections.find(
+      c => c.from.id === from.id && c.to.id === to.id
+    );
+    if (exists) return;
+
     const conn = [...this.state.connections];
     conn.push(new Connection(from, to));
+
     this.setState({ connections: conn });
+  };
+
+  removeConnection = (connection: Connection) => {
+    console.log(`delete`);
+    this.setState((previousState: WorkflowState) => {
+      const connections = previousState.connections.filter(
+        c => c.id !== connection.id
+      );
+      return { connections };
+    });
   };
 
   render() {
@@ -121,6 +175,8 @@ export class Workflow extends Component<WorkflowType> {
         connections={this.state.connections}
         updateNode={this.updateNode}
         selectNode={this.selectNode}
+        selectConnection={this.selectConnection}
+        removeConnection={this.removeConnection}
         isAnyNodeSelected={this.isAnyNodeSelected()}
         createConnection={this.createConnection}
       />

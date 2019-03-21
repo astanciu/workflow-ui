@@ -11,3 +11,29 @@
   fill: none;
   cursor: pointer;
 }
+.ConnectionSelected {
+  composes: Connection;
+  stroke: red;
+}
+
+.ConnectionHitBox {
+  composes: Connection;
+  stroke: #ffffff00;
+  stroke-width: 16px;
+}
+
+.Close {
+  fill: #ff0000;
+  cursor: pointer;
+}
+
+.CloseOutline {
+  fill: #fff;
+  stroke-width: 1;
+  stroke: #ff0000;
+}
+
+.CloseX {
+  fill: #ffffff;
+  cursor: pointer;
+}
