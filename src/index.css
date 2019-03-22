@@ -10,3 +10,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/*
+Disable Rubber-Band / Elastic Scroll in OSX with pure CSS by Subash https://gist.github.com/Subash/fe82b0c1ba53347a2399#gistcomment-1566377
+
+*/
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}

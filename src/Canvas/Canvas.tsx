@@ -292,14 +292,13 @@ class Canvas extends React.Component<Props> {
         <g id="Canvas" transform={this.getTransform()}>
           <Grid view={this.state.view} />
           {connections}
-          {nodes}
-
           {this.state.connectionInProgress && (
             <ConnectionPreview
               startNode={this.state.connectionInProgress.from}
               mouse={this.state.connectionInProgress.to}
             />
           )}
+          {nodes}
         </g>
       </svg>
     );

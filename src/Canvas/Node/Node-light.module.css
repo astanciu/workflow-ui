@@ -3,6 +3,7 @@
   fill: #34373c;
   cursor: pointer;
   stroke: none;
+  transition: fill 0.05s linear;
 }
 
 .normalOutline {
