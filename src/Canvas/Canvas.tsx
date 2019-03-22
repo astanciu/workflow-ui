@@ -275,6 +275,7 @@ class Canvas extends React.Component<Props> {
         key={conn.id}
         connection={conn}
         select={this.props.selectConnection}
+        unselected={this.props.isAnyNodeSelected}
         removeConnection={this.props.removeConnection}
       />
     ));

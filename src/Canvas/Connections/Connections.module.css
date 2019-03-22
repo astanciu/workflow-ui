@@ -15,6 +15,10 @@
   composes: Connection;
   stroke: red;
 }
+.ConnectionUnselected {
+  composes: Connection;
+  stroke: #d7d7da;
+}
 
 .ConnectionHitBox {
   composes: Connection;

@@ -102,6 +102,7 @@ export class Workflow extends Component<WorkflowType> {
     }
 
     this.onNodeSelect(node);
+    this.selectConnection(null);
   };
 
   selectConnection = (connection: Connection | null) => {
@@ -117,8 +118,8 @@ export class Workflow extends Component<WorkflowType> {
       this.onConnectionDeSelect(currentlySelected);
       if (currentlySelected.id === connection.id) return;
     }
-
     this.onConnectionSelect(connection);
+    this.selectNode(null);
   };
 
   onConnectionSelect = (conn: Connection) => {

@@ -100,13 +100,13 @@ export default class NodeComponent extends React.Component<Props> {
     let nodeClass = styles.normal;
     let nodeOutline = styles.normalOutline;
     let nodeIconClass = styles.normalIcon;
-    let nodePort = styles.normalPort;
 
     if (this.props.unselected) {
       nodeClass = styles.unselected;
       nodeOutline = styles.unselectedOutline;
       nodeIconClass = styles.unselectedIcon;
     }
+
     if (this.props.node.selected) {
       nodeClass = styles.selected;
       nodeOutline = styles.selectedOutline;
@@ -116,6 +116,7 @@ export default class NodeComponent extends React.Component<Props> {
     let dragStyle = {
       cursor: 'inherit'
     };
+
     if (this.dragging) {
       nodeClass += ' ' + styles.nocursor;
       nodeIconClass += ' ' + styles.nocursor;
@@ -142,12 +143,12 @@ export default class NodeComponent extends React.Component<Props> {
             node={this.props.node}
             onConnectionDrag={this.props.onConnectionDrag}
             onConnectionEnd={this.props.onConnectionEnd}
-            className={nodePort}
+            unselected={this.props.unselected}
           />
           <InPort
             node={this.props.node}
-            className={nodePort}
             highlight={this.props.connectionCandidate}
+            unselected={this.props.unselected}
           />
         </g>
       </g>

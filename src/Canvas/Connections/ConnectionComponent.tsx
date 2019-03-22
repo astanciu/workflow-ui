@@ -8,6 +8,7 @@ import { makeSVGPath, findPointOnCurve } from './util';
 type Props = {
   connection: Connection;
   select: (conn: Connection) => void;
+  unselected: boolean;
   removeConnection: (conn: Connection) => void;
 };
 
@@ -35,7 +36,9 @@ class ConnectionComponent extends React.Component<Props> {
     const c = this.props.connection;
     const n = nextProps.connection as Connection;
 
-    return !isEqual(c, n);
+    return (
+      !isEqual(c, n) || !isEqual(nextProps.unselected, this.props.unselected)
+    );
   }
 
   _onTapConnection = e => {
@@ -70,16 +73,18 @@ class ConnectionComponent extends React.Component<Props> {
       endX,
       endY
     );
+    let className = styles.Connection;
+    if (connection.selected) {
+      className = styles.ConnectionSelected;
+    }
+    if (this.props.unselected) {
+      className = styles.ConnectionUnselected;
+    }
 
     return (
       <g ref={this.connectionDomEl}>
         <path d={path} className={styles.ConnectionHitBox} />
-        <path
-          d={path}
-          className={
-            connection.selected ? styles.ConnectionSelected : styles.Connection
-          }
-        />
+        <path d={path} className={className} />
         <g ref={this.closeDomEl} display={connection.selected ? '' : 'none'}>
           <circle
             className={styles.CloseOutline}

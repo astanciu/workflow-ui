@@ -11,6 +11,12 @@
   stroke-width: 3;
 }
 
+.PortUnselected {
+  composes: Port;
+  fill: #dfe5e8;
+  stroke: #c8c8c8;
+}
+
 .PortHitBox {
   fill: #ffffff00;
   cursor: pointer;

@@ -6,7 +6,7 @@ import styles from './Port.module.css';
 
 type InPortProps = {
   node: Node;
-  className: string;
+  unselected: boolean;
   highlight: boolean;
 };
 
@@ -22,9 +22,17 @@ export class InPort extends React.Component<InPortProps> {
   };
 
   render() {
+    let className = styles.Port;
+    if (this.props.unselected) {
+      className = styles.PortUnselected;
+    }
+    if (this.props.highlight) {
+      className = styles.PortHighlight;
+    }
+
     return (
       <circle
-        className={this.props.highlight ? styles.PortHighlight : styles.Port}
+        className={className}
         cx={this.props.node.inPortOffset.x}
         cy={this.props.node.inPortOffset.y}
         r={this.props.highlight ? '6' : '4'}
@@ -35,7 +43,7 @@ export class InPort extends React.Component<InPortProps> {
 
 type OutPortProps = {
   node: Node;
-  className: string;
+  unselected: boolean;
   onConnectionDrag: (node: Node, e: Event) => void;
   onConnectionEnd: (node: Node, e: Event) => void;
 };
@@ -60,6 +68,12 @@ export class OutPort extends React.Component<OutPortProps> {
     this.props.onConnectionEnd(this.props.node, e);
   };
   render() {
+    let className = styles.Port;
+
+    if (this.props.unselected) {
+      className = styles.PortUnselected;
+    }
+
     return (
       <g>
         <circle
@@ -69,7 +83,7 @@ export class OutPort extends React.Component<OutPortProps> {
           r="20"
         />
         <circle
-          className={styles.Port}
+          className={className}
           cx={this.props.node.outPortOffset.x}
           cy={this.props.node.outPortOffset.y}
           r="4"
