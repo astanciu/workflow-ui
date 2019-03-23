@@ -1,7 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from 'react';
 import EventManager from '../Util/EventManager.js';
-import { Node } from '../../classes';
+import { Node } from '../../models';
 import styles from './Port.module.css';
 
 type InPortProps = {
@@ -10,36 +9,26 @@ type InPortProps = {
   highlight: boolean;
 };
 
-export class InPort extends React.Component<InPortProps> {
-  componentDidMount() {
-    const domNode = ReactDOM.findDOMNode(this);
-    const em = new EventManager(domNode, this.props.node);
-    em.onMove(this._onMove);
-  }
-
-  _onMove = e => {
-    e.stopPropagation();
-  };
-
-  render() {
+export const InPort = React.memo(
+  ({ node, unselected, highlight }: InPortProps) => {
     let className = styles.Port;
-    if (this.props.unselected) {
+    if (unselected) {
       className = styles.PortUnselected;
     }
-    if (this.props.highlight) {
+    if (highlight) {
       className = styles.PortHighlight;
     }
 
     return (
       <circle
         className={className}
-        cx={this.props.node.inPortOffset.x}
-        cy={this.props.node.inPortOffset.y}
-        r={this.props.highlight ? '6' : '4'}
+        cx={node.inPortOffset.x}
+        cy={node.inPortOffset.y}
+        r={highlight ? '6' : '4'}
       />
     );
   }
-}
+);
 
 type OutPortProps = {
   node: Node;
@@ -48,47 +37,46 @@ type OutPortProps = {
   onConnectionEnd: (node: Node, e: Event) => void;
 };
 
-export class OutPort extends React.Component<OutPortProps> {
-  componentDidMount() {
-    const domNode = ReactDOM.findDOMNode(this);
-    const em = new EventManager(domNode, this.props.node);
-    em.onMove(this._onMove);
+export const OutPort = React.memo(
+  ({ node, unselected, onConnectionDrag, onConnectionEnd }: OutPortProps) => {
+    let nodeDomRef = useRef(null);
+    let nodeRef = useRef(node);
 
-    em.onMoveEnd(this._onMoveEnd);
-  }
+    useEffect(() => {
+      const em = new EventManager(nodeDomRef.current, nodeRef.current);
+      em.onMove(e => {
+        e.stopPropagation();
+        onConnectionDrag(nodeRef.current, e);
+      });
+      em.onMoveEnd(e => {
+        e.stopPropagation();
+        onConnectionEnd(nodeRef.current, e);
+      });
 
-  _onMove = e => {
-    e.stopPropagation();
-    this.props.onConnectionDrag(this.props.node, e);
-  };
+      return () => {
+        em.setdown();
+      };
+    }, []);
 
-  _onMoveEnd = e => {
-    e.stopPropagation();
-    // console.log(`onMoveEnd ${this.props.node.name}`, e.data);
-    this.props.onConnectionEnd(this.props.node, e);
-  };
-  render() {
-    let className = styles.Port;
-
-    if (this.props.unselected) {
-      className = styles.PortUnselected;
-    }
+    useEffect(() => {
+      nodeRef.current = node;
+    });
 
     return (
-      <g>
+      <g ref={nodeDomRef}>
         <circle
           className={styles.PortHitBox}
-          cx={this.props.node.outPortOffset.x}
-          cy={this.props.node.outPortOffset.y}
+          cx={node.outPortOffset.x}
+          cy={node.outPortOffset.y}
           r="20"
         />
         <circle
-          className={className}
-          cx={this.props.node.outPortOffset.x}
-          cy={this.props.node.outPortOffset.y}
+          className={unselected ? styles.PortUnselected : styles.Port}
+          cx={node.outPortOffset.x}
+          cy={node.outPortOffset.y}
           r="4"
         />
       </g>
     );
   }
-}
+);
