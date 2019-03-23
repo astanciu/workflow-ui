@@ -9,10 +9,7 @@ type Props = {
 };
 
 const ConnectionPreview = ({ startNode, mouse }: Props) => {
-  const { x: startX, y: startY } = startNode.outPortPosition;
-  const { x: endX, y: endY } = mouse;
-
-  const { path } = makeSVGPath(startX, startY, endX, endY);
+  const { path } = makeSVGPath(startNode.outPortPosition, mouse);
 
   return <path d={path} className={styles.previewConnection} />;
 };

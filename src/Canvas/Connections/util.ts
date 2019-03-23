@@ -6,62 +6,56 @@ import { Point } from '../../classes';
 const NODE_SIZE = 110;
 const CURVE = 90;
 
-export const makeSVGPath = (
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number
-) => {
-  let c1X, c1Y, c2X, c2Y;
+export const makeSVGPath = (start: Point, end: Point) => {
+  let c1 = new Point();
+  let c2 = new Point();
 
-  if (endX - 5 < startX) {
-    const curveFactor = ((startX - endX) * CURVE) / 200;
-    if (Math.abs(endY - startY) < NODE_SIZE / 2) {
+  if (end.x - 5 < start.x) {
+    const curveFactor = ((start.x - end.x) * CURVE) / 200;
+    if (Math.abs(end.y - start.y) < NODE_SIZE / 2) {
       // Loopback
-      c1X = startX + curveFactor;
-      c1Y = startY - curveFactor;
-      c2X = endX - curveFactor;
-      c2Y = endY - curveFactor;
+      c1.x = start.x + curveFactor;
+      c1.y = start.y - curveFactor;
+      c2.x = end.x - curveFactor;
+      c2.y = end.y - curveFactor;
     } else {
       // Stick out some
-      c1X = startX + curveFactor;
-      c1Y = startY + (endY > startY ? curveFactor : -curveFactor);
-      c2X = endX - curveFactor;
-      c2Y = endY + (endY > startY ? -curveFactor : curveFactor);
+      c1.x = start.x + curveFactor;
+      c1.y = start.y + (end.y > start.y ? curveFactor : -curveFactor);
+      c2.x = end.x - curveFactor;
+      c2.y = end.y + (end.y > start.y ? -curveFactor : curveFactor);
     }
   } else {
     // Controls halfway between
-    c1X = startX + (endX - startX) / 2;
-    c1Y = startY;
-    c2X = c1X;
-    c2Y = endY;
+    c1.x = start.x + (end.x - start.x) / 2;
+    c1.y = start.y;
+    c2.x = c1.x;
+    c2.y = end.y;
   }
 
-  const path = `M ${startX} ${startY} C ${c1X} ${c1Y} ${c2X} ${c2Y} ${endX} ${endY}`;
+  const path = `M ${start.x} ${start.y} C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${
+    end.x
+  } ${end.y}`;
 
-  return { path, c1X, c1Y, c2X, c2Y };
+  return { path, c1, c2 };
 };
 
 export const findPointOnCurve = function(
   p: number,
-  sx: number,
-  sy: number,
-  c1x: number,
-  c1y: number,
-  c2x: number,
-  c2y: number,
-  ex: number,
-  ey: number
-) {
+  start: Point,
+  c1: Point,
+  c2: Point,
+  end: Point
+): Point {
   // p is percentage from 0 to 1
   const op = 1 - p;
   // 3 green points between 4 points that define curve
-  const g1x = sx * p + c1x * op;
-  const g1y = sy * p + c1y * op;
-  const g2x = c1x * p + c2x * op;
-  const g2y = c1y * p + c2y * op;
-  const g3x = c2x * p + ex * op;
-  const g3y = c2y * p + ey * op;
+  const g1x = start.x * p + c1.x * op;
+  const g1y = start.y * p + c1.y * op;
+  const g2x = c1.x * p + c2.x * op;
+  const g2y = c1.y * p + c2.y * op;
+  const g3x = c2.x * p + end.x * op;
+  const g3y = c2.y * p + end.y * op;
   // 2 blue points between green points
   const b1x = g1x * p + g2x * op;
   const b1y = g1y * p + g2y * op;
