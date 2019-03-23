@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 import findIndex from 'lodash/findIndex';
 
 import Canvas from '../Canvas/Canvas';
-import { Node, Connection } from '../classes';
+import { Node, Connection } from '../models';
 
 type WorkflowType = {
   workflow: any;

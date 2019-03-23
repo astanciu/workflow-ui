@@ -6,7 +6,7 @@ import Grid from './Grid/Grid.js';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
-import { Node, Connection, Point } from '../classes';
+import { Node, Connection, Point } from '../models';
 import ConnectionPreview from './Connections/ConnectionPreview';
 import ConnectionComponent from './Connections/ConnectionComponent';
 

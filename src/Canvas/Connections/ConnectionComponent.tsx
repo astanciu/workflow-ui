@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import EventManager from '../Util/EventManager.js';
-import { Connection } from '../../classes';
+import { Connection } from '../../models';
 import { isEqual } from 'lodash';
 import styles from './Connections.module.css';
 import { makeSVGPath, findPointOnCurve } from './util';

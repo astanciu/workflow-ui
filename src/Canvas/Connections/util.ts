@@ -1,4 +1,4 @@
-import { Point } from '../../classes';
+import { Point } from '../../models';
 
 // Credit for these methods goes to
 // https://github.com/flowhub/the-graph/blob/master/the-graph/the-graph-edge.js

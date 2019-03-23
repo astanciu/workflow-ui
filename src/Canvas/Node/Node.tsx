@@ -4,7 +4,7 @@ import styles from './Node-light.module.css';
 import Icon from '../Icon/Icon';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
-import { Node, Point } from '../../classes';
+import { Node, Point } from '../../models';
 import isEqual from 'lodash/isEqual';
 
 type Props = {
