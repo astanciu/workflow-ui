@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
-import Grid from './Grid/Grid.js';
+import Grid from './Grid/Grid';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
@@ -290,7 +290,7 @@ class Canvas extends React.Component<Props> {
         id="svgCanvas"
       >
         <g id="Canvas" transform={this.getTransform()}>
-          <Grid view={this.state.view} />
+          <Grid />
           {connections}
           {this.state.connectionInProgress && (
             <ConnectionPreview

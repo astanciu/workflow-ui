@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Grid.module.css';
 
-export default ({ view }) => {
+export default () => {
   const SIZE = 100000;
   const SMALL_SPACING = 50;
   const BIG_SPACING = 250;
