@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
 import Grid from './Grid/Grid';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
@@ -9,17 +9,14 @@ import EventManager from './Util/EventManager.js';
 import { Node, Connection, Point } from '../models';
 import ConnectionPreview from './Connections/ConnectionPreview';
 import ConnectionComponent from './Connections/ConnectionComponent';
-
-type Props = {
-  nodes: Node[];
-  connections: Connection[];
-  updateNode: (node: Node) => void;
-  selectNode: (node: Node | null) => void;
-  selectConnection: (conn: Connection | null) => void;
-  removeConnection: (conn: Connection) => void;
-  isAnyNodeSelected: boolean;
-  createConnection: (fromNode: Node, toNode: Node) => void;
-};
+import {
+  selectNode,
+  selectConnection,
+  updateNode,
+  createConnection,
+  removeConnection
+} from '../redux/actions';
+import { ReduxState } from '../redux/types';
 
 type ViewType = {
   width: number;
@@ -35,14 +32,44 @@ type ConnectionInProgress = {
 };
 
 type State = {
-  nodes: Node[];
-  connections: Connection[];
   view: ViewType;
   connectionInProgress?: ConnectionInProgress;
   closestNode?: Node;
 };
 
-class Canvas extends React.Component<Props> {
+type StoreProps = {
+  nodes: Node[];
+  connections: Connection[];
+  selectedNode: Node | null;
+};
+
+type DispatchProps = {
+  selectNode: (node: Node | null) => void;
+  updateNode: (node: Node) => void;
+  selectConnection: (conn: Connection | null) => void;
+  createConnection: (fromNode: Node, toNode: Node) => void;
+  removeConnection: (conn: Connection) => void;
+};
+
+type OwnProps = {};
+
+const mstp = (state: ReduxState): StoreProps => ({
+  selectedNode: state.selectedNode,
+  nodes: state.nodes,
+  connections: state.connections
+});
+
+const dispatchProps: DispatchProps = {
+  selectNode,
+  updateNode,
+  selectConnection,
+  createConnection,
+  removeConnection
+};
+
+type Props = StoreProps & DispatchProps & OwnProps;
+
+class CanvasComponent extends React.Component<Props> {
   public MIN_SCALE = 0.25;
   public MAX_SCALE = 3;
   public velocity = { x: 0, y: 0 };
@@ -52,8 +79,6 @@ class Canvas extends React.Component<Props> {
   private animationFrame?: number;
 
   state: State = {
-    nodes: [] as Node[],
-    connections: [] as Connection[],
     view: {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -77,13 +102,12 @@ class Canvas extends React.Component<Props> {
   }
 
   componentWillReceiveProps(next) {
-    if (!isEqual(this.state.nodes, next.nodes)) {
-      this.setState({ nodes: next.nodes });
-    }
-
-    if (!isEqual(this.state.connections, next.connections)) {
-      this.setState({ connections: next.connections });
-    }
+    // if (!isEqual(this.state.nodes, next.nodes)) {
+    //   this.setState({ nodes: next.nodes });
+    // }
+    // if (!isEqual(this.state.connections, next.connections)) {
+    //   this.setState({ connections: next.connections });
+    // }
   }
 
   componentWillUnmount() {
@@ -243,7 +267,6 @@ class Canvas extends React.Component<Props> {
   };
 
   onConnectionEnd = (node: Node, e) => {
-    // console.log(`onConnectionEnd`, node.name);
     if (this.state.closestNode) {
       this.props.createConnection(node, this.state.closestNode);
     }
@@ -254,13 +277,11 @@ class Canvas extends React.Component<Props> {
   };
 
   render() {
-    const nodes = this.state.nodes.map(node => (
+    const nodes = this.props.nodes.map(node => (
       <NodeComponent
         key={node.id}
         node={node}
         updateNode={this.props.updateNode}
-        selectNode={this.props.selectNode}
-        unselected={this.props.isAnyNodeSelected}
         canvasView={this.state.view}
         onConnectionDrag={this.onConnectionDrag}
         onConnectionEnd={this.onConnectionEnd}
@@ -270,12 +291,10 @@ class Canvas extends React.Component<Props> {
       />
     ));
 
-    const connections = this.state.connections.map(conn => (
+    const connections = this.props.connections.map(conn => (
       <ConnectionComponent
         key={conn.id}
         connection={conn}
-        select={this.props.selectConnection}
-        unselected={this.props.isAnyNodeSelected}
         removeConnection={this.props.removeConnection}
       />
     ));
@@ -304,5 +323,10 @@ class Canvas extends React.Component<Props> {
     );
   }
 }
+
+const Canvas: React.ComponentType<OwnProps> = connect(
+  mstp,
+  dispatchProps
+)(CanvasComponent);
 
 export default Canvas;

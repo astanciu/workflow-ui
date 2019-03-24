@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import styles from './Node-light.module.css';
 import Icon from '../Icon/Icon';
@@ -6,12 +7,13 @@ import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
 import { Node, Point } from '../../models';
 import isEqual from 'lodash/isEqual';
+import { selectNode } from '../../redux/actions';
 
 type Props = {
   node: Node;
   updateNode: any;
-  selectNode: any;
-  unselected: any;
+  selectedNode: Node;
+  selectNode: (node: Node | null) => void;
   canvasView: any;
   onConnectionDrag: any;
   onConnectionEnd: any;
@@ -19,7 +21,7 @@ type Props = {
   connectionCandidate: boolean;
 };
 
-export default class NodeComponent extends React.Component<Props> {
+class NodeComponent extends React.Component<Props> {
   static displayName = 'Node';
   static defaultProps = {
     snapToGrid: true
@@ -97,17 +99,24 @@ export default class NodeComponent extends React.Component<Props> {
   };
 
   render() {
+    let selected = false;
+    let unselected = false;
+    if (this.props.selectedNode) {
+      selected = this.props.selectedNode.id === this.props.node.id;
+      unselected = this.props.selectedNode.id !== this.props.node.id;
+    }
+
     let nodeClass = styles.normal;
     let nodeOutline = styles.normalOutline;
     let nodeIconClass = styles.normalIcon;
 
-    if (this.props.unselected) {
+    if (unselected) {
       nodeClass = styles.unselected;
       nodeOutline = styles.unselectedOutline;
       nodeIconClass = styles.unselectedIcon;
     }
 
-    if (this.props.node.selected) {
+    if (selected) {
       nodeClass = styles.selected;
       nodeOutline = styles.selectedOutline;
       nodeIconClass = styles.selectedIcon;
@@ -143,15 +152,24 @@ export default class NodeComponent extends React.Component<Props> {
             node={this.props.node}
             onConnectionDrag={this.props.onConnectionDrag}
             onConnectionEnd={this.props.onConnectionEnd}
-            unselected={this.props.unselected}
+            unselected={unselected}
           />
           <InPort
             node={this.props.node}
             highlight={this.props.connectionCandidate}
-            unselected={this.props.unselected}
+            unselected={unselected}
           />
         </g>
       </g>
     );
   }
 }
+
+const mstp = state => ({
+  selectedNode: state.selectedNode
+});
+
+export default connect(
+  mstp,
+  { selectNode }
+)(NodeComponent);

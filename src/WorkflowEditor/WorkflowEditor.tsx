@@ -1,32 +1,38 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Spinner } from '../components/index';
 import { Workflow } from '../Workflow/Workflow';
-import workflow1 from './samples/workflow1';
+import { loadWorkflow } from '../redux/actions';
 
-type Props = {};
-class WorkflowEditor extends Component<Props> {
-  state = {
-    loading: true,
-    workflow: undefined
-  };
+type Props = {
+  loadWorkflow: () => void;
+  loading: boolean;
+  error: Error;
+};
 
-  componentDidMount() {
-    this.loadWorkflow();
+@connect(
+  state => ({
+    loading: state.loading,
+    error: state.error
+  }),
+  { loadWorkflow }
+)
+export default class WorkflowEditor extends Component<Props> {
+  componentWillMount() {
+    this.props.loadWorkflow();
   }
-
-  loadWorkflow = () => {
-    this.setState({
-      loading: false,
-      workflow: workflow1
-    });
-  };
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <Spinner />;
     }
-    return <Workflow workflow={this.state.workflow} />;
+
+    if (this.props.error) {
+      return <div>{this.props.error.message}</div>;
+    }
+
+    console.log('Render WorkflowEditor', this.props);
+
+    return <Workflow />;
   }
 }
-
-export default WorkflowEditor;

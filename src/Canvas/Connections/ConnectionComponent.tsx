@@ -1,21 +1,26 @@
 import React, { useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
 import EventManager from '../Util/EventManager.js';
 import { Connection } from '../../models';
 import { isEqual } from 'lodash';
 import styles from './Connections.module.css';
 import { makeSVGPath, findPointOnCurve } from './util';
+import { selectConnection } from '../../redux/actions';
 
 type Props = {
   connection: Connection;
-  unselected: boolean;
-  select: (conn: Connection) => void;
+  // unselected: boolean;
+  selectedConnection: Connection | null;
+  selectConnection: (conn: Connection | null) => void;
   removeConnection: (conn: Connection) => void;
 };
 
 const ConnectionComponent = ({
   connection,
-  select,
-  unselected,
+  selectedConnection,
+  selectConnection,
+  // select,
+  // unselected,
   removeConnection
 }: Props) => {
   const connectionDom = useRef(null);
@@ -27,7 +32,7 @@ const ConnectionComponent = ({
     const connectionEM = new EventManager(connectionDom.current);
     connectionEM.onTap(e => {
       e.stopPropagation();
-      select(connectionRef.current);
+      selectConnection(connectionRef.current);
     });
 
     const closeButtonEM = new EventManager(closeDom.current);
@@ -52,22 +57,26 @@ const ConnectionComponent = ({
   const end = connection.to.inPortPosition;
 
   const { path, c1, c2 } = makeSVGPath(start, end);
-
   const center = findPointOnCurve(0.5, start, c1, c2, end);
 
+  let selected = selectedConnection && selectedConnection.id === connection.id;
+  let unselected =
+    selectedConnection && selectedConnection.id !== connection.id;
+
   let className = styles.Connection;
-  if (connection.selected) {
+  if (selected) {
     className = styles.ConnectionSelected;
   }
   if (unselected) {
     className = styles.ConnectionUnselected;
   }
 
+  // console.log('render ', connection.id);
   return (
     <g ref={connectionDom}>
       <path d={path} className={styles.ConnectionHitBox} />
       <path d={path} className={className} />
-      <g ref={closeDom} display={connection.selected ? '' : 'none'}>
+      <g ref={closeDom} display={selected ? '' : 'none'}>
         <circle
           className={styles.CloseOutline}
           cx={center.x}
@@ -90,9 +99,9 @@ const ConnectionComponent = ({
   );
 };
 
-export default React.memo(ConnectionComponent, (prev, next) => {
-  const c = prev.connection;
-  const n = next.connection as Connection;
-
-  return isEqual(c, n) && isEqual(next.unselected, prev.unselected);
-});
+export default connect(
+  state => ({
+    selectedConnection: state.selectedConnection
+  }),
+  { selectConnection }
+)(ConnectionComponent);
