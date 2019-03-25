@@ -101,15 +101,6 @@ class CanvasComponent extends React.Component<Props> {
     this.em.onPinch(this._onPinch);
   }
 
-  componentWillReceiveProps(next) {
-    // if (!isEqual(this.state.nodes, next.nodes)) {
-    //   this.setState({ nodes: next.nodes });
-    // }
-    // if (!isEqual(this.state.connections, next.connections)) {
-    //   this.setState({ connections: next.connections });
-    // }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.setCanvasSize);
   }
