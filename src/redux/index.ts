@@ -17,8 +17,20 @@ const reducer = getReducer(initialState);
 
 const middleware = [thunk];
 
-export const store = createStore(
+const store = createStore(
   reducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
+if (process.env.NODE_ENV !== 'production') {
+  //@ts-ignore
+  if (module.hot) {
+    //@ts-ignore
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(reducer);
+    });
+  }
+}
+
+export { store };
