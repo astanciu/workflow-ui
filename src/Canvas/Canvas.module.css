@@ -1,5 +1,7 @@
 .Canvas {
+  position: absolute;
+  top: 57px;
   touch-action: manipulation;
   box-sizing: border-box;
-  background: #ffffff;
+  background: #e7ebee;
 }

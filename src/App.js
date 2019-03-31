@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import WorkflowEditor from './WorkflowEditor/WorkflowEditor';
+import Workflow from './Workflow/Workflow';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <WorkflowEditor />
+        <Workflow />
       </div>
     );
   }

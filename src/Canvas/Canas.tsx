@@ -81,9 +81,9 @@ class CanvasComponent extends React.Component<Props> {
   state: State = {
     view: {
       width: window.innerWidth,
-      height: window.innerHeight,
+      height: window.innerHeight - 56,
       x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
+      y: (window.innerHeight - 56) / 2,
       scale: 1
     },
     connectionInProgress: undefined
@@ -108,7 +108,7 @@ class CanvasComponent extends React.Component<Props> {
   setCanvasSize = debounce(() => {
     const view = { ...this.state.view };
     view.width = window.innerWidth;
-    view.height = window.innerHeight;
+    view.height = window.innerHeight - 56;
     this.setState({ view });
   }, 50);
 
@@ -210,7 +210,7 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   onConnectionDrag = (node: Node, e) => {
-    const mousePosition = this.convertCoordsToSVG(e.detail.x, e.detail.y);
+    const mousePosition = this.convertCoordsToSVG(e.detail.x, e.detail.y - 56);
     this.setClosestNode(mousePosition);
     this.setState(currentState => ({
       connectionInProgress: {
