@@ -1,8 +1,8 @@
 import React from 'react';
-import sprites from './sprites-solid.svg';
+import sprites from '../Assets/sprites-solid.svg';
 import styles from './Icon.module.css';
 
-const Icon = ({
+export const Icon = ({
   icon = 'cog',
   size = 50,
   className = null,
@@ -14,6 +14,7 @@ const Icon = ({
       width={`${size}px`}
       height={`${size}px`}
       fill={color}
+      stroke={color}
     >
       <use
         xlinkHref={`${sprites}#${icon}`}
@@ -23,5 +24,3 @@ const Icon = ({
     </svg>
   );
 };
-
-export default Icon;

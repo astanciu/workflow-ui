@@ -5,7 +5,9 @@ import Canvas from '../Canvas/Canas';
 import { loadWorkflow } from '../redux/actions';
 import { TopBar } from '../TopBar/TopBar';
 import { Sidebar } from '../Sidebar/Sidebar';
+import { AddModal } from '../AddModal/AddModal';
 import { Panel } from '../Panel/Panel';
+import { Test } from '../Test/Test';
 type Props = {
   loadWorkflow: () => void;
   loading: boolean;
@@ -39,6 +41,8 @@ export default class Workflow extends Component<Props> {
         {/* <Sidebar /> */}
         {/* <Panel /> */}
         <Canvas />
+        {/* <AddModal /> */}
+        <Test />
       </>
     );
   }

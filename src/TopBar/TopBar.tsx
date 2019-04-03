@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import styles from './TopBar.module.css';
 
 const TopBarStyled = styled.div`
   position: absolute;
