@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Sidebar.module.css';
-import { Icon } from '../components/Icon';
+import { Icon } from 'Components';
 
 export const Sidebar = props => {
   return (

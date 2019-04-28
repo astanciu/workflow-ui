@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Spinner } from '../components/index';
-import Canvas from '../Canvas/Canas';
-import { loadWorkflow } from '../redux/actions';
-import { TopBar } from '../TopBar/TopBar';
-import { Sidebar } from '../Sidebar/Sidebar';
-import { AddModal } from '../AddModal/AddModal';
-import { Panel } from '../Panel/Panel';
-import { Test } from '../Test/Test';
+import { Spinner } from 'Components/index';
+import Canvas from 'Canvas/Canas';
+import { loadWorkflow } from 'redux-assets/actions';
+import { TopBar } from 'TopBar/index';
+
+import { Test } from 'Test/Test';
+// import { AddModal } from 'AddModal/AddModal';
 type Props = {
   loadWorkflow: () => void;
   loading: boolean;
@@ -21,7 +20,7 @@ type Props = {
   }),
   { loadWorkflow }
 )
-export default class Workflow extends Component<Props> {
+export class Workflow extends Component<Props> {
   componentWillMount() {
     this.props.loadWorkflow();
   }

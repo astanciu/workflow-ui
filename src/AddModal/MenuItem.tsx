@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../components/Icon';
+import { Icon } from 'Components/Icon';
 import {
   MenuListItem,
   IconContainer,

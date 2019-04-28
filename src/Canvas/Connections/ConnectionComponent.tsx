@@ -2,10 +2,9 @@ import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import EventManager from '../Util/EventManager.js';
 import { Connection } from '../../models';
-import { isEqual } from 'lodash';
 import styles from './Connections.module.css';
 import { makeSVGPath, findPointOnCurve } from './util';
-import { selectConnection } from '../../redux/actions';
+import { selectConnection } from '../../redux-assets/actions';
 
 type Props = {
   connection: Connection;
@@ -45,7 +44,7 @@ const ConnectionComponent = ({
       connectionEM.setdown();
       closeButtonEM.setdown();
     };
-  }, []);
+  }, [removeConnection, selectConnection]);
 
   // must rebind connectionRef.current because it's used in the above effect
   // which does not update

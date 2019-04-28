@@ -15,8 +15,8 @@ import {
   updateNode,
   createConnection,
   removeConnection
-} from '../redux/actions';
-import { ReduxState } from '../redux/types';
+} from '../redux-assets/actions';
+import { ReduxState } from '../redux-assets/types';
 
 type ViewType = {
   width: number;

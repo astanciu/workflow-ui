@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Icon } from '../components';
+import { Icon } from 'Components';
 import { Form } from 'react-bootstrap';
 
 const SearchBarWrapper = styled.div`

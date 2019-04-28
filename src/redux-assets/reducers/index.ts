@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-import { Node, Connection } from '../../models';
 import * as A from '../actions';
 import * as Types from '../types';
 import { processWorkflow, updateNode } from './nodes';

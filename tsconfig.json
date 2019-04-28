@@ -18,12 +18,12 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "incremental": true
+    "baseUrl": "src",
+    "moduleResolution": "node"
   },
   "include": ["src"]
 }

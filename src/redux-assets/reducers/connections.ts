@@ -1,6 +1,6 @@
-import { isEqual } from 'lodash';
+
 import produce from 'immer';
-import { Node, Connection } from '../../models';
+import { Connection } from 'models';
 import * as A from '../actions';
 import { ReduxState } from '../types';
 
@@ -29,6 +29,7 @@ export const connectionReducers = (state, action) =>
         draft.connections = state.connections.filter(
           c => c.id !== connection.id
         );
+        break;
       case A.CREATE_CONNECTION:
         const { fromNode, toNode } = action;
         const exists = state.connections.find(
@@ -37,5 +38,8 @@ export const connectionReducers = (state, action) =>
         if (exists) return;
 
         draft.connections.push(new Connection(fromNode, toNode));
+        break;
+      default:
+        return state;
     }
   });

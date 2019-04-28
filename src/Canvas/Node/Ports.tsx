@@ -56,7 +56,7 @@ export const OutPort = React.memo(
       return () => {
         em.setdown();
       };
-    }, []);
+    }, [onConnectionDrag, onConnectionEnd]);
 
     useEffect(() => {
       nodeRef.current = node;

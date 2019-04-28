@@ -7,7 +7,7 @@ import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
 import { Node, Point } from '../../models';
 import isEqual from 'lodash/isEqual';
-import { selectNode } from '../../redux/actions';
+import { selectNode } from '../../redux-assets/actions';
 
 type Props = {
   node: Node;

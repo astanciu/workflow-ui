@@ -1,5 +1,4 @@
 import { isEqual } from 'lodash';
-import produce from 'immer';
 import { Node, Connection } from '../../models';
 
 export const processWorkflow = (state, { workflow }) => {

@@ -13,7 +13,7 @@ import {
 } from './AddModalStyles';
 import { SearchBar } from './SearchBar';
 import { NodeList } from './NodeList';
-import { Icon, LinkButton } from '../components';
+import { Icon, LinkButton } from 'Components';
 
 export const AddModal = props => {
   const [selected, select] = useState('');
