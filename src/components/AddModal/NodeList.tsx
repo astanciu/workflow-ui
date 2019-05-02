@@ -9,7 +9,7 @@ import {
   Description
 } from './NodeItemStyles';
 import { HTMLNodeIcon } from './NodeIcon';
-import { nodes } from '../samples/library';
+import { nodes } from '../../samples/library';
 
 const makeNode = node => {
   return (
