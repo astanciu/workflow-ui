@@ -1,8 +1,12 @@
+// @ts-nocheck
+
+import { createBrowserHistory } from 'history';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import * as Types from './types';
-import { getReducer } from './reducers/index';
+import { createRootReducer } from './reducers/index';
 
 const initialState: Types.ReduxState = {
   nodes: [],
@@ -10,18 +14,15 @@ const initialState: Types.ReduxState = {
   connections: [],
   selectedConnection: null,
   loading: true,
-  error: null
+  error: null,
 };
 
-const reducer = getReducer(initialState);
+const history = createBrowserHistory();
 
-const middleware = [thunk];
+const reducer = createRootReducer(history);
 
-const store = createStore(
-  reducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+const middleware = [routerMiddleware(history), thunk];
+const store = createStore(reducer, {}, composeWithDevTools(applyMiddleware(...middleware)));
 
 if (process.env.NODE_ENV !== 'production') {
   //@ts-ignore
@@ -33,4 +34,4 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-export { store };
+export { store, history };

@@ -1,10 +1,15 @@
-import React from 'react';
-
-import { Auth } from 'Auth';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginStart } from 'redux-assets/actions';
 
 export const Login = props => {
-  console.log(props);
-  Auth.login();
+  const dispatch = useDispatch();
+
+  const startLogin = useCallback(() => dispatch(loginStart()), [dispatch]);
+
+  useEffect(() => {
+    startLogin();
+  });
 
   return <div>Login</div>;
 };

@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import styles from './Node-light.module.css';
-import Icon from '../Icon/Icon';
+import Icon from 'Canvas/Icon/Icon';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
-import { Node, Point } from '../../models';
+import { Node, Point } from 'Models';
 import isEqual from 'lodash/isEqual';
 import { selectNode } from '../../redux-assets/actions';
 
@@ -24,7 +24,7 @@ type Props = {
 class NodeComponent extends React.Component<Props> {
   static displayName = 'Node';
   static defaultProps = {
-    snapToGrid: true
+    snapToGrid: true,
   };
   state = {};
   private dragging = false;
@@ -51,19 +51,18 @@ class NodeComponent extends React.Component<Props> {
     // return true;
   }
 
-  _onTap = e => {
+  _onTap = (e) => {
     e.stopPropagation();
     const node = new Node(this.props.node);
     this.props.selectNode(node);
   };
 
-  _onMove = e => {
+  _onMove = (e) => {
     e.stopPropagation();
     this.dragging = true;
 
     const node = new Node(this.props.node);
-    const scaleFactor =
-      (this.props.canvasView && this.props.canvasView.scale) || 1;
+    const scaleFactor = (this.props.canvasView && this.props.canvasView.scale) || 1;
     node.position = new Point(
       node.position.x + (e.detail.delta.x * 1) / scaleFactor,
       node.position.y + (e.detail.delta.y * 1) / scaleFactor
@@ -72,7 +71,7 @@ class NodeComponent extends React.Component<Props> {
     this.props.updateNode(node);
   };
 
-  _onMoveEnd = e => {
+  _onMoveEnd = (e) => {
     this.dragging = false;
     this.snapToGrid();
   };
@@ -83,7 +82,7 @@ class NodeComponent extends React.Component<Props> {
     const vgrid = 110 * 0.75;
     const target = {
       x: Math.round(node.position.x / hgrid) * hgrid,
-      y: Math.round(node.position.y / vgrid) * vgrid
+      y: Math.round(node.position.y / vgrid) * vgrid,
     };
 
     node.position = new Point(target.x, target.y);
@@ -93,7 +92,7 @@ class NodeComponent extends React.Component<Props> {
   getTransform = () => {
     const loc = {
       x: this.props.node.position.x,
-      y: this.props.node.position.y
+      y: this.props.node.position.y,
     };
     return `translate(${loc.x},${loc.y})`;
   };
@@ -123,7 +122,7 @@ class NodeComponent extends React.Component<Props> {
     }
 
     let dragStyle = {
-      cursor: 'inherit'
+      cursor: 'inherit',
     };
 
     if (this.dragging) {
@@ -139,10 +138,7 @@ class NodeComponent extends React.Component<Props> {
             strokeWidth="1"
             points="40 0 74.6410162 19.75 74.6410162 59.25 40 79 5.35898385 59.25 5.35898385 19.75"
           />
-          <polygon
-            className={nodeClass}
-            points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25"
-          />
+          <polygon className={nodeClass} points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25" />
         </g>
 
         <Icon icon={this.props.node.icon} className={nodeIconClass} />
@@ -154,19 +150,15 @@ class NodeComponent extends React.Component<Props> {
             onConnectionEnd={this.props.onConnectionEnd}
             unselected={unselected}
           />
-          <InPort
-            node={this.props.node}
-            highlight={this.props.connectionCandidate}
-            unselected={unselected}
-          />
+          <InPort node={this.props.node} highlight={this.props.connectionCandidate} unselected={unselected} />
         </g>
       </g>
     );
   }
 }
 
-const mstp = state => ({
-  selectedNode: state.selectedNode
+const mstp = (state) => ({
+  selectedNode: state.selectedNode,
 });
 
 export default connect(

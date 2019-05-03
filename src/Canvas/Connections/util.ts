@@ -1,4 +1,4 @@
-import { Point } from '../../models';
+import { Point } from 'Models';
 
 // Credit for these methods goes to
 // https://github.com/flowhub/the-graph/blob/master/the-graph/the-graph-edge.js
@@ -33,20 +33,12 @@ export const makeSVGPath = (start: Point, end: Point) => {
     c2.y = end.y;
   }
 
-  const path = `M ${start.x} ${start.y} C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${
-    end.x
-  } ${end.y}`;
+  const path = `M ${start.x} ${start.y} C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${end.x} ${end.y}`;
 
   return { path, c1, c2 };
 };
 
-export const findPointOnCurve = function(
-  p: number,
-  start: Point,
-  c1: Point,
-  c2: Point,
-  end: Point
-): Point {
+export const findPointOnCurve = function(p: number, start: Point, c1: Point, c2: Point, end: Point): Point {
   // p is percentage from 0 to 1
   const op = 1 - p;
   // 3 green points between 4 points that define curve

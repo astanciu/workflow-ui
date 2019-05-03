@@ -6,16 +6,10 @@ import Grid from './Grid/Grid';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
-import { Node, Connection, Point } from '../models';
+import { Node, Connection, Point } from 'Models';
 import ConnectionPreview from './Connections/ConnectionPreview';
 import ConnectionComponent from './Connections/ConnectionComponent';
-import {
-  selectNode,
-  selectConnection,
-  updateNode,
-  createConnection,
-  removeConnection
-} from '../redux-assets/actions';
+import { selectNode, selectConnection, updateNode, createConnection, removeConnection } from '../redux-assets/actions';
 import { ReduxState } from '../redux-assets/types';
 
 type ViewType = {
@@ -56,7 +50,7 @@ type OwnProps = {};
 const mstp = (state: ReduxState): StoreProps => ({
   selectedNode: state.selectedNode,
   nodes: state.nodes,
-  connections: state.connections
+  connections: state.connections,
 });
 
 const dispatchProps: DispatchProps = {
@@ -64,7 +58,7 @@ const dispatchProps: DispatchProps = {
   updateNode,
   selectConnection,
   createConnection,
-  removeConnection
+  removeConnection,
 };
 
 type Props = StoreProps & DispatchProps & OwnProps;
@@ -84,9 +78,9 @@ class CanvasComponent extends React.Component<Props> {
       height: window.innerHeight - 56,
       x: window.innerWidth / 2,
       y: (window.innerHeight - 56) / 2,
-      scale: 1
+      scale: 1,
     },
-    connectionInProgress: undefined
+    connectionInProgress: undefined,
   };
 
   componentDidMount() {
@@ -124,7 +118,7 @@ class CanvasComponent extends React.Component<Props> {
     const xFactor = scale / view.scale - 1; //trial & error
     const posDelta = {
       x: location.x - view.x,
-      y: location.y - view.y
+      y: location.y - view.y,
     };
 
     view.scale = scale;
@@ -135,10 +129,7 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   convertCoordsToSVG = (x, y): Point => {
-    return new Point(
-      (x - this.state.view.x) / this.state.view.scale,
-      (y - this.state.view.y) / this.state.view.scale
-    );
+    return new Point((x - this.state.view.x) / this.state.view.scale, (y - this.state.view.y) / this.state.view.scale);
   };
 
   getTransform = () => {
@@ -146,37 +137,37 @@ class CanvasComponent extends React.Component<Props> {
     return `matrix(${view.scale},0,0,${view.scale},${view.x},${view.y})`;
   };
 
-  _onWheel = event => {
+  _onWheel = (event) => {
     let size = event.deltaY ? event.deltaY : 0 - event.wheelDeltaY;
     if (isNaN(size) || !size) return;
 
     const scale = this.state.view.scale + (-1 * size) / 200;
     let center = {
       x: event.clientX,
-      y: event.clientY
+      y: event.clientY,
     };
 
     this.setScale(scale, center);
   };
 
-  _onTap = e => {
+  _onTap = (e) => {
     this.props.selectNode(null);
     this.props.selectConnection(null);
   };
 
-  _onPinch = e => {
+  _onPinch = (e) => {
     const center = { x: e.detail.x, y: e.detail.y };
     this.setScale(e.detail.scale, center);
   };
 
-  _onMove = e => {
+  _onMove = (e) => {
     const view = { ...this.state.view };
     view.x += e.detail.delta.x;
     view.y += e.detail.delta.y;
     this.setState({ view });
   };
 
-  _onMoveEnd = e => {
+  _onMoveEnd = (e) => {
     if (this.animationFrame) cancelAnimationFrame(this.animationFrame);
     this.velocity = e.detail.delta;
 
@@ -189,14 +180,9 @@ class CanvasComponent extends React.Component<Props> {
     if (this.friction < 0.01) this.friction = 0.01;
     this.velocity = {
       x: this.velocity.x * this.friction,
-      y: this.velocity.y * this.friction
+      y: this.velocity.y * this.friction,
     };
-    if (
-      this.velocity.x < 0.02 &&
-      this.velocity.x > -0.02 &&
-      this.velocity.y < 0.02 &&
-      this.velocity.y > -0.02
-    ) {
+    if (this.velocity.x < 0.02 && this.velocity.x > -0.02 && this.velocity.y < 0.02 && this.velocity.y > -0.02) {
       this.friction = 1.0;
       return;
     }
@@ -212,13 +198,11 @@ class CanvasComponent extends React.Component<Props> {
   onConnectionDrag = (node: Node, e) => {
     const mousePosition = this.convertCoordsToSVG(e.detail.x, e.detail.y - 56);
     this.setClosestNode(mousePosition);
-    this.setState(currentState => ({
+    this.setState((currentState) => ({
       connectionInProgress: {
         from: node,
-        to: this.state.closestNode
-          ? this.state.closestNode.inPortPosition
-          : mousePosition
-      }
+        to: this.state.closestNode ? this.state.closestNode.inPortPosition : mousePosition,
+      },
     }));
   };
 
@@ -263,12 +247,12 @@ class CanvasComponent extends React.Component<Props> {
     }
     this.setState({
       connectionInProgress: null,
-      closestNode: undefined
+      closestNode: undefined,
     });
   };
 
   render() {
-    const nodes = this.props.nodes.map(node => (
+    const nodes = this.props.nodes.map((node) => (
       <NodeComponent
         key={node.id}
         node={node}
@@ -276,18 +260,12 @@ class CanvasComponent extends React.Component<Props> {
         canvasView={this.state.view}
         onConnectionDrag={this.onConnectionDrag}
         onConnectionEnd={this.onConnectionEnd}
-        connectionCandidate={
-          this.state.closestNode ? this.state.closestNode.id === node.id : false
-        }
+        connectionCandidate={this.state.closestNode ? this.state.closestNode.id === node.id : false}
       />
     ));
 
-    const connections = this.props.connections.map(conn => (
-      <ConnectionComponent
-        key={conn.id}
-        connection={conn}
-        removeConnection={this.props.removeConnection}
-      />
+    const connections = this.props.connections.map((conn) => (
+      <ConnectionComponent key={conn.id} connection={conn} removeConnection={this.props.removeConnection} />
     ));
 
     return (
@@ -303,10 +281,7 @@ class CanvasComponent extends React.Component<Props> {
           <Grid />
           {connections}
           {this.state.connectionInProgress && (
-            <ConnectionPreview
-              startNode={this.state.connectionInProgress.from}
-              mouse={this.state.connectionInProgress.to}
-            />
+            <ConnectionPreview startNode={this.state.connectionInProgress.from} mouse={this.state.connectionInProgress.to} />
           )}
           {nodes}
         </g>

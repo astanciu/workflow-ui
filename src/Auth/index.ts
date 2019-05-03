@@ -24,8 +24,6 @@ class Authentication {
 
   private audience = 'https://workflow.dev/';
 
-  constructor() {}
-
   async login() {
     this.clearTokenSet();
     const state = randomString(32);

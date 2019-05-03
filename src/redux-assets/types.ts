@@ -1,4 +1,4 @@
-import { Node, Connection } from '../models';
+import { Node, Connection } from 'Models';
 
 export type ReduxState = {
   nodes: Node[];

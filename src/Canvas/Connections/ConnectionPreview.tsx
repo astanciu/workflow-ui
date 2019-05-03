@@ -1,5 +1,5 @@
 import React from 'react';
-import { Point, Node } from '../../models';
+import { Point, Node } from 'Models';
 import styles from './Connections.module.css';
 import { makeSVGPath } from './util';
 

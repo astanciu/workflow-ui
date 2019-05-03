@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash';
-import { Node, Connection } from '../../models';
+import { Node, Connection } from 'Models';
 
 export const processWorkflow = (state, { workflow }) => {
-  const nodes = workflow.nodes.map(node => new Node(node)) as Node[];
+  const nodes = workflow.nodes.map((node) => new Node(node)) as Node[];
 
-  const connections = workflow.connections.map(conn => {
-    const fromNode = nodes.find(n => n.id === conn.from);
-    const toNode = nodes.find(n => n.id === conn.to);
+  const connections = workflow.connections.map((conn) => {
+    const fromNode = nodes.find((n) => n.id === conn.from);
+    const toNode = nodes.find((n) => n.id === conn.to);
 
     if (fromNode && toNode) {
       return new Connection(fromNode, toNode, conn.id);
@@ -19,7 +19,7 @@ export const processWorkflow = (state, { workflow }) => {
     nodes,
     connections,
     loading: false,
-    error: null
+    error: null,
   };
 };
 
@@ -36,7 +36,7 @@ export const updateNode = (state, action) => {
   });
 
   if (posChanged) {
-    const connections = state.connections.map(conn => {
+    const connections = state.connections.map((conn) => {
       if (conn.from.id === node.id) {
         const newConn = conn.clone();
         newConn.from = node;

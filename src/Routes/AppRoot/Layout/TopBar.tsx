@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { Container, Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Logo } from 'Components/Logo';
 
 const TopBarContainer = styled.div`
@@ -22,11 +23,17 @@ const Cont = styled.div`
   background-color: #000;
 `;
 
-export const TopBar = props => {
+export const TopBar = (props) => {
+  const { user } = useSelector((state) => ({
+    user: state.app.user,
+  }));
   return (
     <Cont fluid className="foo">
       <TopBarContainer>
         <Logo />
+        <Link to="/login">Login</Link>
+        <Link to="/logout">Logout</Link>
+        <div>{user.name}</div>
       </TopBarContainer>
     </Cont>
   );
