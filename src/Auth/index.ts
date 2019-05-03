@@ -1,5 +1,20 @@
 import { randomString, sha256, bufferToBase64UrlEncoded } from './util';
 
+export type AuthError = {
+  error: string;
+  error_description?: string;
+};
+
+export type TokenSet = {
+  access_token: string;
+  id_token: string;
+  expires_in: number;
+  scope?: string;
+  token_type?: string;
+};
+
+export type AuthResult = TokenSet | AuthError;
+
 class Authentication {
   private client_id: string = 'Ct4gc9rE88RelvUEZs5RfizIHEe9iN5E';
   private domain: string = 'wfl.auth0.com';
@@ -12,13 +27,12 @@ class Authentication {
   constructor() {}
 
   async login() {
-    console.log(`Loging in...`);
-
+    this.clearTokenSet();
     const state = randomString(32);
     const codeVerifier = randomString(32);
     const codeChallenge = bufferToBase64UrlEncoded(sha256(codeVerifier));
 
-    sessionStorage.setItem(`login-code-verifier-${state}`, codeVerifier);
+    localStorage.setItem(`login-code-verifier-${state}`, codeVerifier);
 
     const loginUrl = new URL(this.auth_endpoint);
     loginUrl.search = new URLSearchParams({
@@ -35,34 +49,26 @@ class Authentication {
     window.location.assign(loginUrl.toString());
   }
 
-  async callback() {
+  async callback(): Promise<[TokenSet | null, AuthError | null]> {
     const search = new URLSearchParams(window.location.search);
     const error = search.get('error');
-    const error_description = search.get('error_description');
+    const error_description = search.get('error_description') || '';
     if (error) {
-      return { error, error_description };
+      return [null, { error, error_description }];
     }
 
     if (!search.has('code')) {
-      return { error: 'code not found' };
+      return [null, { error: 'code not found' }];
     }
     const code = search.get('code');
     const state = search.get('state');
-    const code_verifier = sessionStorage.getItem(
-      `login-code-verifier-${state}`
-    );
-
-    // debugger;
-    // sessionStorage.removeItem(`login-code-verifier-${state}`);
+    const code_verifier = localStorage.getItem(`login-code-verifier-${state}`);
+    localStorage.removeItem(`login-code-verifier-${state}`);
 
     if (!code_verifier) {
-      console.error('unexpected state parameter');
-      return { error: 'unexpected state parameter' };
+      return [null, { error: 'unexpected state parameter' }];
     }
 
-    // sessionStorage.
-
-    // exchange the authorization code for a tokenset
     const tokenSet = await fetch(this.token_endpoint, {
       method: 'POST',
       // @ts-ignore
@@ -79,17 +85,33 @@ class Authentication {
       })
     }).then(r => r.json());
 
-    return tokenSet;
-    //this has access_token, id_token, expires_in, scope, token_type.
-    // console.dir();
+    this.storeTokenSet(tokenSet);
+    let user = await this.getUser(tokenSet);
+    console.log(user);
+    return [tokenSet, null];
+  }
 
-    // window.tokenSet = tokenSet;
-    // window.verifier = code_verifier;
+  async getUser(tokenSet: TokenSet) {
+    const url = `https://${this.domain}/userinfo`;
+    const user = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${tokenSet.access_token}`
+      }
+    }).then(r => r.json());
 
-    //remove the querystring from the url in the address bar
-    // const url = new URL(window.location.origin);
-    // url.search = '';
-    // window.history.pushState('', document.title, url.toString());
+    return user;
+  }
+
+  storeTokenSet(tokenSet: TokenSet) {
+    localStorage.setItem('id_token', tokenSet.id_token);
+    localStorage.setItem('access_token', tokenSet.access_token);
+    localStorage.setItem('expires_in', tokenSet.expires_in.toString());
+  }
+
+  clearTokenSet() {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_in');
   }
 }
 

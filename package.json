@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-router": "^4.4.5",
     "bootstrap": "^4.3.1",
     "hammerjs": "^2.0.8",
     "immer": "^2.1.4",

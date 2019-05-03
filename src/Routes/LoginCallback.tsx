@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Auth } from 'Auth';
-import { Link } from 'react-router-dom';
+import { Auth, AuthError, TokenSet, AuthResult } from 'Auth';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
-type AuthError = {
-  error: string;
-  error_description: string;
-};
+interface Props extends RouteComponentProps<any> {
+  test: string;
+}
 
-export const LoginCallback = props => {
+export const LoginCallback = (props: RouteComponentProps<{}>) => {
   const [error, setError] = useState<AuthError | undefined>(undefined);
+  const [tokens, setTokens] = useState<TokenSet | undefined>(undefined);
   useEffect(() => {
     const handleCallback = async () => {
-      console.log(`doing calback`);
-      let result = await Auth.callback();
-      console.log('Result', result);
-      if (result.error) {
-        return setError(result);
+      const [tokenSet, error] = await Auth.callback();
+
+      if (error) {
+        return setError(error);
       }
+
+      if (tokenSet) {
+        setTokens(tokenSet);
+      }
+
+      props.history.push('/');
     };
 
     handleCallback();
-  }, []);
+  }, [props, props.history]);
 
   if (error) {
     return (
@@ -33,5 +38,20 @@ export const LoginCallback = props => {
     );
   }
 
-  return <div>Login Callback</div>;
+  if (tokens) {
+    return (
+      <div>
+        Login Success: <strong>{tokens.id_token}</strong>
+        <br />
+        <Link to="/login">Login</Link>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      Login Callback <br />
+      <Link to="/login">Login</Link>
+    </div>
+  );
 };
