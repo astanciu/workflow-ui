@@ -4,5 +4,6 @@ export * from './Adapters';
 export * from './Workflows';
 export * from './Workflow';
 export * from './Login';
+export * from './Logout';
 export * from './LoginCallback';
-export * from './Error';
+export * from './ErrorComponent';

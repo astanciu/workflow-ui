@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import workflow1 from '../samples/workflow1';
+import workflow1 from 'samples/workflow1';
 import { Auth } from 'Auth';
 
 function makeActionCreator(type, ...argNames) {
@@ -24,6 +24,7 @@ export const LOAD_WORKFLOW_ERROR = 'LOAD_WORKFLOW_ERROR';
 export const LOGIN_CALLBACK = 'LOGIN_CALLBACK';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 export const selectNode = makeActionCreator(SELECT_NODE, 'node');
 export const updateNode = makeActionCreator(UPDATE_NODE, 'node');
@@ -61,6 +62,7 @@ const fakeGet = () => {
 export const loginBeginCallback = makeActionCreator(LOGIN_CALLBACK);
 export const loginSuccess = makeActionCreator(LOGIN_SUCCESS, 'user');
 export const loginError = makeActionCreator(LOGIN_ERROR, 'error');
+export const logoutSuccess = makeActionCreator(LOGOUT_SUCCESS);
 
 export const loginStart = () => {
   return async (dispatch) => {
@@ -76,20 +78,30 @@ export const loginCallback = () => {
   return async (dispatch, getState) => {
     dispatch(loginBeginCallback());
     try {
-      console.log(`doing auth callback`);
       const [user, error] = await Auth.callback();
-      // console.log(user);
-      // console.log(error);
       if (error) {
+        console.log(`Action: error: `, error);
         dispatch(loginError(error));
+        dispatch(push('/error'));
       } else {
-        dispatch(loginSuccess(user));
-        const state = getState();
-        console.log(`Success, state: `, state);
         dispatch(push('/'));
+        dispatch(loginSuccess(user));
+        console.log(`here okay?`);
       }
     } catch (error) {
       dispatch(loginError(error));
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      Auth.logout();
+      dispatch(logoutSuccess());
+    } catch (error) {
+      console.log(`Error during logout`, error);
+      dispatch(logoutSuccess());
     }
   };
 };

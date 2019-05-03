@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Spinner } from 'Components/index';
-import Canvas from 'Canvas/Canas';
-import { loadWorkflow } from 'redux-assets/actions';
-import { TopBar } from 'TopBar/index';
+import Canvas from 'Components/Canvas/Canas';
+import { loadWorkflow } from 'ReduxState/actions';
+import { TopBar } from './TopBar/index';
 
 import { Test } from 'Test/Test';
-// import { AddModal } from 'AddModal/AddModal';
+// import { AddModal } from './AddModal';
 type Props = {
   loadWorkflow: () => void;
   loading: boolean;
@@ -14,9 +14,9 @@ type Props = {
 };
 
 @connect(
-  state => ({
+  (state) => ({
     loading: state.loading,
-    error: state.error
+    error: state.error,
   }),
   { loadWorkflow }
 )

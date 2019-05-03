@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { combineReducers, Reducer, AnyAction } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import { History } from 'history';
-import { RouterState, connectRouter } from 'connected-react-router';
+import { connectRouter } from 'connected-react-router';
 import * as A from '../actions';
 import * as Types from '../types';
 import { processWorkflow, updateNode } from './nodes';
@@ -16,14 +16,6 @@ const initialState: Types.ReduxState = {
   error: null,
 };
 
-type State = {
-  router: RouterState;
-  app: Types.ReduxState;
-};
-type StateInput = Partial<State>;
-
-declare const stateReducer: (state: State | undefined, action: AnyAction) => StateInput;
-
 export const createRootReducer = (history: History): Reducer<any> => {
   const combined = combineReducers({
     router: connectRouter(history),
@@ -37,11 +29,13 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     // Login
     case A.LOGIN_CALLBACK:
-      return { ...state, loginLoading: true, error: null };
+      return { ...state, error: null, user: null };
     case A.LOGIN_SUCCESS:
-      return { ...state, loginLoading: false, error: null, user: action.user };
+      return { ...state, error: null, user: action.user };
     case A.LOGIN_ERROR:
-      return { ...state, loginLoading: false, error: action.error };
+      return { ...state, error: action.error, user: null };
+    case A.LOGOUT_SUCCESS:
+      return { ...state, error: null, user: null };
 
     // Workflow
     case A.LOAD_WORKFLOW_BEGIN:

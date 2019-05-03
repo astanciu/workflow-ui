@@ -2,10 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { Logo } from 'Components/Logo';
 
 const TopBarContainer = styled.div`
-  // border: 1px solid red;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  display: flex;
   height: 56px;
   width: 1000px;
   margin: auto;
@@ -23,17 +27,27 @@ const Cont = styled.div`
   background-color: #000;
 `;
 
+const UserContainer = styled.div`
+  text-align: right;
+  flex-grow: 1;
+`;
+
 export const TopBar = (props) => {
-  const { user } = useSelector((state) => ({
+  let { user } = useSelector((state) => ({
     user: state.app.user,
   }));
+  if (!user) {
+    user = { name: 'Not Found' };
+  }
   return (
     <Cont fluid className="foo">
       <TopBarContainer>
         <Logo />
-        <Link to="/login">Login</Link>
-        <Link to="/logout">Logout</Link>
-        <div>{user.name}</div>
+        <UserContainer>
+          <Link to="/login">Login</Link>
+          <Link to="/logout">Logout</Link>
+          <div>{user.name}</div>
+        </UserContainer>
       </TopBarContainer>
     </Cont>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
-import { TopBar } from './TopBar';
-import { SideBar } from './SideBar';
+import { TopBar } from 'Components/TopBar';
+import { SideBar } from 'Components/SideBar';
 
 const RootContainerStyled = styled.div`
   // border: 2px solid black;
@@ -26,7 +26,6 @@ export const Layout = ({ children }) => {
           </Col>
           <Col>
             <Container>{children}</Container>
-            {/* <ContentContainer>{children}</ContentContainer> */}
           </Col>
         </Row>
       </RootContainerStyled>

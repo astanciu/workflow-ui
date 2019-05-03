@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import EventManager from 'Canvas/Util/EventManager.js';
+import EventManager from 'Components/Canvas/Util/EventManager';
 import { Node } from 'Models';
 import styles from './Port.module.css';
 

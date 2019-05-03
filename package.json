@@ -11,6 +11,7 @@
     "immer": "^2.1.4",
     "jssha": "^2.3.1",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "popmotion": "^8.6.3",
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.6",

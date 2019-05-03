@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import EventManager from 'Canvas/Util/EventManager.js';
+import { selectConnection } from 'ReduxState/actions';
+import EventManager from '../Util/EventManager';
 import { Connection } from 'Models';
+import { makeSVGPath, findPointOnCurve } from './util'; // Merge with Util?
 import styles from './Connections.module.css';
-import { makeSVGPath, findPointOnCurve } from './util';
-import { selectConnection } from '../../redux-assets/actions';
 
 type Props = {
   connection: Connection;

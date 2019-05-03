@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import styles from './Node-light.module.css';
-import Icon from 'Canvas/Icon/Icon';
+import Icon from '../Icon/Icon';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
 import { Node, Point } from 'Models';
 import isEqual from 'lodash/isEqual';
-import { selectNode } from '../../redux-assets/actions';
+import { selectNode } from 'ReduxState/actions';
 
 type Props = {
   node: Node;

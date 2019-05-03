@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Error = props => {
+export const ErrorComponent = (props) => {
   return <div>Error</div>;
 };

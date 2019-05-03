@@ -9,8 +9,8 @@ import EventManager from './Util/EventManager.js';
 import { Node, Connection, Point } from 'Models';
 import ConnectionPreview from './Connections/ConnectionPreview';
 import ConnectionComponent from './Connections/ConnectionComponent';
-import { selectNode, selectConnection, updateNode, createConnection, removeConnection } from '../redux-assets/actions';
-import { ReduxState } from '../redux-assets/types';
+import { selectNode, selectConnection, updateNode, createConnection, removeConnection } from 'ReduxState/actions';
+import { ReduxState } from 'ReduxState/types';
 
 type ViewType = {
   width: number;
