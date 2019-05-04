@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { DOMElement } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
@@ -18,6 +18,8 @@ type ViewType = {
   x: number;
   y: number;
   scale: number;
+  offsetTop?: number;
+  offsetLeft?: number;
 };
 
 type ConnectionInProgress = {
@@ -47,7 +49,7 @@ type DispatchProps = {
 
 type OwnProps = {};
 
-const mstp = (state: ReduxState): StoreProps => ({
+const mstp = ({ app: state }): StoreProps => ({
   selectedNode: state.selectedNode,
   nodes: state.nodes,
   connections: state.connections,
@@ -84,9 +86,10 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   componentDidMount() {
+    this.domNode = ReactDOM.findDOMNode(this);
+
     this.setCanvasSize();
     window.addEventListener('resize', this.setCanvasSize);
-    this.domNode = ReactDOM.findDOMNode(this);
 
     this.em = new EventManager(this.domNode);
     this.em.onTap(this._onTap);
@@ -100,10 +103,20 @@ class CanvasComponent extends React.Component<Props> {
   }
 
   setCanvasSize = debounce(() => {
+    const parent = this.domNode!.parentElement as HTMLElement;
+
     const view = { ...this.state.view };
-    view.width = window.innerWidth;
-    view.height = window.innerHeight - 56;
+    // view.width = window.innerWidth;
+    // view.height = window.innerHeight;
+    view.width = parent.offsetWidth;
+    view.height = parent.offsetHeight;
+    view.x = view.width / 2;
+    view.y = view.height / 2;
+    view.offsetTop = parent.offsetTop;
+    view.offsetLeft = parent.offsetLeft;
     this.setState({ view });
+
+    console.log(`View: `, view);
   }, 50);
 
   setScale = (scale, location) => {
@@ -196,7 +209,7 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   onConnectionDrag = (node: Node, e) => {
-    const mousePosition = this.convertCoordsToSVG(e.detail.x, e.detail.y - 56);
+    const mousePosition = this.convertCoordsToSVG(e.detail.x - this.state.view.offsetLeft!, e.detail.y - this.state.view.offsetTop!);
     this.setClosestNode(mousePosition);
     this.setState((currentState) => ({
       connectionInProgress: {

@@ -4,7 +4,7 @@ import { Spinner } from 'Components/index';
 import Canvas from 'Components/Canvas/Canas';
 import { loadWorkflow } from 'ReduxState/actions';
 import { TopBar } from './TopBar/index';
-
+import styled from 'styled-components';
 import { Test } from 'Test/Test';
 // import { AddModal } from './AddModal';
 type Props = {
@@ -13,10 +13,17 @@ type Props = {
   error: Error;
 };
 
+const Container = styled.div`
+  // border: 1px solid blue;
+  width: 100%;
+  height: 100%;
+  overflow: none;
+`;
+
 @connect(
   (state) => ({
-    loading: state.loading,
-    error: state.error,
+    loading: state.app.loading,
+    error: state.app.error,
   }),
   { loadWorkflow }
 )
@@ -36,12 +43,14 @@ export class Workflow extends Component<Props> {
 
     return (
       <>
-        <TopBar />
+        {/* <TopBar /> */}
         {/* <Sidebar /> */}
         {/* <Panel /> */}
-        <Canvas />
+        <Container>
+          <Canvas />
+        </Container>
         {/* <AddModal /> */}
-        <Test />
+        {/* <Test /> */}
       </>
     );
   }

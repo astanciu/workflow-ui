@@ -1,4 +1,5 @@
 import { push } from 'connected-react-router';
+import workflow1 from 'samples/workflow1';
 
 import { Auth } from 'Core';
 
@@ -58,7 +59,7 @@ export const loadWorkflow = () => {
 const fakeGet = () => {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      res('ok');
+      res(workflow1);
     }, 2000);
   });
 };
