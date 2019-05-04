@@ -1,25 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-const SideBarContainer = styled.div`
-  // border: 1px solid blue;
+import { useSelector } from 'react-redux';
+
+import { UserMenu } from 'Components/UserMenu';
+import { Logo } from 'Components/Logo';
+import { Menu, MenuItem } from 'Components/Menu';
+
+const SideMenu = styled.div`
+  height: 100%;
 `;
 
-export const SideBar = props => {
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const UserContainer = styled.div`
+  padding: 7px 20px;
+`;
+
+export const SideBar = (props) => {
+  let user = useSelector((state) => state.app.user);
+  if (!user) {
+    user = { name: 'Not Found' };
+  }
   return (
-    <SideBarContainer>
-      <ul>
-        <li>
-          <Link to="/">Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/adapters">Adapters</Link>
-        </li>
-        <li>
-          <Link to="/workflows">Workflows</Link>
-        </li>
-      </ul>
-    </SideBarContainer>
+    <>
+      <LogoContainer>
+        <Logo size={30} />
+      </LogoContainer>
+      <SideMenu>
+        <Menu>
+          <Menu.Section title="Configure">
+            <MenuItem icon="home" to="/">
+              Dashboard
+            </MenuItem>
+            <MenuItem icon="cubes" to="/adapters">
+              Adapters
+            </MenuItem>
+            <MenuItem icon="project-diagram" to="/workflows">
+              Workflows
+            </MenuItem>
+          </Menu.Section>
+          <Menu.Section title="Other">
+            <MenuItem icon="code-branch" to="/stuff">
+              Stuff
+            </MenuItem>
+            <MenuItem icon="cog" to="/things">
+              Things
+            </MenuItem>
+          </Menu.Section>
+        </Menu>
+      </SideMenu>
+      <UserContainer>
+        <UserMenu user={user} />
+      </UserContainer>
+    </>
   );
 };

@@ -6,5 +6,5 @@ export const Login = (props) => {
   const dispatch = useDispatch();
   dispatch(loginStart());
 
-  return <div />;
+  return <div>Login Page</div>;
 };

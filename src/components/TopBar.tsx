@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
+import { UserMenu } from 'Components/UserMenu';
 import { Logo } from 'Components/Logo';
 
 const TopBarContainer = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   display: flex;
   align-items: center;
   display: flex;
@@ -18,35 +18,33 @@ const TopBarContainer = styled.div`
 
 const Cont = styled.div`
   height: 56px;
-  background-color: #141414;
+  background-color: #fff;
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  background-color: #000;
 `;
 
-const UserContainer = styled.div`
-  text-align: right;
+const UserContainer = styled.div``;
+const LogoContainer = styled.div`
   flex-grow: 1;
 `;
 
 export const TopBar = (props) => {
-  let { user } = useSelector((state) => ({
-    user: state.app.user,
-  }));
+  let user = useSelector((state) => state.app.user);
   if (!user) {
     user = { name: 'Not Found' };
   }
+
   return (
     <Cont fluid className="foo">
       <TopBarContainer>
-        <Logo />
+        <LogoContainer>
+          <Logo size={30} />
+        </LogoContainer>
         <UserContainer>
-          <Link to="/login">Login</Link>
-          <Link to="/logout">Logout</Link>
-          <div>{user.name}</div>
+          <UserMenu user={user} />
         </UserContainer>
       </TopBarContainer>
     </Cont>

@@ -6,10 +6,10 @@ const LogoContainer = styled.div`
   margin: 11px 10px;
 `;
 
-export const Logo = props => {
+export const Logo = ({ size = 30 }) => {
   return (
     <LogoContainer>
-      <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 0 488 309">
+      <svg xmlns="http://www.w3.org/2000/svg" height={size} viewBox="0 0 488 309">
         <defs>
           <linearGradient id="a" x1=".26%" x2="101.26%" y1="49.75%" y2="49.75%">
             <stop offset="0%" stopColor="#3023AE" />

@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
-import workflow1 from 'samples/workflow1';
-import { Auth } from 'Auth';
+
+import { Auth, Bootstrap } from 'Core';
 
 function makeActionCreator(type, ...argNames) {
   return function(...args) {
@@ -12,6 +12,8 @@ function makeActionCreator(type, ...argNames) {
   };
 }
 
+export const BOOTUP_BEGIN = 'BOOTUP_BEGIN';
+export const BOOTUP_END = 'BOOTUP_END';
 export const SELECT_NODE = 'SELECT_NODE';
 export const UPDATE_NODE = 'UPDATE_NODE';
 export const SELECT_CONNECTION = 'SELECT_CONNECTION';
@@ -25,6 +27,9 @@ export const LOGIN_CALLBACK = 'LOGIN_CALLBACK';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
+export const bootupBegin = makeActionCreator(BOOTUP_BEGIN);
+export const bootupEnd = makeActionCreator(BOOTUP_END);
 
 export const selectNode = makeActionCreator(SELECT_NODE, 'node');
 export const updateNode = makeActionCreator(UPDATE_NODE, 'node');
@@ -53,10 +58,12 @@ export const loadWorkflow = () => {
 const fakeGet = () => {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      res(workflow1);
-    }, 200);
+      res('ok');
+    }, 2000);
   });
 };
+
+// Bootup
 
 // Login stuff
 export const loginBeginCallback = makeActionCreator(LOGIN_CALLBACK);
@@ -67,7 +74,11 @@ export const logoutSuccess = makeActionCreator(LOGOUT_SUCCESS);
 export const loginStart = () => {
   return async (dispatch) => {
     try {
-      Auth.login();
+      const user = await Auth.login();
+      if (user) {
+        dispatch(loginSuccess(user));
+        dispatch(push('/'));
+      }
     } catch (error) {
       dispatch(loginError(error));
     }
@@ -84,9 +95,8 @@ export const loginCallback = () => {
         dispatch(loginError(error));
         dispatch(push('/error'));
       } else {
-        dispatch(push('/'));
         dispatch(loginSuccess(user));
-        console.log(`here okay?`);
+        dispatch(push('/'));
       }
     } catch (error) {
       dispatch(loginError(error));
@@ -103,6 +113,14 @@ export const logout = () => {
       console.log(`Error during logout`, error);
       dispatch(logoutSuccess());
     }
+  };
+};
+
+export const startBootup = (user) => {
+  return async (dispatch) => {
+    dispatch(bootupBegin());
+
+    await Bootstrap(user);
   };
 };
 

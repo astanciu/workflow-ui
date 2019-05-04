@@ -26,6 +26,11 @@ class Authentication {
   private audience = 'https://workflow.dev/';
 
   async login() {
+    const user = this.isLoggedIn();
+    if (user) {
+      return user;
+    }
+
     this.clearAuthData();
     const state = randomString(32);
     const codeVerifier = randomString(32);
@@ -46,10 +51,15 @@ class Authentication {
     }).toString();
 
     window.location.assign(loginUrl.toString());
+    return null;
   }
 
   logout() {
     this.clearAuthData();
+  }
+
+  isLoggedIn() {
+    return this.getStoredSession();
   }
 
   async callback(): Promise<[TokenSet | null, AuthError | null]> {
@@ -109,7 +119,9 @@ class Authentication {
     try {
       let user = localStorage.getItem('user');
       let expires_at = localStorage.getItem('expires_at') || '0';
-
+      if (!user || !expires_at) {
+        return null;
+      }
       // Is it expired?
       let expires = parseInt(expires_at, 10);
       let now = moment().utc();
@@ -147,7 +159,7 @@ class Authentication {
     try {
       let body = token.split('.')[1];
       body = JSON.parse(atob(body));
-      expires_at = body.exp - 10 * 1000; // shorten by 10 seconds
+      expires_at = body.exp * 1000; // shorten by 10 seconds
     } catch (err) {
       console.log('Failed to getExpiresAt: ', err);
     }

@@ -1,31 +1,42 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Provider, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { NotFound, Login, Logout, LoginCallback, ErrorComponent } from 'Routes';
-
 import { AppRoot } from 'Routes/AuthenticatedAppRoot';
 import { Spinner } from 'Components';
+import { startBootup } from 'ReduxState/actions';
 
 export const Root = ({ store, history }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <AppCore />
+      <Switch>
+        <Route exact path="/login/callback" component={LoginCallback} />
+        <Route component={AppCore} />
+      </Switch>
     </ConnectedRouter>
   </Provider>
 );
 
 const AppCore = (props) => {
-  let loading = useSelector((state) => state.app.globalLoading);
+  let state = useSelector((state) => ({
+    user: state.app.user,
+    ready: state.app.ready,
+    isBooted: state.app.booted,
+  }));
 
-  if (loading) {
+  const dispatch = useDispatch();
+
+  if (!state.ready) {
+    dispatch(startBootup(state.user));
     return <Spinner />;
   }
 
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
-      <Route exact path="/login/callback" component={LoginCallback} />
+      {/* <Route exact path="/login/callback" component={LoginCallback} /> */}
       <Route exact path="/logout" component={Logout} />
       <Route exact path="/error" component={ErrorComponent} />
 

@@ -1,0 +1,57 @@
+@import 'variables';
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700');
+
+body {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #64727b;
+
+  background-color: #fff;
+}
+
+.searchbar.form-control-lg {
+  padding-left: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: #e1e3e5;
+  font-family: Nunito-Regular;
+  font-weight: 600;
+  font-size: 18px;
+  color: #64727b;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+
+#root{
+  height: 100%;
+}
+
+/*
+Disable Rubber-Band / Elastic Scroll in OSX with pure CSS by Subash https://gist.github.com/Subash/fe82b0c1ba53347a2399#gistcomment-1566377
+*/
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* End rubberband hack */
+

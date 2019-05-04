@@ -9,7 +9,7 @@ const history = createBrowserHistory();
 const reducer = createRootReducer(history);
 const middleware = [routerMiddleware(history), thunk];
 
-const store = createStore(reducer, {}, composeWithDevTools(applyMiddleware(...middleware)));
+const store = createStore(reducer, {}, composeWithDevTools({ trace: false })(applyMiddleware(...middleware)));
 
 if (process.env.NODE_ENV !== 'production') {
   //@ts-ignore
