@@ -8,7 +8,6 @@ import { processWorkflow, updateNode } from './nodes';
 import { removeConnection, createConnection } from './connections';
 
 const initialState: Types.ReduxState = {
-  ready: false,
   nodes: [],
   selectedNode: null,
   connections: [],
@@ -29,11 +28,11 @@ export const createRootReducer = (history: History): Reducer<any> => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // Bootup
-    case A.BOOTUP_BEGIN:
-      return { ...state, ready: false };
-    case A.BOOTUP_END:
-      return { ...state, ready: true };
+    // // Bootup
+    // case A.BOOTUP_BEGIN:
+    //   return { ...state, ready: false };
+    // case A.BOOTUP_END:
+    //   return { ...state, ready: true };
 
     // Login
     case A.LOGIN_CALLBACK:

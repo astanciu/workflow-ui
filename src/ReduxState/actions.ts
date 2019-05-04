@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 
-import { Auth, Bootstrap } from 'Core';
+import { Auth } from 'Core';
 
 function makeActionCreator(type, ...argNames) {
   return function(...args) {
@@ -116,14 +116,10 @@ export const logout = () => {
   };
 };
 
-export const startBootup = (user) => {
-  return async (dispatch) => {
-    dispatch(bootupBegin());
+// export const startBootup = (user) => {
+//   return async (dispatch) => {
+//     dispatch(bootupBegin());
 
-    await Bootstrap(user);
-  };
-};
-
-// export const selectNode = (node: Node | null) => {
-//   return { type: 'SELECT_NODE', node };
+//     await Bootstrap(user);
+//   };
 // };
