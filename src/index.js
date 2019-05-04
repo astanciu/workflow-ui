@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+// Order here matters, import scss before other components
+import './styles/index.scss';
+
 import { Root } from './Root';
 import { store, history } from 'ReduxState/index';
-import './styles/index.scss';
 
 ReactDOM.render(<Root store={store} history={history} />, document.getElementById('root'));

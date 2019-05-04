@@ -18,7 +18,7 @@ const LogoContainer = styled.div`
 `;
 
 const UserContainer = styled.div`
-  padding: 7px 20px;
+  // padding: 7px 20px;
 `;
 
 export const SideBar = (props) => {

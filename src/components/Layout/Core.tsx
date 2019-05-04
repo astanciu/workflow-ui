@@ -20,6 +20,7 @@ const Left = styled.div`
   z-index: 10;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 const Center = styled.div`
   min-width: 500px;
@@ -27,6 +28,7 @@ const Center = styled.div`
   width: 100%;
   background-color: #e7ebee;
   padding: 0px 20px;
+  overflow-y: auto;
 `;
 const Right = styled.div`
   min-width: 300px;
@@ -34,6 +36,7 @@ const Right = styled.div`
   background-color: #fff;
   box-shadow: -1px 0px 3px 0px #00000021
   z-index: 10;
+  overflow-y: auto;
 `;
 
 export const Layout = ({ children }) => {

@@ -13,7 +13,10 @@ export const Root = ({ store, history }) => (
     <ConnectedRouter history={history}>
       <Switch>
         <Route exact path="/login/callback" component={LoginCallback} />
-        <Route component={AppCore} />
+        <Route exact path="/logout" component={Logout} />
+        <Route exact path="/error" component={ErrorComponent} />
+        <Route path="/" component={AppCore} />
+        {/* <Route render={(props) => <NotFound {...props} source="Root" />} /> */}
       </Switch>
     </ConnectedRouter>
   </Provider>
@@ -24,7 +27,10 @@ const AppCore = (props) => {
     user: state.app.user,
     ready: state.app.ready,
     isBooted: state.app.booted,
+    router: state.router,
   }));
+
+  console.log(state.router);
 
   const dispatch = useDispatch();
 
@@ -36,10 +42,6 @@ const AppCore = (props) => {
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
-      {/* <Route exact path="/login/callback" component={LoginCallback} /> */}
-      <Route exact path="/logout" component={Logout} />
-      <Route exact path="/error" component={ErrorComponent} />
-
       <Route path="/" component={AppRoot} />
       <Route render={(props) => <NotFound {...props} source="Root" />} />
     </Switch>

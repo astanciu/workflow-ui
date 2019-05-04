@@ -12,10 +12,11 @@ const Section = styled.div`
 `;
 const Title = styled.div`
   padding: 5px 20px;
-  color: #8d9eb3;
-  font-weight: 400;
+  color: #5c6269;
+  font-weight: 700;
+  font-size: 0.8em;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
 `;
 
 const ItemsList = styled.div`

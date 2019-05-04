@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Dashboard, Adapters, Workflows, NotFound } from 'Routes';
 import { Workflow } from 'Workflow';
-import { Layout } from 'Components/Layout';
+import { Layout } from 'Components/Layout/Core';
 
 export const AppRoot = ({ match }) => {
   return (
