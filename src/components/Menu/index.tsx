@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Icon } from 'Components';
+// import { Icon } from 'Components';
+import { Icon } from 'antd';
 import { useSelector } from 'react-redux';
 
 const Container = styled.div`
@@ -72,15 +73,20 @@ Menu.Section = ({ title, children }) => {
   );
 };
 
-export const MenuItem = ({ children, to, icon, ...props }) => {
+export const MenuItem = ({ children, to, icon, rotate = 0 }) => {
   const router = useSelector((state) => state.router);
   const isActive = router.location.pathname === to;
-
+  const iconProps = {
+    type: icon,
+    rotate: 0,
+  };
+  if (rotate) iconProps.rotate = rotate;
   return (
     <ItemWrapper>
       <Link to={to}>
         <Item active={isActive}>
-          <Icon icon={icon} size={15} color={isActive ? '#777' : '#8d9eb3'} />
+          {/* <Icon icon={icon} size={15} color={isActive ? '#777' : '#8d9eb3'} /> */}
+          <Icon {...iconProps} style={{ lineHeight: '1em' }} />
           <span>{children}</span>
         </Item>
       </Link>

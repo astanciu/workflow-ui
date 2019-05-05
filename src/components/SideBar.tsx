@@ -37,18 +37,18 @@ export const SideBar = (props) => {
             <MenuItem icon="home" to="/">
               Dashboard
             </MenuItem>
-            <MenuItem icon="cubes" to="/adapters">
+            <MenuItem icon="code" to="/adapters">
               Adapters
             </MenuItem>
-            <MenuItem icon="project-diagram" to="/workflows">
+            <MenuItem icon="fork" rotate={90} to="/workflows">
               Workflows
             </MenuItem>
           </Menu.Section>
           <Menu.Section title="Other">
-            <MenuItem icon="code-branch" to="/stuff">
+            <MenuItem icon="tags" to="/stuff">
               Stuff
             </MenuItem>
-            <MenuItem icon="cog" to="/things">
+            <MenuItem icon="setting" to="/things">
               Things
             </MenuItem>
           </Menu.Section>
