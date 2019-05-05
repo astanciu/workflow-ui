@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'Components';
 import { Form } from 'react-bootstrap';
@@ -16,18 +16,13 @@ const IconWrapper = styled.div`
   left: 12px;
 `;
 
-export const SearchBar = props => {
+export const SearchBar = (props) => {
   return (
     <SearchBarWrapper>
       <IconWrapper>
         <Icon icon="search" color="#879199" size={22} />
       </IconWrapper>
-      <Form.Control
-        size="lg"
-        type="text"
-        placeholder=""
-        className="searchbar"
-      />
+      <Form.Control size="lg" type="text" placeholder="" className="searchbar" />
     </SearchBarWrapper>
   );
 };

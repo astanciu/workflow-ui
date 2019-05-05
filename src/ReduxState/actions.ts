@@ -28,6 +28,7 @@ export const LOGIN_CALLBACK = 'LOGIN_CALLBACK';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const SHOW_SIDE_PANEL = 'SHOW_SIDE_PANEL';
 
 export const bootupBegin = makeActionCreator(BOOTUP_BEGIN);
 export const bootupEnd = makeActionCreator(BOOTUP_END);
@@ -43,6 +44,8 @@ export const updateConnection = makeActionCreator(UPDATE_CONNECTION, 'connection
 export const loadWorkflowBegin = makeActionCreator(LOAD_WORKFLOW_BEGIN);
 export const loadWorkflowSuccess = makeActionCreator(LOAD_WORKFLOW_SUCCESS, 'workflow');
 export const loadWorkflowError = makeActionCreator(LOAD_WORKFLOW_ERROR, 'error');
+
+export const showPanel = makeActionCreator(SHOW_SIDE_PANEL, 'visible');
 
 export const loadWorkflow = () => {
   return async (dispatch) => {
@@ -60,7 +63,7 @@ const fakeGet = () => {
   return new Promise((res, rej) => {
     setTimeout(() => {
       res(workflow1);
-    }, 2000);
+    }, 200);
   });
 };
 
@@ -116,11 +119,3 @@ export const logout = () => {
     }
   };
 };
-
-// export const startBootup = (user) => {
-//   return async (dispatch) => {
-//     dispatch(bootupBegin());
-
-//     await Bootstrap(user);
-//   };
-// };

@@ -1,6 +1,7 @@
 import { Node, Connection } from 'Models';
 
 export type ReduxState = {
+  showPanel: boolean;
   nodes: Node[];
   selectedNode: Node | null;
   connections: Connection[];

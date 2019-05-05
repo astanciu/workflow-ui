@@ -1,4 +1,4 @@
-import React, { DOMElement } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import debounce from 'lodash/debounce';
@@ -10,7 +10,6 @@ import { Node, Connection, Point } from 'Models';
 import ConnectionPreview from './Connections/ConnectionPreview';
 import ConnectionComponent from './Connections/ConnectionComponent';
 import { selectNode, selectConnection, updateNode, createConnection, removeConnection } from 'ReduxState/actions';
-import { ReduxState } from 'ReduxState/types';
 
 type ViewType = {
   width: number;
@@ -99,6 +98,7 @@ class CanvasComponent extends React.Component<Props> {
   }
 
   componentWillUnmount() {
+    this.setCanvasSize.cancel();
     window.removeEventListener('resize', this.setCanvasSize);
   }
 
@@ -106,17 +106,15 @@ class CanvasComponent extends React.Component<Props> {
     const parent = this.domNode!.parentElement as HTMLElement;
 
     const view = { ...this.state.view };
-    // view.width = window.innerWidth;
-    // view.height = window.innerHeight;
+
     view.width = parent.offsetWidth;
     view.height = parent.offsetHeight;
     view.x = view.width / 2;
     view.y = view.height / 2;
     view.offsetTop = parent.offsetTop;
     view.offsetLeft = parent.offsetLeft;
-    this.setState({ view });
 
-    console.log(`View: `, view);
+    this.setState({ view });
   }, 50);
 
   setScale = (scale, location) => {

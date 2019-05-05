@@ -87,7 +87,7 @@ const ConnectionComponent = ({
 
 export default connect(
   (state) => ({
-    selectedConnection: state.selectedConnection,
+    selectedConnection: state.app.selectedConnection,
   }),
   { selectConnection }
 )(ConnectionComponent);

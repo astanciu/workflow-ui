@@ -158,7 +158,7 @@ class NodeComponent extends React.Component<Props> {
 }
 
 const mstp = (state) => ({
-  selectedNode: state.selectedNode,
+  selectedNode: state.app.selectedNode,
 });
 
 export default connect(

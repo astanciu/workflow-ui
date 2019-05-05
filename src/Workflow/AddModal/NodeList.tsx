@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import {
-  NodeListWrapper,
-  NodeItemWrapper,
-  IconContainer,
-  Content,
-  Title,
-  Description
-} from './NodeItemStyles';
+import { NodeListWrapper, NodeItemWrapper, IconContainer, Content, Title, Description } from './NodeItemStyles';
 import { HTMLNodeIcon } from './NodeIcon';
 import { nodes } from '../../samples/library';
 
-const makeNode = node => {
+const makeNode = (node) => {
   return (
     <NodeItemWrapper key={node.id}>
       <IconContainer>
@@ -25,7 +18,7 @@ const makeNode = node => {
   );
 };
 
-export const NodeList = props => {
+export const NodeList = (props) => {
   const nodeItems = nodes.map(makeNode);
   return <NodeListWrapper>{nodeItems}</NodeListWrapper>;
 };

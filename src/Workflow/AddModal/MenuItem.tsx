@@ -1,16 +1,11 @@
 import React from 'react';
 import { Icon } from 'Components/Icon';
-import {
-  MenuListItem,
-  IconContainer,
-  Content,
-  Title,
-  Description
-} from './MenuItemStyles';
+import { MenuListItem, IconContainer, Content, Title, Description } from './MenuItemStyles';
 
 export const MenuItem = ({ title, desc, icon, onClick, selected = false }) => {
   return (
-    <a onClick={onClick}>
+    // @ts-ignore
+    <div onClick={onClick}>
       <MenuListItem selected={selected}>
         <IconContainer>
           <Icon icon={icon} color="#848C93" size={15} />
@@ -20,6 +15,6 @@ export const MenuItem = ({ title, desc, icon, onClick, selected = false }) => {
           <Description>{desc}</Description>
         </Content>
       </MenuListItem>
-    </a>
+    </div>
   );
 };

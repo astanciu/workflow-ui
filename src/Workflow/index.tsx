@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Spinner } from 'Components/index';
-import Canvas from 'Components/Canvas/Canas';
-import { loadWorkflow } from 'ReduxState/actions';
-import { TopBar } from './TopBar/index';
+import Canvas from 'Components/Canvas/Canvas';
+import { loadWorkflow, showPanel } from 'ReduxState/actions';
+import { AddModal } from './AddModal';
+
 import styled from 'styled-components';
-import { Test } from 'Test/Test';
-// import { AddModal } from './AddModal';
+
 type Props = {
   loadWorkflow: () => void;
+  showPanel: (visible: boolean) => void;
   loading: boolean;
   error: Error;
+  showAdd: boolean;
 };
 
 const Container = styled.div`
   // border: 1px solid blue;
   width: 100%;
   height: 100%;
-  overflow: none;
+  overflow: hidden;
 `;
 
 @connect(
@@ -25,11 +27,19 @@ const Container = styled.div`
     loading: state.app.loading,
     error: state.app.error,
   }),
-  { loadWorkflow }
+  { loadWorkflow, showPanel }
 )
 export class Workflow extends Component<Props> {
+  public state = {
+    showAdd: false,
+  };
   componentWillMount() {
+    this.props.showPanel(false);
     this.props.loadWorkflow();
+  }
+
+  componentWillUnmount() {
+    this.props.showPanel(true);
   }
 
   render() {
@@ -43,14 +53,10 @@ export class Workflow extends Component<Props> {
 
     return (
       <>
-        {/* <TopBar /> */}
-        {/* <Sidebar /> */}
-        {/* <Panel /> */}
         <Container>
           <Canvas />
         </Container>
-        {/* <AddModal /> */}
-        {/* <Test /> */}
+        {this.state.showAdd && <AddModal />}
       </>
     );
   }
