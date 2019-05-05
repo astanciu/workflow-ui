@@ -7,3 +7,5 @@ export * from './Login';
 export * from './Logout';
 export * from './LoginCallback';
 export * from './ErrorComponent';
+
+export * from './Things';

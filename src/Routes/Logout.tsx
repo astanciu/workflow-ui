@@ -4,9 +4,22 @@ import { logout } from 'ReduxState/actions';
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
 import { BareLayout } from 'Components/Layout/Bare';
-export const Logout = (props) => {
+import { Spinner } from 'Components';
+export const Logout = ({ location }) => {
   const dispatch = useDispatch();
-  dispatch(logout());
+
+  let isDone = false;
+  if (location.search) {
+    const search = new URLSearchParams(location.search);
+    const done = search.get('done') || false;
+    isDone = done === 'true';
+  }
+
+  if (!isDone) {
+    dispatch(logout());
+
+    return <Spinner />;
+  }
 
   return (
     <BareLayout center>

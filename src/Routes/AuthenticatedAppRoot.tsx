@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Dashboard, Adapters, Workflows, NotFound } from 'Routes';
+import { Dashboard, Adapters, Workflows, NotFound, Things } from 'Routes';
 import { Workflow } from 'Workflow';
 import { Layout } from 'Components/Layout/Core';
 
@@ -13,6 +13,7 @@ export const AppRoot = ({ match }) => {
         <Route exact path={`${match.path}workflows`} component={Workflows} />
         <Route exact path={`${match.path}workflows/:id`} component={Workflow} />
 
+        <Route exact path={`${match.path}things`} component={Things} />
         <Route render={(props) => <NotFound {...props} source="App" />} />
       </Switch>
     </Layout>
