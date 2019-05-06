@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Dashboard, Adapters, Workflows, NotFound, Things } from 'Routes';
-import { Workflow } from 'Workflow';
+import { Workflow } from 'Routes/Workflow';
 import { Layout } from 'Components/Layout/Core';
 
 export const AppRoot = ({ match }) => {

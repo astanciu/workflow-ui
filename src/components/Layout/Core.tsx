@@ -40,6 +40,7 @@ const Right = styled.div`
   box-shadow: -1px 0px 3px 0px #00000021
   z-index: 10;
   overflow-y: auto;
+
 `;
 
 export const Layout = ({ children }) => {
@@ -50,7 +51,12 @@ export const Layout = ({ children }) => {
         <SideBar />
       </Left>
       <Center showPanel={showPanel}>{children}</Center>
-      {showPanel && <Right id="right-bar">right</Right>}
+      {showPanel && (
+        <Right id="side-panel">
+          <h1>Welcome</h1>
+          <p>This is a test</p>
+        </Right>
+      )}
     </Root>
   );
 };

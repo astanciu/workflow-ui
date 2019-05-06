@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import workflow1 from 'samples/workflow1';
+import { workflow1 } from 'samples/workflows';
 
 import { Auth } from 'Core';
 

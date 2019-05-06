@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { NodeListWrapper, NodeItemWrapper, IconContainer, Content, Title, Description } from './NodeItemStyles';
-import { HTMLNodeIcon } from './NodeIcon';
-import { nodes } from '../../samples/library';
+import { HTMLNodeIcon } from 'Components/NodeIcon';
+import { nodes } from 'samples/library';
 
 const makeNode = (node) => {
   return (

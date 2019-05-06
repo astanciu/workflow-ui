@@ -6,3 +6,15 @@ h1.ant-typography {
   background: none;
   color: $title-color;
 }
+
+.ant-input-search input {
+  background-color: hsla(210, 15%, 87%, 1);
+}
+
+.ant-tag {
+  font-size: 0.6rem;
+  line-height: 1rem;
+  &:last-child{
+    margin-right: 0px;
+  }
+}

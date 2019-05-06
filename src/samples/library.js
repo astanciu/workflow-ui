@@ -3,43 +3,50 @@ export const nodes = [
     name: 'Add Thing',
     id: '1',
     icon: 'plus-circle',
-    description: 'Add a thing to the workflow'
+    description: 'Add a thing to the workflow',
+    version: '0.0.1',
   },
   {
     name: 'Contact',
     id: '2',
     icon: 'address-book',
-    description: 'Get contact'
+    description: 'Get contact',
+    version: '0.1.0',
   },
-  { name: 'Magnet', id: '3', icon: 'magnet', description: 'Create a magnet' },
+  { name: 'Magnet', id: '3', icon: 'magnet', description: 'Create a magnet', version: '1.0.1' },
   {
     name: 'Bulk Mail',
     id: '4',
     icon: 'mail-bulk',
-    description: 'Send some bulk emails'
+    description: 'Send some bulk emails',
+    version: '2.0.1',
   },
   {
     name: 'Bike Time',
     id: '5',
     icon: 'motorcycle',
-    description: 'Ride a bike'
+    description: 'Ride a bike',
+    version: '0.0.1',
   },
   {
     name: 'Color',
     id: '6',
     icon: 'palette',
-    description: 'Change the colors'
+    description: 'Change the colors',
+    version: '2.0.0',
   },
   {
     name: 'Reply',
     id: '7',
     icon: 'reply',
-    description: 'Send a reply'
+    description: 'Send a reply',
+    version: '2.0.0',
   },
   {
     name: 'Print it',
     id: '8',
     icon: 'print',
-    description: 'Print the thing out'
-  }
+    description: 'Print the thing out',
+    version: '2.0.0',
+  },
 ];
