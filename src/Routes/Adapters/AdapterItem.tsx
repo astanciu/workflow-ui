@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Tag, Button, Avatar } from 'antd';
+import { Tag } from 'antd';
 import { Portal } from 'Components/Portal';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
 import { AdapterPanel } from './AdapterPanel';
@@ -65,10 +65,10 @@ const Right = styled.div`
   margin-left: auto;
 `;
 
-const TimeStampContainer = styled.div`
-  font-size: 0.7em;
-  opacity: 0.8;
-`;
+// const TimeStampContainer = styled.div`
+//   font-size: 0.7em;
+//   opacity: 0.8;
+// `;
 
 export const AdapterItem = ({ adapter, selected, select }) => {
   return (

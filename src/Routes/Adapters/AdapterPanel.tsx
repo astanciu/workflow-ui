@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Tag, Button, Avatar } from 'antd';
-import { Portal } from 'Components/Portal';
-import { HTMLNodeIcon } from 'Components/NodeIcon';
+// import { Tag, Button, Avatar } from 'antd';
+
+// import { HTMLNodeIcon } from 'Components/NodeIcon';
 
 const Container = styled.div`
   border: 1px solid red;

@@ -6,15 +6,8 @@ import { Button, Tabs, Input } from 'antd';
 import { AdapterItem } from './AdapterItem';
 import { Portal } from 'Components/Portal';
 
-import { Data, useGetData } from 'Core/Data';
+import { useGetData } from 'Core/Data';
 import { Spinner } from 'Components';
-
-const AdapterWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 
 const Grid = styled.div`
   display: grid;
@@ -30,10 +23,15 @@ export const Adapters = (props) => {
   const [loading, adapters, error] = useGetData();
   const [tab, setTab] = useState('all');
 
+  if (error) {
+    console.log(error);
+  }
+
   if (loading) {
     return <Spinner />;
   }
-  const list = (adapters || []).map((a) => (
+
+  const list = (adapters as any[])!.map((a) => (
     <AdapterItem key={a.id} adapter={a} selected={a.id === selectedAdapter} select={select} />
   ));
 
@@ -42,7 +40,6 @@ export const Adapters = (props) => {
       <Input.Search size="small" />
     </div>
   );
-  console.log(tab);
   return (
     <Page empty={true}>
       <Page.Header>
@@ -53,7 +50,7 @@ export const Adapters = (props) => {
       </Page.Header>
       <Tabs
         activeKey={tab}
-        // defaultActiveKey="all"
+        defaultActiveKey="all"
         onChange={(key) => setTab(key)}
         size="small"
         animated={false}
