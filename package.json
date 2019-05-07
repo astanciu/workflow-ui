@@ -17,6 +17,7 @@
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-dom": "^16.8.4",
+    "react-monaco-editor": "^0.25.1",
     "react-redux": "^7.1.0-alpha.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",

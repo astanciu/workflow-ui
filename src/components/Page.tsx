@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  height: 100%;
 `;
 
 const Header = styled.div`
