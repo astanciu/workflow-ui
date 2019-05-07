@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export const useSelectedItem = (domEl) => {
-  const [selectedItem, select] = useState('');
+export const useSelectedItem = (domEl, defaultSelected = '') => {
+  const [selectedItem, select] = useState(defaultSelected);
   useEffect(() => {
     const handleClick = (e) => {
       let node = domEl.current;
@@ -9,7 +9,7 @@ export const useSelectedItem = (domEl) => {
         if (domEl && domEl.current && domEl.current.contains(e.target)) {
           return;
         }
-        select('');
+        // select('');
       }
     };
     document.addEventListener('mousedown', handleClick);

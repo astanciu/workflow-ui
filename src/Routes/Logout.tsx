@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from 'ReduxState/actions';
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
-import { BareLayout } from 'Components/Layout/Bare';
+import { BareLayout } from 'Components/RootLayout/Bare';
 import { Spinner } from 'Components';
 export const Logout = ({ location }) => {
   const dispatch = useDispatch();

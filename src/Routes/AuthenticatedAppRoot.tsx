@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Dashboard, Adapters, Workflows, NotFound, Things } from 'Routes';
+import { Dashboard, Adapters, CodeEditor, Workflows, NotFound, Things } from 'Routes';
 import { Workflow } from 'Routes/Workflow';
-import { Layout } from 'Components/Layout/Core';
+import { Layout } from 'Components/RootLayout/Core';
 
 export const AppRoot = ({ match }) => {
   return (
@@ -10,6 +10,7 @@ export const AppRoot = ({ match }) => {
       <Switch>
         <Route exact path={`${match.path}`} component={Dashboard} />
         <Route exact path={`${match.path}adapters`} component={Adapters} />
+        <Route exact path={`${match.path}adapters/code/:id`} component={CodeEditor} />
         <Route exact path={`${match.path}workflows`} component={Workflows} />
         <Route exact path={`${match.path}workflows/:id`} component={Workflow} />
 

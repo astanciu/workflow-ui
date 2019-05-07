@@ -1,6 +1,7 @@
 export * from './NotFound';
 export * from './Dashboard';
 export * from './Adapters';
+export * from './CodeEditor';
 export * from './Workflow';
 export * from './Workflows';
 export * from './Login';

@@ -19,7 +19,7 @@ const Grid = styled.div`
 
 export const Adapters = (props) => {
   const domEl = useRef<HTMLDivElement>(null);
-  const [selectedAdapter, select] = useSelectedItem(domEl);
+  const [selectedAdapter, select] = useSelectedItem(domEl, '1');
   const [loading, adapters, error] = useGetData();
   const [tab, setTab] = useState('all');
 
@@ -30,7 +30,6 @@ export const Adapters = (props) => {
   if (loading) {
     return <Spinner />;
   }
-
   const list = (adapters as any[])!.map((a) => (
     <AdapterItem key={a.id} adapter={a} selected={a.id === selectedAdapter} select={select} />
   ));
