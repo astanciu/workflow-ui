@@ -1,0 +1,638 @@
+@class-pfx: ~'code-tabs';
+
+@code-bg: #dbe2e6;
+@active-tab-bg: @code-bg; //@gray-bg;
+@active-tab-fg: darken(@text-color, 20%);
+@inactive-tab-bg: darken(@active-tab-bg, 10%);
+
+@tabbar-bg: transparent; //darken(@gray-bg, 7%);
+@tabpane-bg: @gray-bg;
+
+@tabs-hover-color: darken(@text-color, 20%);
+@tabs-bar-margin: 0 0 0 0;
+@border-color-split: #b6bdc1;
+
+.@{class-pfx} {
+
+
+  &&-card &-card-bar &-nav-container {
+    height: @tabs-card-height;
+    background-color: @tabbar-bg;
+  }
+
+  &&-card &-card-bar &-ink-bar {
+    visibility: hidden;
+  }
+
+  &&-card &-card-bar &-tab {
+    height: @tabs-card-height;
+    margin: 0;
+    margin-right: 2px;
+    padding: 0 16px;
+    line-height: @tabs-card-height - 2px;
+    background: @inactive-tab-bg;
+    border: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    transition: all 0.3s @ease-in-out;
+  }
+
+  &&-card &-card-bar &-tab-active {
+    height: @tabs-card-height;
+    color: @active-tab-fg;
+    background: @active-tab-bg;
+    border-color: @border-color-split;
+    border-bottom: @border-width-base solid @active-tab-bg;
+  }
+
+  &&-card &-card-bar &-tab-inactive {
+    padding: 0;
+  }
+
+  &&-card &-card-bar &-nav-wrap {
+    margin-bottom: 0;
+  }
+
+  &&-card &-card-bar &-tab &-close-x {
+    width: 16px;
+    height: 16px;
+    height: @font-size-base;
+    margin-right: -5px;
+    margin-left: 3px;
+    overflow: hidden;
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+    vertical-align: middle;
+    transition: all 0.3s;
+
+    &:hover {
+      color: @heading-color;
+    }
+  }
+
+  &&-card &-card-content>&-tabpane,
+  &&-editable-card &-card-content>&-tabpane {
+    transition: none !important;
+    background-color: @tabpane-bg;
+    height: 100%;
+
+    &-inactive {
+      overflow: hidden;
+    }
+  }
+
+  &&-card &-card-bar &-tab:hover .@{iconfont-css-prefix}-close {
+    opacity: 1;
+  }
+
+  &-extra-content {
+    line-height: @tabs-card-height;
+
+    .@{class-pfx}-new-tab {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      color: @text-color;
+      font-size: 12px;
+      line-height: 20px;
+      text-align: center;
+      border: @border-width-base @border-style-base @border-color-split;
+      border-radius: @border-radius-sm;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        color: @active-tab-fg;
+        border-color: @active-tab-fg;
+      }
+
+      svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+      }
+    }
+  }
+
+  // https://github.com/ant-design/ant-design/issues/4669
+  &-vertical&-card &-card-bar&-left-bar,
+  &-vertical&-card &-card-bar&-right-bar {
+    .@{class-pfx}-nav-container {
+      height: auto;
+    }
+
+    .@{class-pfx}-tab {
+      margin-bottom: 8px;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+
+      &-active {
+        padding-bottom: 4px;
+      }
+
+      &:last-child {
+        margin-bottom: 8px;
+      }
+    }
+
+    .@{class-pfx}-new-tab {
+      width: 90%;
+    }
+  }
+
+  &-vertical&-card&-left &-card-bar&-left-bar {
+    .@{class-pfx}-nav-wrap {
+      margin-right: 0;
+    }
+
+    .@{class-pfx}-tab {
+      margin-right: 1px;
+      border-right: 0;
+      border-radius: @border-radius-base 0 0 @border-radius-base;
+
+      &-active {
+        margin-right: -1px;
+        padding-right: 18px;
+      }
+    }
+  }
+
+  &-vertical&-card&-right &-card-bar&-right-bar {
+    .@{class-pfx}-nav-wrap {
+      margin-left: 0;
+    }
+
+    .@{class-pfx}-tab {
+      margin-left: 1px;
+      border-left: 0;
+      border-radius: 0 @border-radius-base @border-radius-base 0;
+
+      &-active {
+        margin-left: -1px;
+        padding-left: 18px;
+      }
+    }
+  }
+
+  // https://github.com/ant-design/ant-design/issues/9104
+  & &-card-bar&-bottom-bar &-tab {
+    height: auto;
+    border-top: 0;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+  }
+
+  & &-card-bar&-bottom-bar &-tab-active {
+    padding-top: 1px;
+    padding-bottom: 0;
+    color: @primary-color;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.@{class-pfx} {
+  .reset-component;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  .clearfix;
+
+  &-ink-bar {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    height: 2px;
+    background-color: @tabs-ink-bar-color;
+    transform-origin: 0 0;
+  }
+
+  &-bar {
+    margin: @tabs-bar-margin;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    outline: none;
+    transition: padding 0.3s @ease-in-out;
+  }
+
+  &-nav-container {
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: -1px;
+    overflow: hidden;
+    font-size: @tabs-title-font-size;
+    line-height: @line-height-base;
+    white-space: nowrap;
+    transition: padding 0.3s @ease-in-out;
+    .clearfix;
+
+    &-scrolling {
+      padding-right: @tabs-scrolling-size;
+      padding-left: @tabs-scrolling-size;
+    }
+  }
+
+  // https://github.com/ant-design/ant-design/issues/9104
+  &-bottom &-bottom-bar {
+    margin-top: 16px;
+    margin-bottom: 0;
+    border-top: @border-width-base @border-style-base @border-color-split;
+    border-bottom: none;
+  }
+
+  &-bottom &-bottom-bar &-ink-bar {
+    top: 1px;
+    bottom: auto;
+  }
+
+  &-bottom &-bottom-bar &-nav-container {
+    margin-top: -1px;
+    margin-bottom: 0;
+  }
+
+  &-tab-prev,
+  &-tab-next {
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 100%;
+    color: @text-color-secondary;
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: width 0.3s @ease-in-out, opacity 0.3s @ease-in-out, color 0.3s @ease-in-out;
+    user-select: none;
+    pointer-events: none;
+
+    &.@{class-pfx}-tab-arrow-show {
+      width: @tabs-scrolling-size;
+      height: 100%;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    &:hover {
+      color: @text-color;
+    }
+
+    &-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-weight: bold;
+      font-style: normal;
+      font-variant: normal;
+      line-height: inherit;
+      text-align: center;
+      text-transform: none;
+      transform: translate(-50%, -50%);
+
+      &-target {
+        display: block;
+        .iconfont-size-under-12px(10px);
+      }
+    }
+  }
+
+  &-tab-btn-disabled {
+    cursor: not-allowed;
+
+    &,
+    &:hover {
+      color: @disabled-color;
+    }
+  }
+
+  &-tab-next {
+    right: 2px;
+  }
+
+  &-tab-prev {
+    left: 0;
+
+    :root & {
+      filter: none;
+    }
+  }
+
+  &-nav-wrap {
+    margin-bottom: -1px;
+    overflow: hidden;
+  }
+
+  &-nav-scroll {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &-nav {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    transition: transform 0.3s @ease-in-out;
+
+    &::before,
+    &::after {
+      display: table;
+      content: ' ';
+    }
+
+    &::after {
+      clear: both;
+    }
+
+    .@{class-pfx}-tab {
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+      height: 100%;
+      margin: @tabs-horizontal-margin;
+      padding: @tabs-horizontal-padding;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s @ease-in-out;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        color: @tabs-hover-color;
+      }
+
+      &:active {
+        color: @tabs-active-color;
+      }
+
+      .@{iconfont-css-prefix} {
+        margin-right: 8px;
+      }
+
+      &-disabled {
+
+        &,
+        &:hover {
+          color: @disabled-color;
+          cursor: not-allowed;
+        }
+      }
+
+      &-active {
+        color: @tabs-highlight-color;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .@{class-pfx}-large-bar {
+    .@{class-pfx}-nav-container {
+      font-size: @tabs-title-font-size-lg;
+    }
+
+    .@{class-pfx}-tab {
+      padding: @tabs-horizontal-padding-lg;
+    }
+  }
+
+  .@{class-pfx}-small-bar {
+    .@{class-pfx}-nav-container {
+      font-size: @tabs-title-font-size-sm;
+    }
+
+    .@{class-pfx}-tab {
+      padding: @tabs-horizontal-padding-sm;
+    }
+  }
+
+  // Horizontal Content
+  .@{class-pfx}-top-content,
+  .@{class-pfx}-bottom-content {
+    width: 100%;
+    top: 40px;
+    position: absolute;
+    bottom: 0px;
+
+    >.@{class-pfx}-tabpane {
+      flex-shrink: 0;
+      width: 100%;
+      opacity: 1;
+      transition: opacity 0.45s;
+    }
+
+    >.@{class-pfx}-tabpane-inactive {
+      .tabs-hidden-content();
+      display: none;
+    }
+
+    &.@{class-pfx}-content-animated {
+      display: flex;
+      flex-direction: row;
+      transition: margin-left 0.3s @ease-in-out;
+      will-change: margin-left;
+    }
+  }
+
+  // Vertical Bar
+  .@{class-pfx}-left-bar,
+  .@{class-pfx}-right-bar {
+    height: 100%;
+    border-bottom: 0;
+
+    &-tab-prev,
+    &-tab-next {
+      width: @tabs-scrolling-size;
+      height: 0;
+      transition: height 0.3s @ease-in-out, opacity 0.3s @ease-in-out, color 0.3s @ease-in-out;
+    }
+
+    &-tab-prev.@{class-pfx}-tab-arrow-show,
+    &-tab-next.@{class-pfx}-tab-arrow-show {
+      width: 100%;
+      height: @tabs-scrolling-size;
+    }
+
+    .@{class-pfx}-tab {
+      display: block;
+      float: none;
+      margin: @tabs-vertical-margin;
+      padding: @tabs-vertical-padding;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .@{class-pfx}-extra-content {
+      text-align: center;
+    }
+
+    .@{class-pfx}-nav-scroll {
+      width: auto;
+    }
+
+    .@{class-pfx}-nav-container,
+    .@{class-pfx}-nav-wrap {
+      height: 100%;
+    }
+
+    .@{class-pfx}-nav-container {
+      margin-bottom: 0;
+
+      &.@{class-pfx}-nav-container-scrolling {
+        padding: @tabs-scrolling-size 0;
+      }
+    }
+
+    .@{class-pfx}-nav-wrap {
+      margin-bottom: 0;
+    }
+
+    .@{class-pfx}-nav {
+      width: 100%;
+    }
+
+    .@{class-pfx}-ink-bar {
+      top: 0;
+      bottom: auto;
+      left: auto;
+      width: 2px;
+      height: auto;
+    }
+
+    .@{class-pfx}-tab-next {
+      bottom: 0;
+      width: 100%;
+      height: @tabs-scrolling-size;
+    }
+
+    .@{class-pfx}-tab-prev {
+      top: 0;
+      width: 100%;
+      height: @tabs-scrolling-size;
+    }
+  }
+
+  // Vertical Content
+  .@{class-pfx}-left-content,
+  .@{class-pfx}-right-content {
+    width: auto;
+    margin-top: 0 !important;
+    overflow: hidden;
+  }
+
+  // Vertical - Left
+  .@{class-pfx}-left-bar {
+    float: left;
+    margin-right: -1px;
+    margin-bottom: 0;
+    border-right: @border-width-base @border-style-base @border-color-split;
+
+    .@{class-pfx}-tab {
+      text-align: right;
+    }
+
+    .@{class-pfx}-nav-container {
+      margin-right: -1px;
+    }
+
+    .@{class-pfx}-nav-wrap {
+      margin-right: -1px;
+    }
+
+    .@{class-pfx}-ink-bar {
+      right: 1px;
+    }
+  }
+
+  .@{class-pfx}-left-content {
+    padding-left: 24px;
+    border-left: @border-width-base @border-style-base @border-color-split;
+  }
+
+  // Vertical - Right
+  .@{class-pfx}-right-bar {
+    float: right;
+    margin-bottom: 0;
+    margin-left: -1px;
+    border-left: @border-width-base @border-style-base @border-color-split;
+
+    .@{class-pfx}-nav-container {
+      margin-left: -1px;
+    }
+
+    .@{class-pfx}-nav-wrap {
+      margin-left: -1px;
+    }
+
+    .@{class-pfx}-ink-bar {
+      left: 1px;
+    }
+  }
+
+  .@{class-pfx}-right-content {
+    padding-right: 24px;
+    border-right: @border-width-base @border-style-base @border-color-split;
+  }
+}
+
+.@{class-pfx}-top .@{class-pfx}-ink-bar-animated,
+.@{class-pfx}-bottom .@{class-pfx}-ink-bar-animated {
+  transition: transform 0.3s @ease-in-out, width 0.3s @ease-in-out, left 0.3s @ease-in-out;
+}
+
+.@{class-pfx}-left .@{class-pfx}-ink-bar-animated,
+.@{class-pfx}-right .@{class-pfx}-ink-bar-animated {
+  transition: transform 0.3s @ease-in-out, height 0.3s @ease-in-out, top 0.3s @ease-in-out;
+}
+
+// No animation
+.tabs-no-animation() {
+  >.@{class-pfx}-content-animated {
+    margin-left: 0 !important;
+    transform: none !important;
+  }
+
+  >.@{class-pfx}-tabpane-inactive {
+    .tabs-hidden-content();
+  }
+}
+
+.no-flex,
+.@{class-pfx}-no-animation {
+  >.@{class-pfx}-content {
+    .tabs-no-animation();
+  }
+}
+
+.@{class-pfx}-left-content,
+.@{class-pfx}-right-content {
+  .tabs-no-animation();
+}

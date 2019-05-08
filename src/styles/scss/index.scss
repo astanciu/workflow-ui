@@ -1,4 +1,3 @@
-@import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700');
 
 
@@ -42,6 +41,19 @@ body {
 
 #root{
   height: 100%;
+}
+
+.react-monaco-editor-container {
+  border: 1px solid #c7cbce;
+  background-color: #e4eaef;
+
+  // .monaco-editor {
+  //   background-color: #e4eaef;
+
+  //   .margin {
+  //     background-color: #e4eaef;
+  //   }
+  // }
 }
 
 /*

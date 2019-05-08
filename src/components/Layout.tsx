@@ -6,6 +6,8 @@ export const FlexRow = styled.div`
   flex-direction: row;
   align-items: center;
   ${({ style }) => style}
+
+  ${({ hover }) => hover && `:hover { cursor: pointer;}`}
 `;
 
 export const FlexCol = styled.div`

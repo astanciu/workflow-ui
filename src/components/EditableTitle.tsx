@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-const Title = styled.div`
+export const Title = styled.div`
   font-size: 1.2em;
   font-weight: 700;
   margin: 0px 2px 0px 10px;

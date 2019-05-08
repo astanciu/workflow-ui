@@ -1,9 +1,9 @@
 export const nodes = [
   {
-    name: 'Add Thing',
+    name: 'Send Email',
     id: '1',
-    icon: 'plus-circle',
-    description: 'Add a thing to the workflow',
+    icon: 'envelope',
+    description: 'Send an email using Sendgrid',
     version: '0.0.1',
   },
   {

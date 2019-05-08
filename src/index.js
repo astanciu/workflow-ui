@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Order here matters, import scss before other components
-import './styles/index.scss';
+// import './styles/index.scss';
+import './styles/less/index.less';
 
 import { Root } from './Root';
 import { store, history } from 'ReduxState/index';

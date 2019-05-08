@@ -55,7 +55,7 @@ export const Adapters = (props) => {
         animated={false}
         tabBarGutter={5}
         tabBarExtraContent={searchBar}
-        tabBarStyle={{ borderBottom: '1px solid #c4cfd9', textTransform: 'uppercase' }}
+        // tabBarStyle={{ borderBottom: '1px solid #c4cfd9', textTransform: 'uppercase' }}
       >
         <Tabs.TabPane tab="All" key="all">
           <Grid ref={domEl}>{list}</Grid>

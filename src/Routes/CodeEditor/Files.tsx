@@ -1,17 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { Button } from 'antd';
 import { FlexCol } from 'Components/Layout';
+
 const Container = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 150px;
 `;
-export const Files = (props) => {
+export const Files = ({ fs, onFileSelect }) => {
+  const list = Object.keys(fs).map((file) => {
+    return (
+      <Button key={file} type="link" onClick={() => onFileSelect(file, fs[file])}>
+        {file}
+      </Button>
+    );
+  });
   return (
     <Container>
       <FlexCol style={{ alignItems: 'flex-start' }}>
         <h3>Files</h3>
-        <p>Add more files</p>
+        {list}
       </FlexCol>
     </Container>
   );
