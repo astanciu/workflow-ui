@@ -59,7 +59,7 @@ const Version = styled.div`
 const IconWrapper = styled.div`
   width: 30px;
   height: 30px;
-  margin-right: 5px;
+  margin-right: 2px;
 `;
 const Right = styled.div`
   margin-left: auto;

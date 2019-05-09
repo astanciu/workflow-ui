@@ -1,10 +1,10 @@
-const get = require('./lib/uuid')
+const util = require('./lib/module')
 
-function main(){
-  let id = get()
-  console.log('Got ID: ' + id)
-  
-  return id;
+module.exports = async function(input){
+  let output = input;
+  output.id = util.uuid();
+  output.updated_at = Date.now()
+  output.ip = await util.getIP()
+
+  return output;
 }
-
-main()

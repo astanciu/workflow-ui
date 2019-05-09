@@ -6,32 +6,35 @@ export const adapter = {
   version: '0.0.1',
   files: {
     // index.j
-    'index.js': `const get = require('./uuid')
+    'index.js': `const util = require('./module')
 
-    function main(){
-      let id = get()
-      console.log('Got ID: ' + id)
-      
-      return id;
-    }
-    
-    main()`,
+module.exports = async function (input) {
+  let output = input;
+  output.id = util.uuid();
+  output.updated_at = Date.now()
+  output.ip = await util.getIP()
+
+  return output;
+}`,
 
     // uuid.js
-    'uuid.js': `const uuid = require('uuid/v4')
+    'module.js': `const uuid = require('uuid/v4')
+const publicIp = require('public-ip');
 
-    const getUUID = () => uuid()
-    module.exports = getUUID`,
+module.exports.getIP = async () => await publicIp.v4()
+module.exports.uuid = () => uuid()
+`,
 
     // pacakge.json
     'package.json': `{
-      "name": "module",
-      "version": "1.0.0",
-      "main": "index.js",
-      "license": "MIT",
-      "dependencies": {
-        "uuid": "^3.3.2"
-      }
-    }`,
+  "name": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "public-ip": "^3.1.0",
+    "uuid": "^3.3.2"
+  }
+}`,
   },
 };

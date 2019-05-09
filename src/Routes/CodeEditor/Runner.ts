@@ -21,9 +21,6 @@ const cache = {
 };
 
 export const Run = async (files) => {
-  console.log(Velcro);
-  console.log(files);
-
   const resolverHost = new Velcro.ResolverHostCompound({
     'https://unpkg.com/': new Velcro.ResolverHostUnpkg(),
     'file:///': new Velcro.ResolverHostMemory(files),
@@ -35,10 +32,10 @@ export const Run = async (files) => {
     resolverHost,
   });
 
-  const importStart = Date.now();
+  // const importStart = Date.now();
   const render = await runtime.import('file:///index.js');
-  const importEnd = Date.now();
+  // const importEnd = Date.now();
+  // const time = importEnd - importStart;
 
-  console.log(`Done in ${importEnd - importStart}ms`);
   return render;
 };

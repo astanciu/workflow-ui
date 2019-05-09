@@ -15,7 +15,7 @@ const Title = styled.div`
 `;
 const Panel = styled.div`
   border: 1px solid #dad9d9;
-  border-top: 5px solid ${({ color }) => color};
+  border-top: 3px solid ${({ color }) => color};
   border-radius: 3px;
   background-color: #fafbfd;
   box-shadow: 0px 2px 5px 0px #e0e0e06b;
@@ -29,7 +29,7 @@ const IconWrapper = styled.div`
   width: 28px;
   height: 28px;
   position: relative;
-  top: -21px;
+  top: -20px;
   border-radius: 20px;
   margin: 0px auto;
   background-color: #1b96ff;

@@ -10,6 +10,8 @@ import { useGetData } from 'Core/Data';
 import { Spinner } from 'Components';
 
 const Grid = styled.div`
+  margin-top: 20px;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
