@@ -1,4 +1,4 @@
-import throttle from 'lodash/throttle';
+import throttle from 'lodash-es/throttle';
 import { listen, multitouch } from 'popmotion';
 
 export default class EventManager {
@@ -11,7 +11,7 @@ export default class EventManager {
       tap: [],
       move: [],
       moveEnd: [],
-      pinch: []
+      pinch: [],
     };
     this.isClick = false;
     this.isDragging = false;
@@ -39,7 +39,7 @@ export default class EventManager {
   };
 
   setupPinch = () => {
-    listen(this.el, 'touchstart').start(e => {
+    listen(this.el, 'touchstart').start((e) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -49,7 +49,7 @@ export default class EventManager {
           this.zooming = true;
           const center = {
             x: (touches[0].x + touches[1].x) / 2,
-            y: (touches[0].y + touches[1].y) / 2
+            y: (touches[0].y + touches[1].y) / 2,
           };
 
           this.scale = scale;
@@ -57,8 +57,8 @@ export default class EventManager {
             detail: {
               x: center.x,
               y: center.y,
-              scale
-            }
+              scale,
+            },
           });
 
           this.callHandler('pinch', customEvent);
@@ -66,7 +66,7 @@ export default class EventManager {
     });
   };
 
-  debugEvent = e => {
+  debugEvent = (e) => {
     if (this.debug) console.log(`${this.name} : ${e.type}`, e);
   };
 
@@ -79,19 +79,15 @@ export default class EventManager {
       if (this.data) {
         event.data = this.data;
       }
-      this.handlers[eventName].forEach(fn => fn(event));
+      this.handlers[eventName].forEach((fn) => fn(event));
     }
   };
 
-  getEvent = e => {
+  getEvent = (e) => {
     if (e.targetTouches) {
-      let event = Array.from(e.touches).find(
-        t => t.identifier === this.touchId
-      );
+      let event = Array.from(e.touches).find((t) => t.identifier === this.touchId);
       if (!event) {
-        event = Array.from(e.changedTouches).find(
-          t => t.identifier === this.touchId
-        );
+        event = Array.from(e.changedTouches).find((t) => t.identifier === this.touchId);
       }
       return event;
     } else {
@@ -99,7 +95,7 @@ export default class EventManager {
     }
   };
 
-  _mousedown = event => {
+  _mousedown = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.debugEvent(event);
@@ -118,12 +114,10 @@ export default class EventManager {
 
     this.mouseDown = true;
     this.isClick = true;
-    this.touchId = event.changedTouches
-      ? event.changedTouches[0].identifier
-      : undefined;
+    this.touchId = event.changedTouches ? event.changedTouches[0].identifier : undefined;
   };
 
-  _mousemove = throttle(rawEvent => {
+  _mousemove = throttle((rawEvent) => {
     rawEvent.preventDefault();
     rawEvent.stopPropagation();
     if (rawEvent.touches && rawEvent.touches.length > 1) return;
@@ -142,17 +136,13 @@ export default class EventManager {
 
     this.delta = {
       x: event.pageX - this.prevLoc.x,
-      y: event.pageY - this.prevLoc.y
+      y: event.pageY - this.prevLoc.y,
     };
 
     // If we're not already dragging and the delta is 0 or 1, treat as possible click
     // (isClick evaluates on mouseUp, so it could be reset if mouse moves a bit more
     //  and delta increases)
-    if (
-      !this.isDragging &&
-      Math.abs(this.delta.x) <= 1 &&
-      Math.abs(this.delta.y) <= 1
-    ) {
+    if (!this.isDragging && Math.abs(this.delta.x) <= 1 && Math.abs(this.delta.y) <= 1) {
       this.isClick = true;
       return;
     }
@@ -169,8 +159,8 @@ export default class EventManager {
       detail: {
         x: event.pageX,
         y: event.pageY,
-        delta: this.delta
-      }
+        delta: this.delta,
+      },
     });
 
     this.prevLoc = { x: event.pageX, y: event.pageY };
@@ -179,7 +169,7 @@ export default class EventManager {
     this.callHandler('move', customEvent);
   }, 1000 / 60);
 
-  _mouseup = rawEvent => {
+  _mouseup = (rawEvent) => {
     rawEvent.preventDefault();
     rawEvent.stopPropagation();
 
@@ -199,17 +189,15 @@ export default class EventManager {
     this.mouseDown = false;
     this.prevLoc = null;
 
-    const event = rawEvent.changedTouches
-      ? rawEvent.changedTouches[0].identifier
-      : rawEvent;
+    const event = rawEvent.changedTouches ? rawEvent.changedTouches[0].identifier : rawEvent;
 
     // This was a click, trigger 'tap'
     if (this.isClick) {
       const customEvent = new CustomEvent('tap', {
         detail: {
           x: event.pageX,
-          y: event.pageY
-        }
+          y: event.pageY,
+        },
       });
       this.callHandler('tap', customEvent);
     }
@@ -221,8 +209,8 @@ export default class EventManager {
           x: event.pageX,
           y: event.pageY,
           delta: this.delta,
-          rawEvent: event
-        }
+          rawEvent: event,
+        },
       });
       this.callHandler('moveEnd', customEvent);
     }
@@ -232,19 +220,19 @@ export default class EventManager {
     this.isDragging = false;
   };
 
-  onTap = fn => {
+  onTap = (fn) => {
     this.addHandler('tap', fn);
   };
 
-  onMove = fn => {
+  onMove = (fn) => {
     this.addHandler('move', fn);
   };
 
-  onMoveEnd = fn => {
+  onMoveEnd = (fn) => {
     this.addHandler('moveEnd', fn);
   };
 
-  onPinch = fn => {
+  onPinch = (fn) => {
     this.setupPinch();
     this.addHandler('pinch', fn);
   };

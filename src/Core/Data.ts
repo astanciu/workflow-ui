@@ -1,7 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { adapter } from 'samples/adapter';
 import { nodes } from 'samples/library';
 
 class DataManager {
+  async get(query: string): Promise<any> {
+    switch (query) {
+      case 'adapter':
+        return adapter;
+      case 'adapters':
+        return nodes;
+      default:
+        return undefined;
+    }
+  }
   async getAdapters(): Promise<Array<any>> {
     return new Promise((res) => setTimeout(() => res(nodes), 500));
   }
@@ -9,24 +20,24 @@ class DataManager {
 
 export const Data = new DataManager();
 
-export const useGetData = () => {
-  const [data, setData] = useState<Array<any>>([]);
+export const useGetData = <T>(query: string): [boolean, T | undefined, Error | undefined] => {
+  const [data, setData] = useState<T>();
   const [error, setError] = useState<undefined | Error>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let didCancel = false;
+    let cancelled = false;
     async function getData() {
       try {
-        if (!didCancel) {
-          setData((await Data.getAdapters()) as []);
+        if (!cancelled) {
+          setData((await Data.get(query)) as T);
         }
 
-        if (!didCancel) {
+        if (!cancelled) {
           setLoading(false);
         }
       } catch (err) {
-        if (!didCancel) {
+        if (!cancelled) {
           setError(err);
           setLoading(false);
         }
@@ -36,9 +47,9 @@ export const useGetData = () => {
     getData();
 
     return () => {
-      didCancel = true;
+      cancelled = true;
     };
-  }, []);
+  }, [query]);
 
   return [loading, data, error];
 };

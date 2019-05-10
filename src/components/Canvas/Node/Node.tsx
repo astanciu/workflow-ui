@@ -6,7 +6,7 @@ import Icon from '../Icon/Icon';
 import { InPort, OutPort } from './Ports';
 import EventManager from '../Util/EventManager.js';
 import { Node, Point } from 'Models';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash-es/isEqual';
 import { selectNode } from 'ReduxState/actions';
 
 type Props = {
@@ -138,7 +138,10 @@ class NodeComponent extends React.Component<Props> {
             strokeWidth="1"
             points="40 0 74.6410162 19.75 74.6410162 59.25 40 79 5.35898385 59.25 5.35898385 19.75"
           />
-          <polygon className={nodeClass} points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25" />
+          <polygon
+            className={nodeClass}
+            points="40 5 70.3108891 22.25 70.3108891 56.75 40 74 9.68911087 56.75 9.68911087 22.25"
+          />
         </g>
 
         <Icon icon={this.props.node.icon} className={nodeIconClass} />

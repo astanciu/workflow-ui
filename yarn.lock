@@ -1579,6 +1579,18 @@
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
   integrity sha512-hRJD2ahnnpLgsj6KWMYSrmXkM3rm2Dl1qkx6IOFD5FnuNPXJIG5L0dhgKXCYTRMGzU4n0wImQ/xfmRc4POUFlg==
 
+"@types/lodash-es@^4.17.3":
+  version "4.17.3"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.3.tgz#87eb0b3673b076b8ee655f1890260a136af09a2d"
+  integrity sha512-iHI0i7ZAL1qepz1Y7f3EKg/zUMDwDfTzitx+AlHhJJvXwenP682ZyGbgPSc5Ej3eEAKVbNWKFuwOadCj5vBbYQ==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.125"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.125.tgz#b5fa71f3080a2136ba2702c390ffe528ec1e3980"
+  integrity sha512-s29jU/MIOSddXeji0TSZPJjf0agnfJYpWeKlr79BbtXlfuYamGVyCNQA2IRi5/plaQiNSxMmNGdvFbdtMMJ3nw==
+
 "@types/lodash@^4.14.122":
   version "4.14.122"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.122.tgz#3e31394c38cf1e5949fb54c1192cbc406f152c6c"
@@ -1718,15 +1730,15 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@velcro/decoder@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/decoder/-/decoder-0.8.0.tgz#196316f07dec5948d8a3b53f4b5cd5f37a24ec05"
-  integrity sha512-fLJuACsCQ5xuU9QAF4lpRs2sNNonVyaSuBoB7qYUhjQkhvjWZ4WqUExxcs6rg4TnLziiUBi9XA6TVHLueUQjaw==
+"@velcro/decoder@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/decoder/-/decoder-0.10.0.tgz#7bb11a0b799013949cd65b8a92536e3c9d8c6feb"
+  integrity sha512-7eZNUYEcgbIMiJJYBtCwtwi505bC+6sIH9ShUJmolAJKjDlozEKCEhO2hlAsO4hCYxn/+OSG1y+k491lV4mIKw==
 
-"@velcro/node-libs@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/node-libs/-/node-libs-0.8.0.tgz#bbd63fe933a70baa61c439b60f16e80006c873ec"
-  integrity sha512-9idRjprZGCTwJB9h1WRV+g7ppRY83JPUlhXVUWyb4f8H94uBU405SU/yil1o/n41JK8utJ8+1LZscqSEhVidTg==
+"@velcro/node-libs@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/node-libs/-/node-libs-0.10.0.tgz#013d156fa942a1f83e28f84a8f3aca7e5a12e9cc"
+  integrity sha512-rLRmpV05WTmkWp8QQoaHyFxQd+SYDJwrjl5sijtnLSHBQ+hr2TqcMEZlRAc0SvD9Xrn+GEbtAxmVWzjrV1cS7A==
   dependencies:
     assert "1.4.1"
     browserify-zlib "^0.2.0"
@@ -1744,58 +1756,58 @@
     util "^0.11.1"
     vmdom "^0.0.23"
 
-"@velcro/resolver-host-compound@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-compound/-/resolver-host-compound-0.8.0.tgz#aba6dc7b26985e8e349f54dad1789d69d3b356a2"
-  integrity sha512-gGmlBTAowPpdJiBIOl/5oxUAiFi5CCVmxWAwpa7au9cnBlext818eHLoPYdUetbA/KFiZ0DoN8HE1QS7VtAojQ==
+"@velcro/resolver-host-compound@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-compound/-/resolver-host-compound-0.10.0.tgz#bedd4991e34788952be6d43a47113b9ce5e45078"
+  integrity sha512-4/EGCSM39OlOyHI6Ald3oquA6kcrD3ZFISVaM/omtmgeCe0ajrtY1zSRgMUNRIRCBGmNZfOOkwLRSt54fNxxTw==
   dependencies:
-    "@velcro/resolver" "^0.8.0"
+    "@velcro/resolver" "^0.10.0"
 
-"@velcro/resolver-host-fs@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-fs/-/resolver-host-fs-0.8.0.tgz#d338923ed5ee2d2724470643c8c3cd3e44c31b9a"
-  integrity sha512-JTUPtv98fu1/39TTgOJjgtUdbsiNVEkj+DYTZ0XDItVmn8kVJJMPvsS2y4pPhfA2NlVGek6PrFjaH8EWBzbk3Q==
+"@velcro/resolver-host-fs@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-fs/-/resolver-host-fs-0.10.0.tgz#b1433f2839da1c12ffa13804b4c333679d331e22"
+  integrity sha512-ISoIO2krugnF3IG4DA/F2+qG7kT2jDA1xO3uYQPRxscKHXiBynlk9VY9/OOW0wUGHJbENRRF03Jec1O12za3Dw==
   dependencies:
-    "@velcro/decoder" "^0.8.0"
-    "@velcro/resolver" "^0.8.0"
+    "@velcro/decoder" "^0.10.0"
+    "@velcro/resolver" "^0.10.0"
 
-"@velcro/resolver-host-memory@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-memory/-/resolver-host-memory-0.8.0.tgz#4896dac704370c0963eee9bba37ac23c7d98f700"
-  integrity sha512-gjSOCLOn+yp53IFgUbqIyJm1YPwVCnpd84K7Pg3z+HobZFtcA2ZXXdF+HJ8I5FUKaPl+mFLWiWcFTtuPK28geQ==
+"@velcro/resolver-host-memory@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-memory/-/resolver-host-memory-0.10.0.tgz#26e1274ba2f2f0aef62d82b1e40bc24e46a7f2a9"
+  integrity sha512-0JMQ9atREIRIeFNFN1EQUucTbULlMNhtsv6xsF2rRI8ncuoYlSmKeyFF/TJ9OFTE1MV4RfRi0TNiqFeiKL20uQ==
   dependencies:
-    "@velcro/decoder" "^0.8.0"
-    "@velcro/resolver" "^0.8.0"
+    "@velcro/decoder" "^0.10.0"
+    "@velcro/resolver" "^0.10.0"
 
-"@velcro/resolver-host-unpkg@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-unpkg/-/resolver-host-unpkg-0.8.0.tgz#ec8fdb3dbe3a595e443bccf3b6bde27258ee3698"
-  integrity sha512-+7BwfaOEQ+UjHnfPn+PbTdmKdKlOl7LsWlaxv+0fNZ2SvgcQlQ9sAwa27XRQAbbgpBI8D1LLeKoPWvTbji7arw==
+"@velcro/resolver-host-unpkg@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/resolver-host-unpkg/-/resolver-host-unpkg-0.10.0.tgz#2271bf4c14cb7f8b529672bbb614355fc2e70f51"
+  integrity sha512-LoWhK4yAJQXJ1qWtRLkIw5LFO+7gkgGMFyGtsTh/OZLYqndL4sIhdk2tqjAzajQf8c7lhIUmxVuYsHEsU6upmA==
   dependencies:
-    "@velcro/decoder" "^0.8.0"
-    "@velcro/resolver" "^0.8.0"
+    "@velcro/decoder" "^0.10.0"
+    "@velcro/resolver" "^0.10.0"
     lru-cache "^5.1.1"
     semver "^5.6.0"
 
-"@velcro/resolver@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/resolver/-/resolver-0.8.0.tgz#68468d4a60b7f915b5ff99512484008f5f3fc84b"
-  integrity sha512-+z9R0o+l34pdKDxc4LQFzCZEC4OO0EzG0vn0M5uZ5ianeWQsZu1BRymQyCpbyoEVFjXPU2HnYybkGS20c3zCPQ==
+"@velcro/resolver@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/resolver/-/resolver-0.10.0.tgz#3b13241b3ed53ebf6b74e4f0308286624dcdfbfa"
+  integrity sha512-cWPAY9OFBrviDtlhq3AzblCSij4RNJ1WgvG+ek/Ktw6GfcA4NUg9MtJ4Dpr4xBN0wWHH63KEf7KsVw+iDrgnYQ==
   dependencies:
-    "@velcro/decoder" "^0.8.0"
+    "@velcro/decoder" "^0.10.0"
 
-"@velcro/runtime@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@velcro/runtime/-/runtime-0.8.0.tgz#dba9f13836d9e51bc61cd1998bbc5d6a6d043f92"
-  integrity sha512-fFWlYx6k42nJOxKWPfBNhYs7l7mohpel7l8ruPes8kxsLRoNSuVk+sSOUIpue5gPmFZ9sexqcnCy4YE/v3Lamg==
+"@velcro/runtime@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@velcro/runtime/-/runtime-0.10.0.tgz#175217bff1a027427ff87b2128f4871467ad9831"
+  integrity sha512-zhI5aPcxcWhYyV4sn+aalmg/OKncuFtIQ3SHRVLCN3L12RYcL2o+YEWhcISDwRjgHHtMJWgBJPt1xZewEdxbxA==
   dependencies:
-    "@velcro/decoder" "^0.8.0"
-    "@velcro/node-libs" "^0.8.0"
-    "@velcro/resolver" "^0.8.0"
-    "@velcro/resolver-host-compound" "^0.8.0"
-    "@velcro/resolver-host-fs" "^0.8.0"
-    "@velcro/resolver-host-memory" "^0.8.0"
-    "@velcro/resolver-host-unpkg" "^0.8.0"
+    "@velcro/decoder" "^0.10.0"
+    "@velcro/node-libs" "^0.10.0"
+    "@velcro/resolver" "^0.10.0"
+    "@velcro/resolver-host-compound" "^0.10.0"
+    "@velcro/resolver-host-fs" "^0.10.0"
+    "@velcro/resolver-host-memory" "^0.10.0"
+    "@velcro/resolver-host-unpkg" "^0.10.0"
     acorn "^6.1.1"
     idb "^4.0.3"
     magic-string "^0.25.2"

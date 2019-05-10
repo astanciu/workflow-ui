@@ -1,15 +1,31 @@
-import React from 'react';
-import ReactResizeDetector from 'react-resize-detector';
 import { Button } from 'antd';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
+import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import ReactResizeDetector from 'react-resize-detector';
 import styled from 'styled-components';
 const Container = styled.div`
   position: relative;
   height: 100%;
 `;
+// @ts-ignore
+window.MonacoEnvironment = {
+  getWorkerUrl: function(moduleId, label) {
+    if (label === 'json') return '/json.worker.js';
+    if (label === 'typescript' || label === 'javascript') return '/typescript.worker.js';
+
+    return '/editor.worker.js';
+  },
+  getWorker: function(moduleId, label) {
+    if (label === 'json') return new Worker('/json.worker.js');
+    if (label === 'typescript' || label === 'javascript') return new Worker('/typescript.worker.js');
+
+    return new Worker('/editor.worker.js');
+  },
+};
 
 type Props = {
+  id?: string;
   fileName: string;
   code: string;
   width?: string;
@@ -31,7 +47,7 @@ const Toolbar = styled.div`
   z-index: 100;
 `;
 
-export class FileEditor extends React.Component<Props> {
+export class Monaco extends React.Component<Props> {
   private editor: any;
   private containerRef;
   private model: any;
@@ -51,7 +67,7 @@ export class FileEditor extends React.Component<Props> {
 
   state = {
     dirty: false,
-    newCode: undefined,
+    code: this.props.code,
   };
 
   constructor(props) {
@@ -98,7 +114,7 @@ export class FileEditor extends React.Component<Props> {
   };
 
   _onChange = (value, e) => {
-    this.setState({ newCode: value });
+    this.setState({ code: value });
     if (this.props.onChange) {
       this.props.onChange(value);
     }
@@ -117,12 +133,12 @@ export class FileEditor extends React.Component<Props> {
   };
 
   componentWillReceiveProps(props) {
-    console.log(`will rec props`, props);
-    if (props.code !== this.props.code) {
-      const self = this;
-      setTimeout(function() {
-        self.editor.getAction('editor.action.formatDocument').run();
-      }, 300);
+    if (props.code !== this.state.code) {
+      // const self = this;
+      this.setState({ code: props.code });
+      // setTimeout(function() {
+      //   self.editor.getAction('editor.action.formatDocument').run();
+      // }, 300);
     }
   }
 
@@ -130,12 +146,13 @@ export class FileEditor extends React.Component<Props> {
     if (
       nextProps.code !== this.props.code ||
       nextState.dirty !== this.state.dirty ||
-      nextState.newCode !== this.state.newCode
+      nextState.code !== this.state.code
     ) {
-      console.log(`updated`, nextProps, nextState);
+      // console.log(`${this.props.id} - should update: `, nextProps, nextState);
+      // console.log(`${this.props.id} -`, this.state, nextState);
       return true;
     }
-    console.log(`not updated`, nextProps, nextState);
+
     return false;
   }
 
@@ -177,7 +194,6 @@ export class FileEditor extends React.Component<Props> {
     if (this.props.height) props.height = this.props.height;
 
     const showToolbar = this.props.toolbar;
-    const code = this.state.newCode === undefined ? this.props.code : this.state.newCode;
 
     return (
       <Container ref={this.containerRef}>
@@ -207,7 +223,7 @@ export class FileEditor extends React.Component<Props> {
           {...props}
           language={this.props.language || 'javascript'}
           theme="workflows"
-          value={code}
+          value={this.state.code}
           options={options}
           onChange={this.onChange}
           editorDidMount={this.editorDidMount}

@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
 import { Node, Connection } from 'Models';
 
 export const processWorkflow = (state, { workflow }) => {

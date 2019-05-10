@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash-es/debounce';
 import Grid from './Grid/Grid';
 import NodeComponent from './Node/Node';
 import styles from './Canvas.module.css';
@@ -207,7 +207,10 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   onConnectionDrag = (node: Node, e) => {
-    const mousePosition = this.convertCoordsToSVG(e.detail.x - this.state.view.offsetLeft!, e.detail.y - this.state.view.offsetTop!);
+    const mousePosition = this.convertCoordsToSVG(
+      e.detail.x - this.state.view.offsetLeft!,
+      e.detail.y - this.state.view.offsetTop!
+    );
     this.setClosestNode(mousePosition);
     this.setState((currentState) => ({
       connectionInProgress: {
@@ -292,7 +295,10 @@ class CanvasComponent extends React.Component<Props> {
           <Grid />
           {connections}
           {this.state.connectionInProgress && (
-            <ConnectionPreview startNode={this.state.connectionInProgress.from} mouse={this.state.connectionInProgress.to} />
+            <ConnectionPreview
+              startNode={this.state.connectionInProgress.from}
+              mouse={this.state.connectionInProgress.to}
+            />
           )}
           {nodes}
         </g>

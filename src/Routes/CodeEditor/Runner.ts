@@ -21,10 +21,12 @@ const cache = {
 };
 
 export const Run = async (files) => {
+  const memoryHost = new Velcro.ResolverHostMemory(files);
   const resolverHost = new Velcro.ResolverHostCompound({
     'https://unpkg.com/': new Velcro.ResolverHostUnpkg(),
-    'file:///': new Velcro.ResolverHostMemory(files),
+    [memoryHost.urlFromPath('/').href]: memoryHost,
   });
+
   const runtime = Velcro.createRuntime({
     cache,
     injectGlobal: Velcro.injectGlobalFromUnpkg,
@@ -32,10 +34,8 @@ export const Run = async (files) => {
     resolverHost,
   });
 
-  // const importStart = Date.now();
-  const render = await runtime.import('file:///index.js');
-  // const importEnd = Date.now();
-  // const time = importEnd - importStart;
+  const index = memoryHost.urlFromPath('/index.js');
+  const mod = await runtime.import(index);
 
-  return render;
+  return mod;
 };

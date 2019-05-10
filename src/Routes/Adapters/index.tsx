@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { useSelectedItem } from 'Core/useSelectedItem';
-import styled from 'styled-components';
-import { Page } from 'Components/Page';
-import { Button, Tabs, Input } from 'antd';
-import { AdapterItem } from './AdapterItem';
-import { Portal } from 'Components/Portal';
-
-import { useGetData } from 'Core/Data';
+import { Button, Input, Tabs } from 'antd';
 import { Spinner } from 'Components';
+import { Page } from 'Components/Page';
+import { Portal } from 'Components/Portal';
+import { useGetData } from 'Core/Data';
+import { useSelectedItem } from 'Core/useSelectedItem';
+import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
+import { AdapterItem } from './AdapterItem';
 
 const Grid = styled.div`
   margin-top: 20px;
@@ -22,7 +21,7 @@ const Grid = styled.div`
 export const Adapters = (props) => {
   const domEl = useRef<HTMLDivElement>(null);
   const [selectedAdapter, select] = useSelectedItem(domEl, '1');
-  const [loading, adapters, error] = useGetData();
+  const [loading, adapters, error] = useGetData('adapters');
   const [tab, setTab] = useState('all');
 
   if (error) {
