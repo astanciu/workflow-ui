@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Icon } from 'antd';
 import { FlexRow } from 'Components/Layout';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
   // border-top: 3px solid #1b96ff;
@@ -22,14 +22,13 @@ const Panel = styled.div`
   background-color: #fafbfd;
   box-shadow: 0px 2px 5px 0px #e0e0e06b;
   min-height: 50px;
-  
-  // ${({ maxHeight }) => maxHeight && `max-height: ${maxHeight}`}
+
   display: flex;
   flex-direction: column;
 
-  // &:nth-child(2) {
-  //   margin-top: -28px;
-  // }
+  &:nth-child(2) {
+    border-top: none;
+  }
 
   &:last-child {
     border-bottom: 1px solid #dad9d9;
@@ -39,6 +38,7 @@ const Panel = styled.div`
 `;
 
 const PanelWrapper = styled.div`
+  background-color: #dbe2e5;
   border-top: 3px solid ${({ color }) => color};
   min-height: 50px;
   display: ${({ open }) => (open ? 'flex' : 'none')};
@@ -72,7 +72,7 @@ const PanelIconWrapper = styled.div`
 `;
 
 const Content = styled.div`
-  ${({ pullUp }) => pullUp && 'margin-top: -28px;'};
+  ${({ pullUp }) => pullUp && 'margin-top: -10px;'};
 `;
 
 const PaddedContent = styled.div`

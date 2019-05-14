@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
 import { adapter } from 'samples/adapter';
 import { nodes } from 'samples/library';
+import { APIClient } from './axios';
 
 class DataManager {
+  async query(query, values) {
+    let res = await APIClient.post('/graphql', {
+      query,
+      values,
+    });
+
+    return res.data;
+  }
+
   async get(query: string): Promise<any> {
     switch (query) {
       case 'adapter':
@@ -13,6 +23,7 @@ class DataManager {
         return undefined;
     }
   }
+
   async getAdapters(): Promise<Array<any>> {
     return new Promise((res) => setTimeout(() => res(nodes), 500));
   }
@@ -31,6 +42,11 @@ export const useGetData = <T>(query: string): [boolean, T | undefined, Error | u
       try {
         if (!cancelled) {
           setData((await Data.get(query)) as T);
+          // let result = await APIClient.post('/graphql', {
+          //   query,
+          // });
+
+          // console.log(`result: `, result.data);
         }
 
         if (!cancelled) {

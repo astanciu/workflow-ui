@@ -1,6 +1,5 @@
 import moment from 'moment';
-
-import { randomString, sha256, bufferToBase64UrlEncoded } from './util';
+import { bufferToBase64UrlEncoded, randomString, sha256 } from './util';
 
 type AuthorizationResponse = {
   code: string | null | undefined;
@@ -41,6 +40,11 @@ class Authentication {
   private auth_endpoint: string = `https://${this.a0domain}/authorize`;
   private token_endpoint: string = `https://${this.a0domain}/oauth/token`;
   private audience = 'https://workflow.dev/';
+  private history;
+
+  public setHistory(history) {
+    this.history = history;
+  }
 
   async login() {
     let user;
@@ -89,6 +93,12 @@ class Authentication {
     window.location.assign(logoutUrl.toString());
   }
 
+  redirect(url) {
+    if (this.history) {
+      this.history.push(url);
+    }
+  }
+
   isLoggedIn() {
     return this.getStoredSession();
   }
@@ -105,7 +115,7 @@ class Authentication {
     return this.processAuthorizationResponse(authzResp);
   }
 
-  async silentRefresh() {
+  async silentRefresh(): Promise<void> {
     const state = randomString(32);
     const codeVerifier = randomString(32);
     localStorage.setItem(`login-code-verifier-${state}`, codeVerifier);
@@ -159,8 +169,7 @@ class Authentication {
       iframe.setAttribute('src', authorizationEndpointUrl.toString());
     });
 
-    const [user, error] = await this.processAuthorizationResponse(authzResp);
-    console.log(user, error);
+    await this.processAuthorizationResponse(authzResp);
   }
 
   async getUser(tokenSet: TokenSet): Promise<User> {
@@ -177,13 +186,36 @@ class Authentication {
     return user;
   }
 
-  async getToken() {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      throw new Error('No Token');
+  // Returns token if ok
+  // or silently refreshes the token and returns it
+  // or fails and redirects to login page
+  async getToken(): Promise<string> {
+    function retrieve(): string {
+      const token = localStorage.getItem('access_token');
+      if (!token) throw new Error('Bad or missing token');
+
+      return token;
+    }
+    try {
+      if (!this.isTokenExpired()) {
+        return retrieve();
+      } else {
+        await this.silentRefresh();
+        if (!this.isTokenExpired()) {
+          return retrieve();
+        }
+
+        this.clearAuthData();
+        this.redirect('/login');
+        return '';
+      }
+    } catch (err) {
+      console.log(err);
+      this.clearAuthData();
+      this.redirect('/login');
     }
 
-    return token;
+    return '';
   }
 
   private async processAuthorizationResponse(authz: AuthorizationResponse): Promise<[User | null, AuthError | null]> {
@@ -200,7 +232,6 @@ class Authentication {
       return [null, { error: 'code not found' }];
     }
     const code_verifier = localStorage.getItem(`login-code-verifier-${state}`);
-    // localStorage.removeItem(`login-code-verifier-${state}`);
     this.cleanTempLocalStorate();
 
     if (!code_verifier) {

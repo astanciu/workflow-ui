@@ -6,6 +6,7 @@ import { Page } from 'Components/Page';
 import { Portal } from 'Components/Portal';
 import { useGetData } from 'Core/Data';
 import { Adapter } from 'Core/Types';
+import { useConfirm } from 'Core/useConfirm';
 import get from 'lodash-es/get';
 import React, { useState } from 'react';
 import { EditorPanel } from './EditorPanel';
@@ -21,6 +22,8 @@ export const CodeEditor = ({ match }) => {
   const [openTabs, setOpenTabs] = useState<OpenFile[]>([]);
   const [activeTab, setActiveTab] = useState<string>();
   const [dirtyFiles, setDirtyFiles] = useState<string[]>([]);
+  const [tempCode, setTempCode] = useState<string>('');
+  const showConfirm = useConfirm();
 
   if (loading) return <Spinner />;
   if (error) return <Err error={error} />;
@@ -39,11 +42,19 @@ export const CodeEditor = ({ match }) => {
     }
   };
 
-  const onEdit = (fileName, action) => {
+  const onEdit = async (fileName, action) => {
     if (action === 'remove') {
       if (dirtyFiles.includes(fileName)) {
-        alert('Changes not saved');
-        return;
+        const save = await showConfirm({
+          title: 'Save?',
+          message: 'You have unsaved changes, would you like to save before closing?',
+          yesLabel: 'Save',
+          noLabel: "Don't Save",
+        });
+
+        if (save) {
+          onSave(tempCode);
+        }
       }
       const remainingTabs = openTabs.filter((tab) => tab.fileName !== fileName);
       setActiveTab((remainingTabs[0] || {}).fileName);
@@ -96,15 +107,17 @@ export const CodeEditor = ({ match }) => {
             >
               {openTabs.map((file) => (
                 <Tabs.TabPane tab={file.fileName} key={file.fileName}>
-                  <Container style={{ border: '0px solid gray' }}>
+                  <Container style={{ border: '1px solid #b6bdc0', borderTop: 'none' }}>
                     <Monaco
+                      id={`editor-${file.fileName}`}
                       fileName={file.fileName}
                       code={file.code}
                       toolbar={true}
                       focus={true}
+                      onChange={(code) => setTempCode(code)}
                       onSave={onSave}
                       language={getLanguage(file.fileName)}
-                      setDirty={onDirty}
+                      onDirty={onDirty}
                     />
                   </Container>
                 </Tabs.TabPane>

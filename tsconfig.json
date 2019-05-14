@@ -23,7 +23,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "baseUrl": "src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "incremental": true
   },
   "include": ["src"]
 }

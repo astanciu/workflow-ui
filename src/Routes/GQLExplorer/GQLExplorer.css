@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Maven+Pro|Open+Sans');
+
+.gqlexplorer {
+  height: 100vh;
+}
+
+.graphiql-container {
+  display: flex;
+  height: 100%;
+}
+
+.graphiql-container .editorWrap,
+.graphiql-container .topBarWrap,
+.graphiql-container .queryWrap,
+.graphiql-container .resultWrap,
+.graphiql-container .editorBar {
+  display: flex
+}
+
+.graphiql-container .topBar {
+  display: flex;
+  height: 57px;
+}
+
+.graphiql-container .toolbar {
+  background: none;
+}
+
+.graphiql-container .title {
+  width: auto;
+}
+
+.graphiql-container .doc-explorer {
+  background: white;
+  height: 57px;
+}
+
+.graphiql-container .doc-explorer-title-bar {
+  height: 57px;
+}
+
+.graphiql-container .doc-explorer-contents {
+  top: 56px;
+}
+
+.graphiql-container .search-box-outer {
+  height: 33px;
+}
+
+.graphiql-container .CodeMirror {
+  font-size: 11px;
+}
+
+.graphiql-container .CodeMirror pre {
+  line-height: 18px;
+}
+
+.doc-type-description {
+  font-family: 'Open Sans', sans-serif;
+  color: #647379;
+}
+
+.doc-category-item {
+  font-family: 'Maven Pro', sans-serif;
+}

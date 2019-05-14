@@ -1,5 +1,6 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const { addLessLoader } = require('customize-cra');
+
+const { addLessLoader, useEslintRc, addBundleVisualizer } = require('customize-cra');
 
 module.exports = function override(config, env) {
   const options = {
@@ -10,7 +11,15 @@ module.exports = function override(config, env) {
     javascriptEnabled: true,
   };
 
+  config = useEslintRc()(config);
   config = addLessLoader(options)(config);
+  config = addBundleVisualizer(
+    {
+      analyzerMode: 'static',
+      reportFilename: 'report.html',
+    },
+    true // --analyze
+  )(config);
 
   if (!config.plugins) {
     config.plugins = [];

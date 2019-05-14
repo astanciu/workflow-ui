@@ -5,8 +5,6 @@ import { Monaco } from 'Components/Monaco';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { useDispatch } from 'react-redux';
-// import { push } from 'connected-react-router';
 import { Run } from './Runner';
 import { RunPane } from './RunPane';
 
@@ -68,7 +66,7 @@ export const EditorPanel = ({ adapter }) => {
 
       <Scrollable style={{ paddingTop: '20px' }}>
         <RunPane title="Run">
-          <RunPane.Section style={{ marginTop: '-28px' }} first>
+          <RunPane.Section style={{ marginTop: '-10px', backgroundColor: '#dbe2e5' }} first>
             <Monaco
               id="input"
               language="json"
@@ -98,9 +96,9 @@ export const EditorPanel = ({ adapter }) => {
               </Center>
             </RunPane.Text>
           </RunPane.Section>
-          <RunPane.Section icon="down-circle">
+          <RunPane.Section icon="down-circle" style={{ backgroundColor: '#dbe2e5' }}>
             <Monaco
-              id="outpu"
+              id="output"
               code={result}
               language="json"
               width="100%"

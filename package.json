@@ -4,13 +4,18 @@
   "private": true,
   "dependencies": {
     "antd": "^3.17.0",
+    "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.4.0",
+    "core-decorators": "^0.20.0",
+    "custom-graphiql": "astanciu/custom-graphiql",
+    "graphql": "^14.3.0",
     "hammerjs": "^2.0.8",
     "immer": "^2.1.4",
     "jssha": "^2.3.1",
     "less": "^3.9.0",
     "lodash-es": "^4.17.11",
+    "lokka": "^1.7.0",
     "moment": "^2.24.0",
     "popmotion": "^8.6.3",
     "react": "^16.8.4",
@@ -44,21 +49,24 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/lodash": "^4.14.122",
     "@types/lodash-es": "^4.17.3",
+    "@types/react": "^16.8.7",
+    "@types/react-dom": "^16.8.2",
     "@types/react-router": "^4.4.5",
     "@types/redux": "^3.6.0",
     "@velcro/runtime": "^0.10.0",
-    "@types/lodash": "^4.14.122",
-    "@types/react": "^16.8.7",
-    "@types/react-dom": "^16.8.2",
     "@welldone-software/why-did-you-render": "^3.0.9",
     "customize-cra": "^0.2.12",
+    "http-proxy-middleware": "^0.19.1",
     "less-loader": "^5.0.0",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "node-sass": "^4.11.0",
     "react-app-rewire-less-modules": "^1.3.0",
     "react-app-rewired": "^2.1.3",
     "tslint": "^5.14.0",
-    "typescript": "^3.4.5"
-  }
+    "typescript": "^3.4.5",
+    "webpack-bundle-analyzer": "^3.3.2"
+  },
+  "proxy": "http://localhost:3500"
 }
