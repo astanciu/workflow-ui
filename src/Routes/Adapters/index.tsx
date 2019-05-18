@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createDefaultAdapter, loadAdapters } from 'ReduxState/actions';
 import styled from 'styled-components';
+import { AdapterDefaultPanel } from './AdapterDefaultPanel';
 import { AdapterItem } from './AdapterItem';
 import { AdapterPanel } from './AdapterPanel';
 
@@ -103,16 +104,7 @@ export const Adapters = (props) => {
           Content of Tab Pane 3
         </Tabs.TabPane>
       </Tabs>
-      <Portal>
-        {selectedAdapter ? (
-          <AdapterPanel adapter={selectedAdapter} />
-        ) : (
-          <>
-            <h1>Adapters</h1>
-            <p>What they are</p>
-          </>
-        )}
-      </Portal>
+      <Portal>{selectedAdapter ? <AdapterPanel adapter={selectedAdapter} /> : <AdapterDefaultPanel />}</Portal>
     </Page>
   );
 };

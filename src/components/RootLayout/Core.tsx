@@ -2,6 +2,7 @@ import { SideBar } from 'Components/SideBar';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { WelcomePanel } from './WelcomePanel';
 
 const Root = styled.div`
   // border: 1px solid red;
@@ -53,8 +54,7 @@ export const Layout = ({ children }) => {
       <Center showPanel={showPanel}>{children}</Center>
       {showPanel && (
         <Right id="side-panel">
-          <h1>Welcome</h1>
-          <p>This is a test</p>
+          <WelcomePanel />
         </Right>
       )}
     </Root>

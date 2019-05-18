@@ -1,6 +1,7 @@
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import { Page } from 'Components/Page';
 import { Portal } from 'Components/Portal';
+import { GenericPanel } from 'Components/RootLayout/GenericPanel';
 import { useSelectedItem } from 'Core/useSelectedItem';
 import React, { useRef } from 'react';
 import { workflow1, workflow2, workflow3 } from 'samples/workflows';
@@ -25,8 +26,9 @@ export const Workflows = (props) => {
       {list}
       {!selectedWorkflow && (
         <Portal>
-          <h1>Workflows</h1>
-          <p>They rock</p>
+          <GenericPanel title="Workflows">
+            <Typography.Paragraph>Workflows let you wire up adapters</Typography.Paragraph>
+          </GenericPanel>
         </Portal>
       )}
     </Page>
