@@ -26,6 +26,7 @@ const Left = styled.div`
 
 const Center = styled.div`
   // border: 1px solid red;
+  position: relative;
   min-width: 500px;
   ${({ showPanel }) => showPanel && 'max-width: 850px;'}
   width: 100%;

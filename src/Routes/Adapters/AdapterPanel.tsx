@@ -4,8 +4,9 @@ import { FlexRow } from 'Components/Layout';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
 import { PanelSection } from 'Components/PanelSection';
 import { push } from 'connected-react-router';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAdapter } from 'ReduxState/actions';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -18,11 +19,17 @@ const Container = styled.div`
 
 export const AdapterPanel = ({ adapter }) => {
   const dispatch = useDispatch();
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const deleteLoading = useSelector((state) => state.adapters.loadingDelete);
+  const error = useSelector((state) => state.adapters.deleteError);
+
   const editCode = () => dispatch(push(`/adapters/code/${adapter.uuid}`));
   const del = () => {
-    setDeleteLoading(true);
+    dispatch(deleteAdapter(adapter.uuid));
   };
+  if (error) {
+    // TODO: handle workflow deps
+    console.log('Delete Error', error);
+  }
   return (
     <Container>
       <FlexRow style={{ padding: '20px 0px 20px 20px' }}>

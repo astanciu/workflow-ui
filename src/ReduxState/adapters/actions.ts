@@ -16,6 +16,16 @@ export const createAdapterBegin = makeActionCreator(CREATE_ADAPTER_BEGIN);
 export const createAdapterSuccess = makeActionCreator(CREATE_ADAPTER_SUCCESS, 'adapter');
 export const createAdapterError = makeActionCreator(CREATE_ADAPTER_ERROR, 'error');
 
+export const DELETE_ADAPTER_BEGIN = 'DELETE_ADAPTER_BEGIN';
+export const DELETE_ADAPTER_SUCCESS = 'DELETE_ADAPTER_SUCCESS';
+export const DELETE_ADAPTER_ERROR = 'DELETE_ADAPTER_ERROR';
+export const deleteAdapterBegin = makeActionCreator(DELETE_ADAPTER_BEGIN);
+export const deleteAdapterSuccess = makeActionCreator(DELETE_ADAPTER_SUCCESS, 'uuid');
+export const deleteAdapterError = makeActionCreator(DELETE_ADAPTER_ERROR, 'error');
+
+export const CLEAR_SELECTED_ADAPTER = 'CLEAR_SELECTED_ADAPTER';
+export const clearSelectedAdapter = makeActionCreator(CLEAR_SELECTED_ADAPTER);
+
 export const loadAdapters = () => {
   return async (dispatch, getState) => {
     dispatch(loadAdaptersBegin());
@@ -54,5 +64,20 @@ export const createDefaultAdapter = () => {
 
     if (error) dispatch(createAdapterError(error));
     if (data) dispatch(createAdapterSuccess(data.createDefaultAdapter));
+  };
+};
+
+export const deleteAdapter = (uuid) => {
+  return async (dispatch) => {
+    dispatch(deleteAdapterBegin());
+    const q = `mutation _($uuid:String){
+      deleteAdapter(uuid:$uuid)
+    }`;
+    const v = { uuid };
+    let { data, error } = await getData(q, v);
+
+    // TODO: check for workflows received here?
+    if (error) dispatch(deleteAdapterError(error));
+    if (data) dispatch(deleteAdapterSuccess(data.deleteAdapter));
   };
 };

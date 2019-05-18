@@ -1,9 +1,7 @@
 import { Tag } from 'antd';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
-import { Portal } from 'Components/Portal';
 import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
-import { AdapterPanel } from './AdapterPanel';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,11 +96,11 @@ export const AdapterItem = ({ adapter, selected, select }) => {
           </Right>
         </Line>
       </Container>
-      {selected && (
+      {/* {selected && (
         <Portal>
           <AdapterPanel adapter={adapter} />
         </Portal>
-      )}
+      )} */}
     </>
   );
 };
