@@ -1,6 +1,6 @@
+import { Button } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -28,11 +28,12 @@ type Props = {
   title?: string;
   action?: any;
   children?: any;
+  r?: any;
 };
 
-export const Page = ({ empty = false, title, children, action }: Props) => {
+export const Page = ({ empty = false, title, children, action, r }: Props) => {
   return (
-    <PageWrapper>
+    <PageWrapper ref={r}>
       {!empty && (
         <Header>
           <Title>{title}</Title>

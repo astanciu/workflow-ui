@@ -1,6 +1,6 @@
 export type Adapter = {
   name: string;
-  id: string;
+  uuid: string;
   icon: string;
   description: string;
   version: string;

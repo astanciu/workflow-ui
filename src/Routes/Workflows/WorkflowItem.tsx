@@ -1,12 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { Icon, Button, Avatar } from 'antd';
-import { useDispatch } from 'react-redux';
+import { Avatar, Button, Icon } from 'antd';
+import { Portal } from 'Components/Portal';
 import { push } from 'connected-react-router';
 import { getTimeTouched } from 'Core/Utils';
-
-import { Portal } from 'Components/Portal';
+import React, { SyntheticEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 const Container = styled.div`
   border: 3px solid ${({ selected }) => (selected ? '#1990ff' : 'transparent')};
@@ -64,7 +62,8 @@ const TimeStampContainer = styled.div`
 
 export const WorkflowItem = ({ workflow, selected, select }) => {
   const dispatch = useDispatch();
-  const clicked = () => {
+  const clicked = (e: SyntheticEvent) => {
+    e.nativeEvent.stopImmediatePropagation();
     select(workflow.id);
   };
 

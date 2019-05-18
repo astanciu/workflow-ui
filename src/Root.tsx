@@ -1,7 +1,5 @@
-import { Spinner } from 'Components';
 import { ConnectedRouter } from 'connected-react-router';
 import { Auth } from 'Core/Auth';
-import { useBootstrap } from 'Core/useBootstrap';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
@@ -26,10 +24,6 @@ export const Root = ({ store, history }) => {
 };
 
 const AppCore = (props) => {
-  const ready = useBootstrap();
-
-  if (!ready) return <Spinner />;
-
   return (
     <Switch>
       <Route exact path="/login" component={Login} />

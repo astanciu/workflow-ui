@@ -1,11 +1,12 @@
 // @ts-nocheck
-import { combineReducers, Reducer } from 'redux';
-import { History } from 'history';
 import { connectRouter } from 'connected-react-router';
+import { History } from 'history';
+import { combineReducers, Reducer } from 'redux';
 import * as A from '../actions';
+import { adaptersReducer } from '../adapters/reducer';
 import * as Types from '../types';
+import { createConnection, removeConnection } from './connections';
 import { processWorkflow, updateNode } from './nodes';
-import { removeConnection, createConnection } from './connections';
 
 const initialState: Types.ReduxState = {
   showPanel: true,
@@ -16,12 +17,14 @@ const initialState: Types.ReduxState = {
   loading: true,
   error: null,
   user: null,
+  adapters: [],
 };
 
 export const createRootReducer = (history: History): Reducer<any> => {
   const combined = combineReducers({
     router: connectRouter(history),
     app: reducer,
+    adapters: adaptersReducer,
   });
 
   return combined;

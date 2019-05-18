@@ -1,9 +1,8 @@
 import { push } from 'connected-react-router';
+import { Auth } from 'Core';
 import { workflow1 } from 'samples/workflows';
 
-import { Auth } from 'Core';
-
-function makeActionCreator(type, ...argNames) {
+export function makeActionCreator(type, ...argNames) {
   return function(...args) {
     const action = { type };
     argNames.forEach((arg, index) => {
@@ -13,8 +12,8 @@ function makeActionCreator(type, ...argNames) {
   };
 }
 
-export const BOOTUP_BEGIN = 'BOOTUP_BEGIN';
-export const BOOTUP_END = 'BOOTUP_END';
+export * from './adapters/actions';
+
 export const SELECT_NODE = 'SELECT_NODE';
 export const UPDATE_NODE = 'UPDATE_NODE';
 export const SELECT_CONNECTION = 'SELECT_CONNECTION';
@@ -29,9 +28,6 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const SHOW_SIDE_PANEL = 'SHOW_SIDE_PANEL';
-
-export const bootupBegin = makeActionCreator(BOOTUP_BEGIN);
-export const bootupEnd = makeActionCreator(BOOTUP_END);
 
 export const selectNode = makeActionCreator(SELECT_NODE, 'node');
 export const updateNode = makeActionCreator(UPDATE_NODE, 'node');
@@ -66,8 +62,6 @@ const fakeGet = () => {
     }, 200);
   });
 };
-
-// Bootup
 
 // Login stuff
 export const loginBeginCallback = makeActionCreator(LOGIN_CALLBACK);

@@ -1,18 +1,17 @@
+import { SideBar } from 'Components/SideBar';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { SideBar } from 'Components/SideBar';
 
 const Root = styled.div`
   // border: 1px solid red;
   display: flex;
   height: 100%;
-  ${({ showPanel }) => showPanel && 'max-width: 1300px;'}
-  justify-content: flex-start;
+  // ${({ showPanel }) => showPanel && 'max-width: 1300px;'}
+  justify-content: space-between;
   align-items: stretch;
-  background-color: #b2b3b1;
+  background-color: #e7ebee;
   overflow: auto;
-  background-color: #fff;
 `;
 
 const Left = styled.div`
@@ -22,6 +21,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  background-color: #fff;
 `;
 
 const Center = styled.div`
@@ -35,8 +35,7 @@ const Center = styled.div`
 
 const Right = styled.div`
   min-width: 300px;
-
-  background-color: transparent;
+  background-color: #fff;
   box-shadow: -1px 0px 3px 0px #00000021
   z-index: 10;
   overflow-y: auto;

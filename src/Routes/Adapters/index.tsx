@@ -2,9 +2,10 @@ import { Button, Input, Tabs } from 'antd';
 import { Spinner } from 'Components';
 import { Page } from 'Components/Page';
 import { Portal } from 'Components/Portal';
-import { useGetData } from 'Core/Data';
 import { useSelectedItem } from 'Core/useSelectedItem';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createDefaultAdapter, loadAdapters } from 'ReduxState/actions';
 import styled from 'styled-components';
 import { AdapterItem } from './AdapterItem';
 
@@ -20,19 +21,31 @@ const Grid = styled.div`
 
 export const Adapters = (props) => {
   const domEl = useRef<HTMLDivElement>(null);
-  const [selectedAdapter, select] = useSelectedItem(domEl, '1');
-  const [loading, adapters, error] = useGetData('adapters');
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.adapters.loading);
+  const adapters = useSelector((state) => state.adapters.adapters);
+  const error = useSelector((state) => state.adapters.error);
+  const loadingCreate = useSelector((state) => state.adapters.loadingCreate);
+
   const [tab, setTab] = useState('all');
+  const [selectedAdapter, setSelected] = useSelectedItem(domEl, '');
 
-  if (error) {
-    console.log(error);
-  }
+  const load = async () => {
+    dispatch(loadAdapters());
+  };
 
-  if (loading) {
-    return <Spinner />;
-  }
-  const list = (adapters as any[])!.map((a) => (
-    <AdapterItem key={a.id} adapter={a} selected={a.id === selectedAdapter} select={select} />
+  const createAdapter = async () => {
+    dispatch(createDefaultAdapter());
+  };
+
+  useEffect(() => {
+    load();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (loading) return <Spinner />;
+
+  const list = adapters.map((a) => (
+    <AdapterItem key={a.uuid} adapter={a} selected={a.uuid === selectedAdapter} select={setSelected} />
   ));
 
   const searchBar = (
@@ -40,11 +53,12 @@ export const Adapters = (props) => {
       <Input.Search size="small" />
     </div>
   );
+
   return (
-    <Page empty={true}>
+    <Page empty={true} r={domEl}>
       <Page.Header>
         <Page.Title>Adapters</Page.Title>
-        <Button type="primary" icon="plus" size="default">
+        <Button type="primary" icon="plus" size="default" onClick={createAdapter} loading={loadingCreate}>
           Adapter
         </Button>
       </Page.Header>
@@ -56,10 +70,10 @@ export const Adapters = (props) => {
         animated={false}
         tabBarGutter={5}
         tabBarExtraContent={searchBar}
-        // tabBarStyle={{ borderBottom: '1px solid #c4cfd9', textTransform: 'uppercase' }}
+        tabBarStyle={{ borderBottom: '1px solid #c4cfd9', textTransform: 'uppercase' }}
       >
         <Tabs.TabPane tab="All" key="all">
-          <Grid ref={domEl}>{list}</Grid>
+          <Grid>{list}</Grid>
         </Tabs.TabPane>
         <Tabs.TabPane tab="Mine" key="2">
           Content of Tab Pane 2
@@ -68,7 +82,6 @@ export const Adapters = (props) => {
           Content of Tab Pane 3
         </Tabs.TabPane>
       </Tabs>
-
       {!selectedAdapter && (
         <Portal>
           <h1>Adapters</h1>

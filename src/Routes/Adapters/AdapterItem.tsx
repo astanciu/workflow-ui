@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import { Tag } from 'antd';
-import { Portal } from 'Components/Portal';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
+import { Portal } from 'Components/Portal';
+import React, { SyntheticEvent } from 'react';
+import styled from 'styled-components';
 import { AdapterPanel } from './AdapterPanel';
 const Container = styled.div`
   display: flex;
@@ -71,16 +71,20 @@ const Right = styled.div`
 // `;
 
 export const AdapterItem = ({ adapter, selected, select }) => {
+  const click = (e: SyntheticEvent) => {
+    e.nativeEvent.stopImmediatePropagation();
+    select(adapter.uuid);
+  };
+
   return (
     <>
-      <Container onClick={() => select(adapter.id)} selected={selected}>
+      <Container onClick={click} selected={selected}>
         <Line>
           <IconWrapper>
             <HTMLNodeIcon icon={adapter.icon} size={30} />
           </IconWrapper>
           <Name>
             <Title>{adapter.name}</Title>
-            {/* <Description>{adapter.description}</Description> */}
           </Name>
         </Line>
         <Line>

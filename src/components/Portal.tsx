@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Spinner } from 'Components';
-
 export const Portal = ({ children }) => {
   const [portal, setPortal] = useState();
 
@@ -24,7 +22,7 @@ export const Portal = ({ children }) => {
   }, []);
 
   if (!portal) {
-    return <Spinner />;
+    return null;
   }
 
   let content = <>Default Sidebar</>;

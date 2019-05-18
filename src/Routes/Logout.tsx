@@ -1,10 +1,11 @@
+import { Typography } from 'antd';
+import { Spinner } from 'Components';
+import { BareLayout } from 'Components/RootLayout/Bare';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from 'ReduxState/actions';
 import { Link } from 'react-router-dom';
-import { Typography } from 'antd';
-import { BareLayout } from 'Components/RootLayout/Bare';
-import { Spinner } from 'Components';
+import { logout } from 'ReduxState/actions';
+
 export const Logout = ({ location }) => {
   const dispatch = useDispatch();
 

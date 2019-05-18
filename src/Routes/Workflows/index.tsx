@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { Page } from 'Components/Page';
 import { Button } from 'antd';
-import { WorkflowItem } from './WorkflowItem';
+import { Page } from 'Components/Page';
 import { Portal } from 'Components/Portal';
 import { useSelectedItem } from 'Core/useSelectedItem';
+import React, { useRef } from 'react';
 import { workflow1, workflow2, workflow3 } from 'samples/workflows';
+import { WorkflowItem } from './WorkflowItem';
 const workflows = [workflow1, workflow2, workflow3];
 
 export const Workflows = (props) => {
@@ -15,14 +15,14 @@ export const Workflows = (props) => {
   ));
 
   return (
-    <Page empty={true}>
+    <Page empty={true} r={domEl}>
       <Page.Header>
         <Page.Title>Workflows</Page.Title>
         <Button type="primary" icon="plus" size="default">
           Workflow
         </Button>
       </Page.Header>
-      <div ref={domEl}>{list}</div>
+      {list}
       {!selectedWorkflow && (
         <Portal>
           <h1>Workflows</h1>

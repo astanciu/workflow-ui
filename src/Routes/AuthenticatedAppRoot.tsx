@@ -1,10 +1,16 @@
+import { Spinner } from 'Components';
 import { Layout } from 'Components/RootLayout/Core';
+import { useBootstrap } from 'Core/useBootstrap';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Adapters, CodeEditor, Dashboard, NotFound, Things, Workflows } from 'Routes';
 import { Workflow } from 'Routes/Workflow';
 
 export const AppRoot = ({ match }) => {
+  const [firstTime, ready] = useBootstrap();
+
+  if (!ready) return <Spinner />;
+
   return (
     <Layout>
       <Switch>

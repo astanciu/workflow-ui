@@ -1,4 +1,4 @@
-import { Node, Connection } from 'Models';
+import { Connection, Node } from 'Models';
 
 export type ReduxState = {
   showPanel: boolean;
@@ -9,4 +9,5 @@ export type ReduxState = {
   loading: boolean;
   error: Error | null;
   user: any;
+  adapters: any[];
 };

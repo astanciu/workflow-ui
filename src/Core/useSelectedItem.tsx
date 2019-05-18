@@ -1,20 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useSelectedItem = (domEl, defaultSelected = '') => {
   const [selectedItem, select] = useState(defaultSelected);
+
   useEffect(() => {
     const handleClick = (e) => {
       let node = domEl.current;
-      if (node) {
-        if (domEl && domEl.current && domEl.current.contains(e.target)) {
-          return;
-        }
-        // select('');
+
+      if (node && domEl && domEl.current && domEl.current.contains(e.target)) {
+        select('');
       }
     };
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('click', handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('click', handleClick);
     };
   }, [domEl]);
 

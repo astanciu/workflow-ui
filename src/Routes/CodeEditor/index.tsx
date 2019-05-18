@@ -4,34 +4,50 @@ import { Err } from 'Components/Err';
 import { Monaco } from 'Components/Monaco';
 import { Page } from 'Components/Page';
 import { Portal } from 'Components/Portal';
-import { useGetData } from 'Core/Data';
+import { getData } from 'Core/Data';
 import { Adapter } from 'Core/Types';
 import { useConfirm } from 'Core/useConfirm';
 import get from 'lodash-es/get';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditorPanel } from './EditorPanel';
 import { Files } from './Files';
 import { getLanguage } from './helpers';
 import { Container } from './styles';
 import { OpenFile } from './types';
-
+const q = `query _($uuid:String){
+  adapter(uuid:$uuid) {
+    uuid
+    name
+    version
+    icon
+    description
+    files
+    created_at
+    updated_at
+  }
+}`;
 export const CodeEditor = ({ match }) => {
   const id = get(match, 'params.id');
-  const [loading, dbadapter, error] = useGetData<Adapter>('adapter');
-  const [adapter, setAdapter] = useState<Adapter | undefined>(dbadapter);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
+  const [adapter, setAdapter] = useState<Adapter>();
   const [openTabs, setOpenTabs] = useState<OpenFile[]>([]);
   const [activeTab, setActiveTab] = useState<string>();
   const [dirtyFiles, setDirtyFiles] = useState<string[]>([]);
   const [tempCode, setTempCode] = useState<string>('');
   const showConfirm = useConfirm();
 
-  if (loading) return <Spinner />;
-  if (error) return <Err error={error} />;
+  const load = async () => {
+    setLoading(true);
+    let { data, error } = await getData(q, { uuid: id });
+    if (data) setAdapter(data.adapter);
+    if (error) setError(error);
+    setLoading(false);
+  };
 
-  if (dbadapter && !adapter) {
-    setAdapter(dbadapter);
-  }
-  if (!adapter) return <Err error={{ message: 'Adapter not found' }} />;
+  useEffect(() => {
+    load();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFileSelect = (fileName, code) => {
     if (openTabs.find((tab) => tab.fileName === fileName)) {
@@ -86,6 +102,10 @@ export const CodeEditor = ({ match }) => {
       setDirtyFiles((files) => files.concat(file));
     }
   };
+
+  if (loading) return <Spinner />;
+
+  if (!adapter) return <Err error={{ message: 'Adapter not found' }} />;
 
   return (
     <Page empty={true}>

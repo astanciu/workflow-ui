@@ -4,12 +4,9 @@ import { Data } from 'Core/Data';
 import React from 'react';
 
 export const Dashboard = (props) => {
-  const q = '{hello}';
-  // const [loading, data, error] = useGetData(q)
-
   const click = async () => {
     try {
-      let r = await Data.query(q, null);
+      let r = await Data.query('{hello}');
       console.log(`in click results: `, r);
     } catch (err) {
       console.log(`Caught the error: `, err.message);
