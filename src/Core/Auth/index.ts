@@ -150,7 +150,7 @@ class Authentication {
         if (e.origin !== authorizationEndpointUrl.origin || e.data.type !== 'authorization_response') {
           return;
         }
-        e.source.close();
+        e.source && e.source.close();
         clearTimeout(timeoutSetTimeoutId);
         window.removeEventListener('message', responseHandler, false);
         window.document.body.removeChild(iframe);
@@ -312,7 +312,7 @@ class Authentication {
     try {
       let body = token.split('.')[1];
       body = JSON.parse(atob(body));
-      expires_at = body.exp * 1000; // shorten by 10 seconds
+      expires_at = body.exp * 1000;
     } catch (err) {
       console.log('Failed to getExpiresAt: ', err);
     }

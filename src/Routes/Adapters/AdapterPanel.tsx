@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Button } from 'antd';
 import { Title } from 'Components/EditableTitle';
 import { FlexRow } from 'Components/Layout';
 import { HTMLNodeIcon } from 'Components/NodeIcon';
@@ -6,8 +6,9 @@ import { PanelSection } from 'Components/PanelSection';
 import { push } from 'connected-react-router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAdapter } from 'ReduxState/actions';
+import { deleteAdapter, updateAdapter } from 'ReduxState/actions';
 import styled from 'styled-components';
+import { DetailsForm } from './DetailsForm';
 
 const Container = styled.div`
   // border: 1px solid red;
@@ -20,16 +21,25 @@ const Container = styled.div`
 export const AdapterPanel = ({ adapter }) => {
   const dispatch = useDispatch();
   const deleteLoading = useSelector((state) => state.adapters.loadingDelete);
+  const updateLoading = useSelector((state) => state.adapters.loadingUpdate);
   const error = useSelector((state) => state.adapters.deleteError);
 
   const editCode = () => dispatch(push(`/adapters/code/${adapter.uuid}`));
+
   const del = () => {
     dispatch(deleteAdapter(adapter.uuid));
   };
+
   if (error) {
     // TODO: handle workflow deps
     console.log('Delete Error', error);
   }
+
+  const onSubmit = (values) => {
+    console.log(`Submitted: `, values);
+    dispatch(updateAdapter(adapter.uuid, values));
+  };
+
   return (
     <Container>
       <FlexRow style={{ padding: '20px 0px 20px 20px' }}>
@@ -46,17 +56,15 @@ export const AdapterPanel = ({ adapter }) => {
       </PanelSection>
 
       <PanelSection title="Properties" icon="edit" center={false} color="#ff038f">
-        <Form layout="vertical">
-          <Form.Item label="Name">
-            <Input value={adapter.name} />
-          </Form.Item>
-          <Form.Item label="Description">
-            <Input.TextArea autosize value={adapter.description} />
-          </Form.Item>
-          <Button onClick={del} icon="save" type="primary">
-            Save
-          </Button>
-        </Form>
+        <DetailsForm
+          loading={updateLoading}
+          onSubmit={onSubmit}
+          fields={{
+            name: { value: adapter.name, options: { rules: [{ required: true, message: 'Name is required' }] } },
+            description: { value: adapter.description },
+            icon: { value: adapter.icon },
+          }}
+        />
       </PanelSection>
 
       <PanelSection title="Delete Adapter" icon="code" center={true} color="#ff0000">

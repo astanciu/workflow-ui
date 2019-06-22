@@ -40,7 +40,7 @@ const Right = styled.div`
   background-color: #fff;
   box-shadow: -1px 0px 3px 0px #00000021
   z-index: 10;
-  overflow-y: auto;
+  overflow-y: scroll;
 
 `;
 

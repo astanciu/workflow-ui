@@ -13,7 +13,7 @@ import { AdapterItem } from './AdapterItem';
 import { AdapterPanel } from './AdapterPanel';
 
 const Grid = styled.div`
-  margin-top: 20px;
+  padding-top: 20px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

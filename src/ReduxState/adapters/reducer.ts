@@ -9,6 +9,8 @@ const initialState = {
   error: null,
   createError: null,
   deleteError: null,
+  loadingUpdate: false,
+  updateError: null,
   adapters: [] as Adapter[],
   selected: null,
 };
@@ -16,6 +18,12 @@ const initialState = {
 export const adaptersReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      // Misc
+      case A.CLEAR_SELECTED_ADAPTER:
+        draft.selected = null;
+        break;
+
+      // Load
       case A.LOAD_ADAPTERS_BEGIN:
         draft.loading = true;
         draft.error = null;
@@ -32,6 +40,7 @@ export const adaptersReducer = (state = initialState, action) =>
         draft.adapters = action.adapters;
         break;
 
+      // Create
       case A.CREATE_ADAPTER_BEGIN:
         draft.loadingCreate = true;
         draft.createError = null;
@@ -47,10 +56,22 @@ export const adaptersReducer = (state = initialState, action) =>
         draft.createError = action.error;
         break;
 
-      case A.CLEAR_SELECTED_ADAPTER:
-        draft.selected = null;
+      // Update
+      case A.UPDATE_ADAPTER_BEGIN:
+        draft.loadingUpdate = true;
+        draft.updateError = null;
+        break;
+      case A.UPDATE_ADAPTER_SUCCESS:
+        draft.loadingUpdate = false;
+        draft.updateError = null;
+        draft.adapters = draft.adapters.map((a) => (a.uuid === action.adapter.uuid ? action.adapter : a));
+        break;
+      case A.UPDATE_ADAPTER_ERROR:
+        draft.loadingUpdate = false;
+        draft.updateError = action.error;
         break;
 
+      // Delete
       case A.DELETE_ADAPTER_BEGIN:
         draft.loadingDelete = true;
         draft.deleteError = null;
