@@ -1,15 +1,14 @@
+import debounce from 'lodash-es/debounce';
+import { Connection, Node, Point } from 'Models';
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
-import debounce from 'lodash-es/debounce';
+import { createConnection, removeConnection, selectConnection, selectNode, updateNode } from 'ReduxState/actions';
+import styles from './Canvas.module.css';
+import ConnectionComponent from './Connections/ConnectionComponent';
+import ConnectionPreview from './Connections/ConnectionPreview';
 import Grid from './Grid/Grid';
 import NodeComponent from './Node/Node';
-import styles from './Canvas.module.css';
 import EventManager from './Util/EventManager.js';
-import { Node, Connection, Point } from 'Models';
-import ConnectionPreview from './Connections/ConnectionPreview';
-import ConnectionComponent from './Connections/ConnectionComponent';
-import { selectNode, selectConnection, updateNode, createConnection, removeConnection } from 'ReduxState/actions';
 
 type ViewType = {
   width: number;
@@ -69,7 +68,7 @@ class CanvasComponent extends React.Component<Props> {
   public MAX_SCALE = 3;
   public velocity = { x: 0, y: 0 };
   public friction = 1;
-  public domNode: Element | Text | null = null;
+  public domNode = React.createRef<SVGSVGElement>();
   private em!: EventManager;
   private animationFrame?: number;
 
@@ -85,12 +84,12 @@ class CanvasComponent extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.domNode = ReactDOM.findDOMNode(this);
+    // this.domNode = ReactDOM.findDOMNode(this);
 
     this.setCanvasSize();
     window.addEventListener('resize', this.setCanvasSize);
 
-    this.em = new EventManager(this.domNode);
+    this.em = new EventManager(this.domNode.current);
     this.em.onTap(this._onTap);
     this.em.onMove(this._onMove);
     this.em.onMoveEnd(this._onMoveEnd);
@@ -103,16 +102,23 @@ class CanvasComponent extends React.Component<Props> {
   }
 
   setCanvasSize = debounce(() => {
-    const parent = this.domNode!.parentElement as HTMLElement;
+    const parent = this.domNode.current!.parentElement as HTMLElement;
 
+    const bb = this.domNode.current!.getBoundingClientRect();
+    console.dir(bb);
+    // console.log(`view:`, view);
     const view = { ...this.state.view };
 
     view.width = parent.offsetWidth;
     view.height = parent.offsetHeight;
+    // view.x = view.width / 2;
+    // view.y = view.height / 2;
+    // view.offsetTop = parent.offsetTop;
+    // view.offsetLeft = parent.offsetLeft;
     view.x = view.width / 2;
     view.y = view.height / 2;
-    view.offsetTop = parent.offsetTop;
-    view.offsetLeft = parent.offsetLeft;
+    view.offsetTop = bb.top;
+    view.offsetLeft = bb.left;
 
     this.setState({ view });
   }, 50);
@@ -290,6 +296,7 @@ class CanvasComponent extends React.Component<Props> {
         onWheel={this._onWheel}
         className={styles.Canvas}
         id="svgCanvas"
+        ref={this.domNode}
       >
         <g id="Canvas" transform={this.getTransform()}>
           <Grid />
