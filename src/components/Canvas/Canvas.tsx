@@ -103,10 +103,8 @@ class CanvasComponent extends React.Component<Props> {
 
   setCanvasSize = debounce(() => {
     const parent = this.domNode.current!.parentElement as HTMLElement;
-
     const bb = this.domNode.current!.getBoundingClientRect();
-    console.dir(bb);
-    // console.log(`view:`, view);
+
     const view = { ...this.state.view };
 
     view.width = parent.offsetWidth;
