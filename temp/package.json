@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "execa": "^1.0.0",
-    "lodash-es": "^4.17.11",
+    "lodash-es": "^4.17.14",
     "public-ip": "^3.1.0",
     "uuid": "^3.3.2",
     "vmdom": "^0.0.23"
