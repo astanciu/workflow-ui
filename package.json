@@ -11,7 +11,7 @@
     "custom-graphiql": "astanciu/custom-graphiql",
     "graphql": "^14.3.1",
     "hammerjs": "^2.0.8",
-    "immer": "^3.1.3",
+    "immer": "^8.0.1",
     "jssha": "^2.3.1",
     "less": "^3.9.0",
     "lodash-es": "^4.17.14",
