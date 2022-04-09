@@ -16,7 +16,7 @@
     "less": "^3.9.0",
     "lodash-es": "^4.17.14",
     "lokka": "^1.7.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "popmotion": "^8.6.3",
     "react": "^16.8.4",
     "react-bootstrap": "^1.0.0-beta.9",
